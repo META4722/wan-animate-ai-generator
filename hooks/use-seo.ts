@@ -33,10 +33,28 @@ export function useSEO(options: UseSEOOptions = {}): SEOData {
     const pageConfig = PAGE_SEO[pathname] || {}
     
     // 合并配置
-    const title = options.title || pageConfig.title || 'AI建筑渲染平台'
+    const configTitle = pageConfig.title
+    const title = options.title || (typeof configTitle === 'string' ? configTitle : 'AI建筑渲染平台')
     const description = options.description || pageConfig.description || '释放创造力，让设计变简单'
     const keywords = options.keywords || (pageConfig.keywords as string[]) || []
-    const image = options.image || pageConfig.openGraph?.images?.[0]?.url
+    const images = pageConfig.openGraph?.images
+    let image = options.image
+    if (!image && images) {
+      if (Array.isArray(images)) {
+        const firstImage = images[0]
+        if (typeof firstImage === 'string') {
+          image = firstImage
+        } else if (firstImage && typeof firstImage === 'object' && 'url' in firstImage) {
+          image = firstImage.url as string
+        }
+      } else {
+        if (typeof images === 'string') {
+          image = images
+        } else if (typeof images === 'object' && 'url' in images) {
+          image = (images as any).url
+        }
+      }
+    }
     
     // 生成规范URL
     const canonical = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://rendaily.com'}${pathname}`
@@ -83,7 +101,7 @@ export function useSEO(options: UseSEOOptions = {}): SEOData {
     }
     
     return {
-      title: typeof title === 'string' ? title : title?.default || 'AI Architectural Rendering Platform',
+      title,
       description,
       keywords,
       image,

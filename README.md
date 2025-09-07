@@ -1,22 +1,22 @@
-# 🇨🇳 Raphael Starter Kit - AI中文名字生成器
+# 🏗️ Rendaily - AI Architectural Rendering Platform
 
-> 基于 Next.js、Supabase 和 Creem.io 构建的现代化SaaS启动套件
+> Built with Next.js, Supabase, and modern AI technology stack
 
-一个完整的AI驱动中文名字生成器，融合先进的AI技术与深厚的中华文化底蕴，为全球用户提供个性化、文化准确的中文名字生成服务。
+A complete AI-powered architectural rendering platform that transforms your design concepts into stunning visualizations. Rendaily combines cutting-edge AI technology with professional architectural workflow to deliver instant, high-quality renders.
 
 [![Next.js](https://img.shields.io/badge/Next.js-13+-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Auth%20%26%20Database-green)](https://supabase.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.0+-06B6D4)](https://tailwindcss.com/)
 
-## ✨ 项目亮点
+## ✨ Key Features
 
-🤖 **智能AI生成** - 基于OpenAI/OpenRouter的先进语言模型，理解个性特征和文化背景
-🏮 **文化准确性** - 深度融合中华传统命名文化，确保每个名字都有深刻寓意
-⚡ **即时生成** - 秒级响应，提供完整的字符解析、拼音标注和文化解释
-🎯 **个性匹配** - 根据用户的性格特征、出生年份和喜好偏向量身定制
-🔊 **语音播放** - 集成豆包TTS，提供准确的中文名字发音
-📱 **响应式设计** - 完美适配各种设备，优雅的用户体验
+🤖 **AI-Powered Rendering** - Advanced AI models for text-to-render, sketch-to-render, and image enhancement
+🏗️ **Professional Workflow** - Seamless integration with architectural design processes
+⚡ **Instant Results** - Generate high-quality renders in seconds, not hours
+🎨 **Multiple Styles** - Wide range of architectural styles and visualization options
+🔍 **Image Upscaling** - Professional-grade image enhancement and upscaling capabilities
+📱 **Responsive Design** - Perfect experience across all devices and screen sizes
 
 ## 🚀 技术栈
 
@@ -97,8 +97,8 @@ Rendaily-V1/
 ### 步骤 1: 克隆仓库
 
 ```bash
-git clone https://github.com/yourusername/raphael-starter-kit.git
-cd raphael-starter-kit
+git clone https://github.com/yourusername/rendaily.git
+cd rendaily
 ```
 
 ### 步骤 2: 安装依赖
