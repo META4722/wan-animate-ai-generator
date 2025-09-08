@@ -31,7 +31,7 @@ export default async function RootLayout({
       <head>
         <MultipleStructuredData schemas={pageSchemas.home} />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
