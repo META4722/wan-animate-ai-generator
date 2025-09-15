@@ -64,7 +64,6 @@ export function useSEO(options: UseSEOOptions = {}): SEOData {
       if (pathname === '/') return pageSchemas.home
       if (pathname === '/pricing') return pageSchemas.pricing
       if (pathname === '/features') return pageSchemas.features
-      if (pathname === '/about') return pageSchemas.about
       return []
     }
     
@@ -78,7 +77,6 @@ export function useSEO(options: UseSEOOptions = {}): SEOData {
         'pricing': 'Pricing',
         'features': 'Features',
         'gallery': 'Gallery',
-        'about': 'About Us',
         'dashboard': 'Dashboard',
         'profile': 'Profile',
         'settings': 'Settings',

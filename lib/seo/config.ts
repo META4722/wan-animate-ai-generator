@@ -120,11 +120,6 @@ export const PAGE_SEO: Record<string, Partial<Metadata>> = {
     description: 'Access Rendaily dashboard to create architectural visualizations with professional AI rendering tools. Manage your projects and subscriptions.',
     keywords: ['user dashboard', 'AI rendering tools', 'project management', 'architectural design']
   },
-  '/about': {
-    title: 'About Us - AI-Driven Architectural Rendering Innovation',
-    description: 'Learn about Rendaily\'s vision and mission. We\'re dedicated to providing architects and designers with cutting-edge AI rendering technology.',
-    keywords: ['about us', 'company information', 'AI technology', 'architectural rendering innovation']
-  }
 }
 
 // 工具函数：生成页面元数据
