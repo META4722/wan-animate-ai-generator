@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Wand2, Upload } from 'lucide-react';
+import { Wand2, Upload, Loader2, Download, Heart, X, Maximize } from 'lucide-react';
+import { ImageGenerationService } from '@/lib/api/image-generation';
+import { ImageModal } from '@/components/ui/image-modal';
 
 export default function AIDesignTool() {
   const [activeTab, setActiveTab] = useState('text');
@@ -9,7 +11,14 @@ export default function AIDesignTool() {
   const [imageCount, setImageCount] = useState(1);
   const [prompt, setPrompt] = useState('');
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isStyleDropdownOpen, setIsStyleDropdownOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedAspectRatio, setSelectedAspectRatio] = useState('16:9');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -87,19 +96,97 @@ export default function AIDesignTool() {
     if (file) {
       // Check file type
       if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
+        setError('Please select an image file');
         return;
       }
 
       // Check file size (limit to 10MB)
       if (file.size > 10 * 1024 * 1024) {
-        alert('File size must be less than 10MB');
+        setError('File size must be less than 10MB');
         return;
       }
+
+      // Clear any previous error
+      setError(null);
 
       // Create file URL for preview
       const fileUrl = URL.createObjectURL(file);
       setUploadedImage(fileUrl);
+      setUploadedFile(file);
+    }
+  };
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImageUrl(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const handleGenerate = async () => {
+
+    // Validate image upload for non-text modes
+    if (activeTab !== 'text' && !uploadedFile) {
+      setError('Please upload an image for this generation mode');
+      return;
+    }
+
+    setIsGenerating(true);
+    setError(null);
+    setGeneratedImages([]);
+
+    try {
+      let uploadedImageUrl: string | undefined;
+
+      // For non-text modes, handle uploaded image
+      if (activeTab !== 'text' && uploadedFile) {
+        uploadedImageUrl = await ImageGenerationService.uploadImage(uploadedFile);
+      }
+
+      // Build context-aware prompt
+      let enhancedPrompt = prompt.trim();
+
+      if (activeTab === 'text') {
+        // For text-to-image, add architectural context
+        enhancedPrompt = enhancedPrompt || 'modern architectural building';
+        enhancedPrompt = `architectural rendering: ${enhancedPrompt}`;
+      } else if (activeTab === 'sketch') {
+        enhancedPrompt = enhancedPrompt || 'realistic architectural rendering';
+        enhancedPrompt = `convert this architectural sketch to realistic rendering: ${enhancedPrompt}`;
+      } else if (activeTab === 'elevation') {
+        enhancedPrompt = enhancedPrompt || 'photorealistic building rendering';
+        enhancedPrompt = `transform this architectural elevation to photorealistic rendering: ${enhancedPrompt}`;
+      } else if (activeTab === 'exterior') {
+        enhancedPrompt = enhancedPrompt || 'modern exterior design';
+        enhancedPrompt = `exterior architectural design: ${enhancedPrompt}`;
+      } else if (activeTab === 'interior') {
+        enhancedPrompt = enhancedPrompt || 'modern interior design';
+        enhancedPrompt = `interior architectural design: ${enhancedPrompt}`;
+      }
+
+      const response = await ImageGenerationService.generateImage({
+        prompt: enhancedPrompt,
+        style: selectedStyle,
+        aspectRatio: selectedAspectRatio,
+        n: imageCount,
+        uploadedImageUrl
+      });
+
+      const imageUrls = response.data.map(item => item.url);
+      setGeneratedImages(imageUrls);
+
+      // Save to history
+      for (const imageUrl of imageUrls) {
+        await ImageGenerationService.saveGeneratedImage(imageUrl, {
+          prompt: prompt.trim() || 'No description provided',
+          style: selectedStyle,
+          type: activeTab
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Generation failed:', error);
+      setError(error.message || 'Failed to generate image. Please try again.');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -279,10 +366,20 @@ export default function AIDesignTool() {
                     </button>
                   </div>
                   <div className="flex gap-1 ml-2">
-                    <button className="w-8 h-8 rounded-full border text-xs font-medium transition-all duration-200 border-border bg-background text-muted-foreground hover:border-primary hover:text-foreground" title="1:1 - Square">1:1</button>
-                    <button className="w-8 h-8 rounded-full border text-xs font-medium transition-all duration-200 border-border bg-background text-muted-foreground hover:border-primary hover:text-foreground" title="4:3 - Standard">4:3</button>
-                    <button className="w-8 h-8 rounded-full border text-xs font-medium transition-all duration-200 border-border bg-background text-muted-foreground hover:border-primary hover:text-foreground" title="3:2 - Photo">3:2</button>
-                    <button className="w-8 h-8 rounded-full border text-xs font-medium transition-all duration-200 border-primary bg-primary text-primary-foreground shadow-sm" title="16:9 - Widescreen">16:9</button>
+                    {['1:1', '4:3', '3:2', '16:9'].map((ratio) => (
+                      <button
+                        key={ratio}
+                        onClick={() => setSelectedAspectRatio(ratio)}
+                        className={`w-8 h-8 rounded-full border text-xs font-medium transition-all duration-200 ${
+                          selectedAspectRatio === ratio
+                            ? 'border-primary bg-primary text-primary-foreground shadow-sm'
+                            : 'border-border bg-background text-muted-foreground hover:border-primary hover:text-foreground'
+                        }`}
+                        title={`${ratio} - ${ratio === '1:1' ? 'Square' : ratio === '4:3' ? 'Standard' : ratio === '3:2' ? 'Photo' : 'Widescreen'}`}
+                      >
+                        {ratio}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -326,29 +423,222 @@ export default function AIDesignTool() {
                   </div>
                 </div>
                 
-                <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 sm:py-3 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                  Generate
-                  <span className="ml-2 text-xs opacity-90">1 Credit</span>
+                <button
+                  onClick={handleGenerate}
+                  disabled={isGenerating}
+                  className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-primary-foreground py-3 sm:py-3 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      Generate
+                      <span className="ml-2 text-xs opacity-90">1 Credit</span>
+                    </>
+                  )}
                 </button>
+
+                {/* Error Display */}
+                {error && (
+                  <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-3 flex items-center gap-2">
+                    <X className="w-4 h-4 text-destructive flex-shrink-0" />
+                    <p className="text-destructive text-sm">{error}</p>
+                    <button
+                      onClick={() => setError(null)}
+                      className="ml-auto w-6 h-6 rounded-full hover:bg-destructive/10 flex items-center justify-center"
+                    >
+                      <X className="w-3 h-3 text-destructive" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
           {/* Preview Panel - Right side on PC, Bottom on mobile */}
           <div className="w-full lg:w-2/3">
-            <div className="bg-card backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-border p-4 sm:p-8 h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[600px] flex items-center justify-center">
-              {/* Placeholder content centered */}
-              <div className="text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-xl">
-                  <Wand2 className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
+            <div className="bg-card backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-border p-4 sm:p-8 h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[600px]">
+              {generatedImages.length > 0 ? (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Generated Images</h3>
+                  <div className={`grid gap-4 ${imageCount === 1 ? 'grid-cols-1' : imageCount === 2 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'}`}>
+                    {generatedImages.map((imageUrl, index) => (
+                      <div key={index} className="group relative rounded-xl overflow-hidden bg-muted aspect-video">
+                        <img
+                          src={imageUrl}
+                          alt={`Generated image ${index + 1}`}
+                          className="w-full h-full object-cover cursor-pointer transition-transform duration-200 hover:scale-105"
+                          onLoad={() => console.log(`Image ${index + 1} loaded`)}
+                          onError={() => console.error(`Image ${index + 1} failed to load`)}
+                          onClick={() => handleImageClick(imageUrl)}
+                        />
+
+                        {/* Action Buttons Overlay */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          {/* Top action buttons */}
+                          <div className="absolute top-2 left-2 right-2 flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Toggle favorite
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Favorite"
+                              >
+                                <Heart className="w-4 h-4 text-gray-700" />
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Download image
+                                  const link = document.createElement('a');
+                                  link.href = imageUrl;
+                                  link.download = `generated-image-${index + 1}.jpg`;
+                                  document.body.appendChild(link);
+                                  link.click();
+                                  document.body.removeChild(link);
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Download"
+                              >
+                                <Download className="w-4 h-4 text-gray-700" />
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Copy prompt
+                                  navigator.clipboard.writeText(prompt || 'No prompt');
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Copy Prompt"
+                              >
+                                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Create variation
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Create Variation"
+                              >
+                                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                              </button>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleImageClick(imageUrl);
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Fullscreen"
+                              >
+                                <Maximize className="w-4 h-4 text-gray-700" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Bottom action buttons */}
+                          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Edit/Enhance image
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Edit"
+                              >
+                                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Upscale image
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Upscale 4K"
+                              >
+                                <span className="text-xs font-bold text-gray-700">4K</span>
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Share image
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Share"
+                              >
+                                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                                </svg>
+                              </button>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Add to collection
+                                }}
+                                className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white transition-colors shadow-lg"
+                                title="Add to Collection"
+                              >
+                                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // Delete image
+                                  if (confirm('Are you sure you want to delete this image?')) {
+                                    setGeneratedImages(prev => prev.filter((_, i) => i !== index));
+                                  }
+                                }}
+                                className="w-8 h-8 bg-red-500/90 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-red-500 transition-colors shadow-lg"
+                                title="Delete"
+                              >
+                                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3">
-                  Your creation will appear here
-                </h3>
-                <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-sm sm:max-w-md mx-auto px-4 sm:px-0">
-                  Upload an image and describe your vision to generate amazing AI-powered designs
-                </p>
-              </div>
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  {/* Placeholder content centered */}
+                  <div className="text-center">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-xl">
+                      <Wand2 className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2 sm:mb-3">
+                      Your creation will appear here
+                    </h3>
+                    <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-sm sm:max-w-md mx-auto px-4 sm:px-0">
+                      {activeTab === 'text'
+                        ? 'Describe your vision to generate amazing AI-powered designs'
+                        : 'Upload an image and describe your vision to generate amazing AI-powered designs'
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -405,6 +695,17 @@ export default function AIDesignTool() {
           </div>
         </div>
       )}
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        imageUrl={selectedImageUrl}
+        prompt={prompt}
+        style={selectedStyle}
+        aspectRatio={selectedAspectRatio}
+        generatedAt={new Date().toISOString()}
+      />
     </div>
   );
 }

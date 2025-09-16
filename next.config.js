@@ -16,6 +16,38 @@ const nextConfig = {
     minimumCacheTTL: 31536000, // 1年
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fal.media',
+        port: '',
+        pathname: '/files/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'delivery-us1.bfl.ai',
+        port: '',
+        pathname: '/results/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'delivery-eu1.bfl.ai',
+        port: '',
+        pathname: '/results/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'delivery-eu4.bfl.ai',
+        port: '',
+        pathname: '/results/**',
+      },
+    ],
   },
   
   // 压缩配置

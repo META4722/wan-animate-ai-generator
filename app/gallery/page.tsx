@@ -2,10 +2,13 @@
 
 import React, { useState } from 'react';
 import { Search, Filter, Heart, Download, Eye } from 'lucide-react';
+import { ImageModal } from '@/components/ui/image-modal';
 
 export default function GalleryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
 
   // Sample gallery data
   const galleryItems = [
@@ -80,6 +83,11 @@ export default function GalleryPage() {
     { id: 'interior', label: 'Interior Design' }
   ];
 
+  const handleImageClick = (item: any) => {
+    setSelectedImage(item);
+    setIsModalOpen(true);
+  };
+
   const filteredItems = galleryItems.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          item.author.toLowerCase().includes(searchTerm.toLowerCase());
@@ -145,7 +153,7 @@ export default function GalleryPage() {
               className="bg-card backdrop-blur-xl rounded-2xl shadow-xl border border-border overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
               {/* Image */}
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden cursor-pointer" onClick={() => handleImageClick(item)}>
                 <img
                   src={item.image}
                   alt={item.title}
@@ -214,6 +222,19 @@ export default function GalleryPage() {
           </div>
         )}
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <ImageModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          imageUrl={selectedImage.image}
+          prompt={selectedImage.title}
+          style={selectedImage.style}
+          aspectRatio="4:3"
+          generatedAt={new Date().toISOString()}
+        />
+      )}
     </div>
   );
 }
