@@ -3,6 +3,7 @@
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { FlipWords } from "@/components/ui/flip-words";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import VideoGenerator from "./video-generator";
 
 
 export default function Hero() {
@@ -46,23 +47,10 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 flex items-center justify-center">
-          <div className="relative p-4 lg:p-8">
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 transform hover:scale-105 transition-transform duration-300">
-              <video
-                className="w-full h-auto min-h-[400px] lg:min-h-[500px] object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls={false}
-              >
-                <source src="/images/first page video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
-            </div>
-          </div>
+
+        {/* Video Generator Section */}
+        <div className="relative z-10 mt-16 lg:mt-24 px-6 lg:px-8">
+          <VideoGenerator />
         </div>
       </div>
     </AuroraBackground>
