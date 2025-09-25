@@ -3,7 +3,6 @@
 
 // New landing page components
 import Hero from "@/components/home/hero";
-import LogoCloud from "@/components/home/logocloud";
 import HowToUse from "@/components/home/how-to-use";
 import KeyFeatures from "@/components/home/key-features";
 import Stats from "@/components/home/stats";
@@ -16,7 +15,6 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-8 md:gap-12 lg:gap-24">
       <Hero />
-      <LogoCloud />
       <HowToUse />
       <KeyFeatures />
       <Stats />
