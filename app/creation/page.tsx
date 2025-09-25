@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Wand2, Upload, Loader2, Download, Heart, X, Maximize } from 'lucide-react';
+import { Wand2, Upload, Loader2, Download, Heart, X, Maximize, Sparkles } from 'lucide-react';
 import { ImageGenerationService } from '@/lib/api/image-generation';
 import { ImageModal } from '@/components/ui/image-modal';
+// import { OpenRouterService } from '@/lib/api/openrouter'; // Not needed - using API route instead
 
 export default function AIDesignTool() {
   const [activeTab, setActiveTab] = useState('text');
@@ -19,6 +20,7 @@ export default function AIDesignTool() {
   const [selectedAspectRatio, setSelectedAspectRatio] = useState('16:9');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string>('');
+  const [isEnhancingPrompt, setIsEnhancingPrompt] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -192,6 +194,47 @@ export default function AIDesignTool() {
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleEnhancePrompt = async () => {
+    if (!prompt.trim()) {
+      setError('Please enter a description first');
+      return;
+    }
+
+    setIsEnhancingPrompt(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/enhance-prompt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: prompt.trim(),
+          designType: activeTab
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to enhance prompt');
+      }
+
+      const data = await response.json();
+      setPrompt(data.enhancedPrompt);
+
+      // Show a brief success message if using fallback
+      if (data.fallback) {
+        console.log('Using fallback enhancement due to API limitations');
+      }
+    } catch (error: any) {
+      console.error('Prompt enhancement failed:', error);
+      setError(error.message || 'Failed to enhance description. Please try again.');
+    } finally {
+      setIsEnhancingPrompt(false);
+    }
   };
 
   useEffect(() => {
@@ -386,17 +429,47 @@ export default function AIDesignTool() {
 
               {/* Text Input */}
               <div className="space-y-3">
-                <label className="text-foreground font-semibold text-sm flex items-center gap-2">
-                  Scene Description
-                </label>
-                <textarea
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe the scene"
-                  className="w-full h-24 bg-background border border-border rounded-xl p-3 text-foreground placeholder-muted-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
-                />
+                <div className="flex items-center justify-between">
+                  <label className="text-foreground font-semibold text-sm flex items-center gap-2">
+                    Scene Description
+                  </label>
+                  <button
+                    onClick={handleEnhancePrompt}
+                    disabled={isEnhancingPrompt || !prompt.trim()}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-sm hover:shadow-md"
+                    title="Enhance your description with AI"
+                  >
+                    {isEnhancingPrompt ? (
+                      <>
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                        Enhancing...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-3 h-3" />
+                        AI Enhance
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="relative">
+                  <textarea
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="Describe the scene you want to create..."
+                    className="w-full h-24 bg-background border border-border rounded-xl p-3 text-foreground placeholder-muted-foreground text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
+                  />
+                  {isEnhancingPrompt && (
+                    <div className="absolute inset-0 bg-background/50 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        AI is enhancing your description...
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <p className="text-muted-foreground text-xs">
-                  Include subject, materials, details, location, lighting and other elements in your description
+                  Include subject, materials, details, location, lighting and other elements. Use AI Enhance to automatically improve your description.
                 </p>
               </div>
 

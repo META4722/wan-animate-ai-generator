@@ -6,7 +6,7 @@ import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 
 export default function Hero() {
-  const words = ["interior", "architecture", "building", "creative"];
+  const words = ["videos", "animations", "content", "visuals"];
 
   return (
     <AuroraBackground className="h-auto min-h-screen">
@@ -16,14 +16,15 @@ export default function Hero() {
             <div className="relative px-6 py-16 sm:py-20 lg:px-8 lg:py-24 lg:pr-0">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
                 <h1 className="text-4xl font-semibold tracking-tight text-pretty text-foreground sm:text-6xl">
-                  <span className="whitespace-nowrap">
-                    Generate <FlipWords words={words} duration={1500} className="text-primary" />
-                  </span>
+                  Wan Animate
                   <br />
-                  design by using AI
+                  <span className="whitespace-nowrap">
+                    AI <FlipWords words={words} duration={1500} className="text-primary" />
+                  </span>
+                  Generator
                 </h1>
                 <p className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8">
-                  Instantly redesign interiors and exteriors with AI-powered tools
+                  Create stunning animations and videos with AI-powered tools
                 </p>
                 <div className="mt-10 flex-col gap-4">
                   <div className="relative inline-block hover:rotate-[10deg] hover:scale-105 transition-all duration-300 ease-out rounded-lg">
