@@ -10,68 +10,68 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "What is RenderFlow?",
-    answer: "RenderFlow is an AI-powered design tool specifically built for architects and design professionals. It helps you generate stunning architectural visualizations using our proprietary RenderFlow AI model, trained specifically for architectural design."
+    question: "What is Wan 2.5 animate?",
+    answer: "Wan 2.5 animate is an AI-powered character animation platform that allows you to animate any character from a source video. Simply upload a character image and reference performance video, and our AI will transfer the motion and expressions to create stunning animations."
   },
   {
-    question: "How does the AI image generation work?",
-    answer: "Our platform uses our proprietary RenderFlow AI model, specifically trained on architectural data. You can generate images in two ways: Text-to-Image (describe what you want) or Image-to-Image (upload an existing image and modify it). The AI processes your prompts and creates high-quality architectural visualizations."
+    question: "How does the character animation process work?",
+    answer: "Upload a clear character portrait and a reference performance video (up to 45 seconds). Our AI analyzes the motion, facial expressions, and gestures from the reference video and applies them to your character while maintaining their unique appearance and identity."
   },
   {
-    question: "What's the difference between Text-to-Image and Image-to-Image?",
-    answer: "Text-to-Image generates completely new images from your written descriptions. Image-to-Image takes an existing image you upload and modifies it based on your prompt - perfect for iterating on existing designs or changing specific elements."
+    question: "What file formats are supported?",
+    answer: "For character images: JPG and PNG formats up to 10MB. For reference videos: MP4 and MOV formats up to 50MB. We recommend 1080p or higher resolution for best results. The character image should be a clear front-facing portrait."
   },
   {
-    question: "How many images can I generate with each plan?",
-    answer: "Starter Plan includes 200 images per month, Pro Plan includes 800 images per month, and Enterprise Plan offers unlimited generations. You can also purchase additional credits if needed."
+    question: "How long does it take to generate an animation?",
+    answer: "Generation time depends on video length and quality settings. Standard quality typically takes 2-5 minutes per 10 seconds of video. High quality takes 5-10 minutes per 10 seconds. You'll receive progress updates during generation."
   },
   {
-    question: "What image formats and sizes are supported?",
-    answer: "We support multiple aspect ratios including 1:1, 16:9, 3:2, 2:3, 3:4, 4:3, and 9:16. For uploads, we accept PNG, JPG, and GIF formats up to 10MB. Generated images are delivered in high-quality JPG format."
+    question: "What's the difference between Standard and High Quality modes?",
+    answer: "Standard quality (20 credits/5s) provides good results for most use cases. High Quality (40 credits/5s) offers enhanced detail, smoother motion, and better facial expression accuracy - ideal for professional projects."
   },
   {
-    question: "Can I use the generated images commercially?",
-    answer: "Yes! Pro and Enterprise plans include commercial usage rights. Starter Plan is limited to personal projects only. All generated images can be used in your architectural presentations, client proposals, and marketing materials."
+    question: "What animation modes are available?",
+    answer: "We offer three modes: Character Replacement (full character animation), Face Swap (facial features only), and Motion Transfer (body movement focus). Each mode is optimized for different use cases and creative needs."
   },
   {
-    question: "What AI technology powers RenderFlow?",
-    answer: "RenderFlow is powered by our proprietary AI model, developed specifically for architectural visualization. Our model has been trained on extensive architectural datasets to understand building styles, materials, lighting, and spatial relationships, delivering superior results for design professionals."
+    question: "Can I animate any type of character?",
+    answer: "Yes! Our AI works with various character types including cartoon characters, realistic portraits, digital art, anime-style characters, and more. The character should have a clear, visible face for best results."
   },
   {
-    question: "How long does it take to generate an image?",
-    answer: "Our RenderFlow AI model is optimized for speed and quality, with generation times typically ranging from 10-60 seconds depending on complexity. Text-to-Image is usually faster than Image-to-Image. You'll see the exact generation time displayed after each successful creation."
+    question: "Do I need motion capture equipment?",
+    answer: "No! That's the beauty of Wan 2.5 animate. You don't need any special equipment, mocap suits, or technical expertise. Just upload your files and our AI handles the complex motion transfer automatically."
   },
   {
-    question: "Can I customize the architectural styles?",
-    answer: "Absolutely! You can specify styles like Modern, Minimalist, Vintage, or Luxury in your prompts. For more advanced customization, Enterprise plans include access to specialized style modules and custom model training tailored to your specific design preferences."
+    question: "What makes the lip sync and facial expressions so accurate?",
+    answer: "Our AI includes phoneme-level lip sync technology and micro-expression mapping. It analyzes audio and visual cues from the reference video to create natural, believable facial animations that match the original performance."
   },
   {
-    question: "What happens if I run out of credits?",
-    answer: "You can upgrade your plan for more monthly credits, or purchase additional credit packages (Basic: 3 credits for $9, Standard: 6 credits for $13, Premium: 9 credits for $29). Credits never expire."
+    question: "Can I use the animations commercially?",
+    answer: "Yes! All generated animations can be used for commercial purposes including marketing videos, presentations, social media content, and client projects. You own the rights to your animated content."
   },
   {
-    question: "Is there team collaboration support?",
-    answer: "Yes! Enterprise Plan includes team collaboration features, allowing multiple team members to work together on projects, share generated images, and manage workflows efficiently."
+    question: "How does the credit system work?",
+    answer: "Credits are consumed based on video length and quality: Standard quality uses 20 credits per 5 seconds, High quality uses 40 credits per 5 seconds. Credits never expire and can be purchased in packages or through monthly plans."
   },
   {
-    question: "Do you offer API access?",
-    answer: "API access is available with Enterprise Plan, allowing you to integrate RenderFlow's AI generation capabilities directly into your existing workflows and applications."
+    question: "What happens if my animation doesn't look right?",
+    answer: "You can try different reference videos, adjust quality settings, or use a clearer character image. Our AI works best with front-facing character portraits and well-lit reference videos with clear motion."
   },
   {
-    question: "What kind of support do you provide?",
-    answer: "Starter Plan includes community support, Pro Plan gets priority customer support, and Enterprise Plan includes a dedicated account manager and technical support with SLA guarantees."
+    question: "Is there a limit on video length?",
+    answer: "Reference videos can be up to 45 seconds long. For longer content, you can split your video into segments and animate them separately, then combine the results in your video editor."
   },
   {
-    question: "Can I get a custom deployment?",
-    answer: "Yes! Enterprise Plan includes private deployment options with custom RenderFlow model training, local data storage, and enterprise-grade security - perfect for large firms with specific requirements."
+    question: "Can I run animations in the background?",
+    answer: "Yes! You can queue multiple animation jobs and let them run in the background while you continue working on other projects. You'll receive notifications when each animation is complete."
   },
   {
-    question: "Is there a free trial?",
-    answer: "We offer a Starter Plan at $15/month which is perfect for trying out the platform. Students can use the discount code 'STUDENT' for additional savings."
+    question: "Do you offer team collaboration features?",
+    answer: "Enterprise plans include team workspaces where multiple users can share characters, animations, and collaborate on projects. Perfect for studios and agencies working on character animation projects."
   },
   {
     question: "How do I get started?",
-    answer: "Simply sign up for an account, choose your plan, and start generating! Our intuitive interface makes it easy to create your first architectural visualization in minutes. No technical expertise required."
+    answer: "Simply upload a character image and reference video using our generator above, select your quality and mode preferences, then hit 'Animate'. You can also try it for free to see the results before committing to a paid plan."
   }
 ];
 
@@ -94,7 +94,7 @@ export default function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="max-w-[95%] sm:max-w-[85%] text-sm sm:text-lg leading-normal text-muted-foreground">
-            Everything you need to know about RenderFlow and AI-powered architectural visualization.
+            Everything you need to know about Wan 2.5 animate and AI-powered character animation.
           </p>
         </div>
 
@@ -137,16 +137,16 @@ export default function FAQ() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:support@renderflow.com"
+              href="mailto:support@wanimate.ai"
               className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               Contact Support
             </a>
             <a
-              href="/docs"
+              href="/help"
               className="inline-flex items-center justify-center rounded-md border border-border px-6 py-2 text-sm font-medium hover:bg-muted/50 transition-colors"
             >
-              View Documentation
+              Get Help
             </a>
           </div>
         </div>
