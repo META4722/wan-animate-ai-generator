@@ -5,7 +5,7 @@
 import Hero from "@/components/home/hero";
 import LogoCloud from "@/components/home/logocloud";
 import HowToUse from "@/components/home/how-to-use";
-import Features from "@/components/home/features";
+import KeyFeatures from "@/components/home/key-features";
 import Stats from "@/components/home/stats";
 import Pricing from "@/components/home/pricing";
 import FAQ from "@/components/home/faq";
@@ -18,7 +18,7 @@ export default function Home() {
       <Hero />
       <LogoCloud />
       <HowToUse />
-      <Features />
+      <KeyFeatures />
       <Stats />
       <Pricing />
       <FAQ />
