@@ -7,6 +7,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { defaultMetadata } from "@/lib/seo/config";
 import { MultipleStructuredData } from "@/components/seo/structured-data";
 import { pageSchemas } from "@/lib/seo/structured-data";
+import GoogleTagManager from "@/components/gtm";
+import GoogleAnalytics from "@/components/google-analytics";
 import "./globals.css";
 
 export const metadata = defaultMetadata;
@@ -30,6 +32,8 @@ export default async function RootLayout({
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
       <head>
         <MultipleStructuredData schemas={pageSchemas.home} />
+        <GoogleTagManager />
+        <GoogleAnalytics />
       </head>
       <body className="bg-background text-foreground" suppressHydrationWarning>
         <ThemeProvider

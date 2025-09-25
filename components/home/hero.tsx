@@ -38,9 +38,17 @@ export default function Hero() {
                       borderWidth={2}
                       className="rounded-xl"
                     />
-                    <a href="/creation" className="relative rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary inline-block">
+                    <button
+                      onClick={() => {
+                        const videoGenerator = document.getElementById('video-generator');
+                        if (videoGenerator) {
+                          videoGenerator.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                      className="relative rounded-lg bg-primary px-8 py-3 text-lg font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary inline-block"
+                    >
                       Get Started
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -43,7 +43,7 @@ export default function VideoGenerator() {
   const canAnimate = characterImage && referenceVideo && !isGenerating
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 border border-gray-200/50 dark:border-gray-700/50 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-2xl">
+    <div id="video-generator" className="w-full max-w-7xl mx-auto p-6 border border-gray-200/50 dark:border-gray-700/50 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-2xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Panel - Controls */}
         <div className="space-y-8">

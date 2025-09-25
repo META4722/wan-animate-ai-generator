@@ -1,11 +1,4 @@
-import { generatePageMetadata } from "@/lib/seo/config";
 import Link from "next/link";
-
-export const metadata = generatePageMetadata('/blog', {
-  title: 'Blog - Technical Insights on Character Animation',
-  description: 'Sharing technical insights on high-fidelity character animation with Wan 2.5 animate. Learn about AI-powered motion transfer and animation techniques.',
-  keywords: ['character animation blog', 'AI animation insights', 'motion transfer technology', 'Wan 2.5', 'animation techniques']
-});
 
 interface BlogPost {
   id: string;
