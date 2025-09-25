@@ -2,38 +2,38 @@ import { Metadata } from 'next'
 
 // SEO Configuration Constants
 export const SEO_CONFIG = {
-  siteName: 'Rendaily',
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://rendaily.com',
-  companyName: 'Rendaily',
-  description: 'Unleash creativity, make design simple. AI-powered architectural rendering platform for architects and designers with text-to-render, sketch-to-render, and professional visualization tools.',
+  siteName: 'Wan 2.5 animate',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://wan-animate.com',
+  companyName: 'Wan 2.5 animate',
+  description: 'Animate any character from a source video with AI-powered motion transfer technology. Create stunning character animations effortlessly.',
   keywords: [
-    'architectural rendering',
-    'AI rendering',
-    'architectural visualization',
-    'design tools',
-    'text to render',
-    'sketch to render',
-    'image upscaling',
-    'architect tools',
-    'designer platform',
-    '3D rendering',
-    'AI design software',
-    'building visualization',
-    'elevation to render',
-    'image to render',
-    'AI architectural tools',
-    'professional rendering',
-    'design workflow',
-    'visual architecture'
+    'character animation',
+    'AI animation',
+    'motion transfer',
+    'video animation',
+    'source video animation',
+    'character rigging',
+    'AI motion capture',
+    'animation tools',
+    'video to animation',
+    '2D animation',
+    '3D animation',
+    'AI animation software',
+    'character movement',
+    'animate from video',
+    'AI character animation',
+    'professional animation',
+    'animation workflow',
+    'motion synthesis'
   ],
   images: {
     default: '/og-image.jpg',
     logo: '/logo.svg'
   },
   social: {
-    twitter: '@rendaily',
-    facebook: 'rendaily',
-    linkedin: 'company/rendaily'
+    twitter: '@wan2animate',
+    facebook: 'wan2animate',
+    linkedin: 'company/wan2animate'
   }
 }
 
@@ -41,7 +41,7 @@ export const SEO_CONFIG = {
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SEO_CONFIG.siteUrl),
   title: {
-    default: `${SEO_CONFIG.siteName} - AI Architectural Rendering Platform`,
+    default: `${SEO_CONFIG.siteName} - Animate any character from a source video`,
     template: `%s | ${SEO_CONFIG.siteName}`
   },
   description: SEO_CONFIG.description,
@@ -67,7 +67,7 @@ export const defaultMetadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: SEO_CONFIG.siteUrl,
-    title: `${SEO_CONFIG.siteName} - AI Architectural Rendering Platform`,
+    title: `${SEO_CONFIG.siteName} - Animate any character from a source video`,
     description: SEO_CONFIG.description,
     siteName: SEO_CONFIG.siteName,
     images: [
@@ -75,13 +75,13 @@ export const defaultMetadata: Metadata = {
         url: SEO_CONFIG.images.default,
         width: 1200,
         height: 630,
-        alt: `${SEO_CONFIG.siteName} - AI Architectural Rendering Platform`
+        alt: `${SEO_CONFIG.siteName} - Animate any character from a source video`
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SEO_CONFIG.siteName} - AI Architectural Rendering Platform`,
+    title: `${SEO_CONFIG.siteName} - Animate any character from a source video`,
     description: SEO_CONFIG.description,
     images: [SEO_CONFIG.images.default],
     creator: SEO_CONFIG.social.twitter
@@ -96,9 +96,9 @@ export const defaultMetadata: Metadata = {
 // Page SEO Configuration Mapping
 export const PAGE_SEO: Record<string, Partial<Metadata>> = {
   '/': {
-    title: 'AI Architectural Rendering Platform - Unleash Creativity, Make Design Simple',
-    description: 'Professional AI-powered architectural rendering platform supporting text-to-render, sketch-to-render, image upscaling and more. Efficient creative tools for architects and designers - generate professional renderings in minutes.',
-    keywords: ['AI architectural rendering', 'text to render', 'architectural visualization', 'design tools', 'architect platform']
+    title: 'Wan 2.5 animate - Animate any character from a source video',
+    description: 'Transform any character with AI-powered animation from source videos. Create stunning character animations with advanced motion transfer technology - animate characters effortlessly.',
+    keywords: ['character animation', 'AI animation', 'motion transfer', 'video animation', 'animate from source video']
   },
   '/pricing': {
     title: 'Pricing Plans - Choose Your Perfect Plan',

@@ -1,8 +1,8 @@
-# 🎬 Wanimate AI - AI Animation & Video Generator
+# 🎬 Wan 2.5 animate - Animate any character from a source video
 
 > Built with Next.js, Supabase, and modern AI technology stack
 
-A complete AI-powered animation and video generation platform that transforms your creative concepts into stunning visual content. Wanimate AI combines cutting-edge AI technology with professional animation workflow to deliver instant, high-quality videos and animations.
+A complete AI-powered character animation platform that transforms any character from source videos into stunning animated content. Wan 2.5 animate combines cutting-edge motion transfer technology with professional animation workflow to deliver instant, high-quality character animations.
 
 [![Next.js](https://img.shields.io/badge/Next.js-13+-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
@@ -11,11 +11,11 @@ A complete AI-powered animation and video generation platform that transforms yo
 
 ## ✨ Key Features
 
-🤖 **AI-Powered Animation** - Advanced AI models for text-to-video, image-to-animation, and motion enhancement
-🎬 **Professional Workflow** - Seamless integration with animation and video production processes
-⚡ **Instant Results** - Generate high-quality animations in seconds, not hours
-🎨 **Multiple Styles** - Wide range of animation styles and visual effects options
-🔍 **Video Enhancement** - Professional-grade video upscaling and enhancement capabilities
+🤖 **AI-Powered Motion Transfer** - Advanced AI models for character animation from source videos
+🎬 **Professional Workflow** - Seamless integration with character animation and motion production
+⚡ **Instant Results** - Generate high-quality character animations in seconds, not hours
+🎨 **Multiple Characters** - Animate any character, person, avatar, or figure from source material
+🔍 **Motion Enhancement** - Professional-grade motion capture and animation enhancement
 📱 **Responsive Design** - Perfect experience across all devices and screen sizes
 
 ## 🚀 技术栈
