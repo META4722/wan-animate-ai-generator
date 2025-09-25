@@ -9,8 +9,8 @@ export function Logo() {
     >
       <div className="flex items-center justify-center">
         <Image
-          src="/images/rendaily-logo.png"
-          alt="Rendaily Logo"
+          src="/favicon.PNG"
+          alt="Wanimate Logo"
           width={32}
           height={32}
           className="w-8 h-8"
