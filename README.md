@@ -1,8 +1,8 @@
-# 🏗️ Rendaily - AI Architectural Rendering Platform
+# 🎬 Wanimate AI - AI Animation & Video Generator
 
 > Built with Next.js, Supabase, and modern AI technology stack
 
-A complete AI-powered architectural rendering platform that transforms your design concepts into stunning visualizations. Rendaily combines cutting-edge AI technology with professional architectural workflow to deliver instant, high-quality renders.
+A complete AI-powered animation and video generation platform that transforms your creative concepts into stunning visual content. Wanimate AI combines cutting-edge AI technology with professional animation workflow to deliver instant, high-quality videos and animations.
 
 [![Next.js](https://img.shields.io/badge/Next.js-13+-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
@@ -11,11 +11,11 @@ A complete AI-powered architectural rendering platform that transforms your desi
 
 ## ✨ Key Features
 
-🤖 **AI-Powered Rendering** - Advanced AI models for text-to-render, sketch-to-render, and image enhancement
-🏗️ **Professional Workflow** - Seamless integration with architectural design processes
-⚡ **Instant Results** - Generate high-quality renders in seconds, not hours
-🎨 **Multiple Styles** - Wide range of architectural styles and visualization options
-🔍 **Image Upscaling** - Professional-grade image enhancement and upscaling capabilities
+🤖 **AI-Powered Animation** - Advanced AI models for text-to-video, image-to-animation, and motion enhancement
+🎬 **Professional Workflow** - Seamless integration with animation and video production processes
+⚡ **Instant Results** - Generate high-quality animations in seconds, not hours
+🎨 **Multiple Styles** - Wide range of animation styles and visual effects options
+🔍 **Video Enhancement** - Professional-grade video upscaling and enhancement capabilities
 📱 **Responsive Design** - Perfect experience across all devices and screen sizes
 
 ## 🚀 技术栈

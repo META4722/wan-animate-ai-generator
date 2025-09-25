@@ -16,10 +16,10 @@ export default function Hero() {
             <div className="relative px-6 py-16 sm:py-20 lg:px-8 lg:py-24 lg:pr-0">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
                 <h1 className="text-4xl font-semibold tracking-tight text-pretty text-foreground sm:text-6xl">
-                  Wan Animate
+                  Wanimate AI
                   <br />
                   <span className="whitespace-nowrap">
-                    AI <FlipWords words={words} duration={1500} className="text-primary" />
+                    <FlipWords words={words} duration={1500} className="text-primary" />
                   </span>
                   Generator
                 </h1>
