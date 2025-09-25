@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <h2>Favicon Generator for Wan 2.5 animate</h2>
+
+    <canvas id="canvas16" width="16" height="16" style="border:1px solid #ccc; margin:5px;"></canvas>
+    <canvas id="canvas32" width="32" height="32" style="border:1px solid #ccc; margin:5px;"></canvas>
+    <canvas id="canvas48" width="48" height="48" style="border:1px solid #ccc; margin:5px;"></canvas>
+
+    <script>
+        // Create animated favicon for different sizes
+        function createFavicon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#8b5cf6');
+
+            // Draw background circle
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 1, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            const scale = size / 32;
+
+            // Draw character figure
+            ctx.fillStyle = '#ffffff';
+
+            // Head
+            ctx.beginPath();
+            ctx.arc((16-3)*scale, (16-6)*scale, 2.5*scale, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Body
+            ctx.fillRect((16-4)*scale, (16-3)*scale, 2*scale, 6*scale);
+
+            // Arms
+            ctx.fillRect((16-6)*scale, (16-2)*scale, 2*scale, 1*scale);
+            ctx.fillRect((16-2)*scale, (16-2)*scale, 2*scale, 1*scale);
+
+            // Legs
+            ctx.fillRect((16-4)*scale, (16+3)*scale, 1*scale, 3*scale);
+            ctx.fillRect((16-3)*scale, (16+3)*scale, 1*scale, 3*scale);
+
+            // Play button
+            const gradient2 = ctx.createLinearGradient(0, 0, size, size);
+            gradient2.addColorStop(0, '#ec4899');
+            gradient2.addColorStop(1, '#f97316');
+
+            ctx.fillStyle = gradient2;
+            ctx.beginPath();
+            ctx.arc(22*scale, 22*scale, 4*scale, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Play triangle
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.moveTo((22-1.5)*scale, (22-1.5)*scale);
+            ctx.lineTo((22-1.5)*scale, (22+1.5)*scale);
+            ctx.lineTo((22+1.5)*scale, 22*scale);
+            ctx.closePath();
+            ctx.fill();
+
+            // Add "W" text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${6*scale}px Arial`;
+            ctx.fillText('W', 4*scale, 8*scale);
+        }
+
+        // Generate favicons
+        createFavicon('canvas16', 16);
+        createFavicon('canvas32', 32);
+        createFavicon('canvas48', 48);
+
+        console.log('Right-click on each canvas and "Save Image As" to download the favicons');
+    </script>
+
+    <p>Right-click on each canvas above and select "Save Image As..." to download the favicon files.</p>
+    <ul>
+        <li>16x16 - Save as "favicon-16x16.png"</li>
+        <li>32x32 - Save as "favicon-32x32.png" and "favicon.png"</li>
+        <li>48x48 - Save as "favicon-48x48.png"</li>
+    </ul>
+</body>
+</html>
