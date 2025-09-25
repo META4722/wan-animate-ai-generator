@@ -21,12 +21,11 @@ export default function Header({ user }: HeaderProps) {
   const pathname = usePathname();
   const isDashboard = pathname?.startsWith("/dashboard");
 
-  // Main navigation items for Rendaily
+  // Main navigation items for Wanimate AI
   const mainNavItems: NavItem[] = [
     { label: "Home", href: "/" },
-    { label: "Create", href: "/creation" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Community", href: "/community" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Blog", href: "/blog" },
   ];
 
   // Dashboard items - empty array as we don't want navigation items in dashboard

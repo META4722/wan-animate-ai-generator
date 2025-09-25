@@ -2,51 +2,56 @@ import { ProductTier } from "@/types/subscriptions";
 
 export const SUBSCRIPTION_TIERS: ProductTier[] = [
   {
-    name: "Starter",
-    id: "tier-hobby",
-    productId: "prod_63JTQmsUcQrlZe94IL76fI", // $11 monthly subscription
-    priceMonthly: "$11",
-    description: "Perfect for individual developers and small projects.",
+    name: "Creator",
+    id: "tier-creator",
+    productId: "prod_63JTQmsUcQrlZe94IL76fI", // $15 monthly subscription
+    priceMonthly: "$15",
+    description: "Perfect for content creators and individual animators.",
     features: [
-      "Global authentication system",
-      "Database integration",
-      "Secure API routes",
-      "Modern UI components",
-      "Dark/Light mode",
-      "Community forum access",
+      "20 animation generations per month",
+      "720p HD video output",
+      "Basic character animation modes",
+      "Standard motion transfer",
+      "Community support",
+      "Export to MP4 format",
     ],
     featured: false,
     discountCode: "", // Optional discount code
   },
   {
-    name: "Business",
+    name: "Professional",
     id: "tier-pro",
-    productId: "prod_6rOJtTwlyjsH9AVuSzh8aR", // $29 monthly subscription (测试产品)
-    priceMonthly: "$29",
-    description: "Ideal for growing businesses and development teams.",
+    productId: "prod_6rOJtTwlyjsH9AVuSzh8aR", // $39 monthly subscription
+    priceMonthly: "$39",
+    description: "Ideal for professional studios and content production.",
     features: [
-      "Everything in Starter",
-      "Multi-currency payments",
-      "Priority support",
-      "Advanced analytics",
-      "Custom branding options",
-      "API usage dashboard",
+      "Everything in Creator",
+      "100 animation generations per month",
+      "1080p Full HD video output",
+      "Advanced holistic replication",
+      "Priority processing queue",
+      "Custom lighting adjustment",
+      "API access for integration",
+      "Email support",
     ],
     featured: true,
-    discountCode: "", // Optional discount code - 临时移除
+    discountCode: "", // Optional discount code
   },
   {
     name: "Enterprise",
     id: "tier-enterprise",
-    productId: "prod_3qPYksZMtk94wQsdkgajrJ", // $99 monthly subscription
-    priceMonthly: "$99",
-    description: "For large organizations with advanced requirements.",
+    productId: "prod_3qPYksZMtk94wQsdkgajrJ", // $199 monthly subscription
+    priceMonthly: "$199",
+    description: "For studios and enterprises with high-volume needs.",
     features: [
-      "Everything in Business",
+      "Everything in Professional",
+      "Unlimited animation generations",
+      "4K Ultra HD video output",
+      "Batch processing capabilities",
+      "White-label solutions",
       "Dedicated account manager",
-      "Custom implementation support",
-      "High-volume transaction processing",
-      "Advanced security features",
+      "Custom model training",
+      "24/7 priority support",
       "Service Level Agreement (SLA)",
     ],
     featured: false,
@@ -56,49 +61,55 @@ export const SUBSCRIPTION_TIERS: ProductTier[] = [
 
 export const CREDITS_TIERS: ProductTier[] = [
   {
-    name: "Basic Package",
-    id: "tier-3-credits",
-    productId: "prod_MqcjVo0Bpx0rbYmHVlrh2", // $9 one-time purchase
-    priceMonthly: "$9",
-    description: "3 credits for testing and small-scale projects.",
-    creditAmount: 3,
+    name: "Starter Pack",
+    id: "tier-5-animations",
+    productId: "prod_MqcjVo0Bpx0rbYmHVlrh2", // $12 one-time purchase
+    priceMonthly: "$12",
+    description: "5 animation generations for testing and small projects.",
+    creditAmount: 5,
     features: [
-      "3 credits for use across all features",
+      "5 character animation generations",
+      "720p HD video output",
       "No expiration date",
-      "Access to standard features",
+      "Basic motion transfer",
       "Community support"
     ],
     featured: false,
     discountCode: "", // Optional discount code
   },
   {
-    name: "Standard Package",
-    id: "tier-6-credits",
-    productId: "prod_4ICkTovEC6o9QY6UuL3aI0", // $13 one-time purchase
-    priceMonthly: "$13",
-    description: "6 credits for medium-sized applications.",
-    creditAmount: 6,
+    name: "Creator Pack",
+    id: "tier-15-animations",
+    productId: "prod_4ICkTovEC6o9QY6UuL3aI0", // $29 one-time purchase
+    priceMonthly: "$29",
+    description: "15 animation generations for content creators.",
+    creditAmount: 15,
     features: [
-      "6 credits for use across all features",
+      "15 character animation generations",
+      "1080p Full HD video output",
       "No expiration date",
+      "Advanced motion transfer",
       "Priority processing",
-      "Basic email support"
+      "Email support"
     ],
     featured: true,
     discountCode: "", // Optional discount code
   },
   {
-    name: "Premium Package",
-    id: "tier-9-credits",
-    productId: "prod_3b3oyQtIJA3eaMIHLNjyCc", // $29 one-time purchase
-    priceMonthly: "$29",
-    description: "9 credits for larger applications and production use.",
-    creditAmount: 9,
+    name: "Studio Pack",
+    id: "tier-50-animations",
+    productId: "prod_3b3oyQtIJA3eaMIHLNjyCc", // $89 one-time purchase
+    priceMonthly: "$89",
+    description: "50 animation generations for professional studios.",
+    creditAmount: 50,
     features: [
-      "9 credits for use across all features",
+      "50 character animation generations",
+      "4K Ultra HD video output",
       "No expiration date",
+      "Holistic replication technology",
+      "Batch processing",
       "Premium support",
-      "Advanced analytics access"
+      "Custom lighting effects"
     ],
     featured: false,
     discountCode: "", // Optional discount code

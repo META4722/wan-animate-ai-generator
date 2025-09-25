@@ -5,6 +5,7 @@
 import Hero from "@/components/home/hero";
 import HowToUse from "@/components/home/how-to-use";
 import KeyFeatures from "@/components/home/key-features";
+import VideoShowcase from "@/components/home/video-showcase";
 import Pricing from "@/components/home/pricing";
 import FAQ from "@/components/home/faq";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <Hero />
       <HowToUse />
       <KeyFeatures />
+      <VideoShowcase />
       <Pricing />
       <FAQ />
     </div>

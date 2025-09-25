@@ -64,10 +64,10 @@ export default function Pricing() {
         <div>
           <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
             <h2 className="font-bold text-2xl sm:text-3xl md:text-6xl leading-[1.1]">
-              Subscription Plans
+              Character Animation Plans
             </h2>
             <p className="max-w-[95%] sm:max-w-[85%] text-sm sm:text-lg leading-normal text-muted-foreground">
-              Choose the plan that fits your needs and unlock unlimited creative possibilities. All plans include core AI image generation features.
+              Choose the perfect plan for your character animation needs. All plans include AI-powered motion transfer and high-fidelity animation generation.
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mt-8 md:mt-12">
