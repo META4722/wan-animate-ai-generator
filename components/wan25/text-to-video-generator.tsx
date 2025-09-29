@@ -218,11 +218,11 @@ export function TextToVideoGenerator() {
     }
   };
 
-  const calculateCredits = (duration: "5" | "10"): number => {
-    return duration === "10" ? 2 : 1;
+  const calculateCredits = (resolution: "480p" | "720p" | "1080p"): number => {
+    return resolution === "480p" ? 5 : resolution === "720p" ? 10 : 15;
   };
 
-  const creditsRequired = calculateCredits(duration);
+  const creditsRequired = calculateCredits(resolution);
 
   return (
     <div className="space-y-6">
@@ -341,8 +341,8 @@ export function TextToVideoGenerator() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="5">5 seconds (1 credit)</SelectItem>
-                  <SelectItem value="10">10 seconds (2 credits)</SelectItem>
+                  <SelectItem value="5">5 seconds</SelectItem>
+                  <SelectItem value="10">10 seconds</SelectItem>
                 </SelectContent>
               </Select>
             </div>

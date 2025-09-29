@@ -161,8 +161,8 @@ export class Wan25Client {
   /**
    * Calculate credits required for a video generation
    */
-  calculateCredits(duration: "5" | "10"): number {
-    return duration === "10" ? 2 : 1;
+  calculateCredits(resolution: "480p" | "720p" | "1080p"): number {
+    return resolution === "480p" ? 5 : resolution === "720p" ? 10 : 15;
   }
 }
 

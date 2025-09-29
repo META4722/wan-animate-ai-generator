@@ -9,6 +9,15 @@ fal.config({
 
 export async function POST(request: NextRequest) {
   try {
+    // Check FAL_KEY configuration first
+    if (!process.env.FAL_KEY || process.env.FAL_KEY === 'your-fal-api-key-here') {
+      console.error("FAL_KEY not configured properly");
+      return NextResponse.json(
+        { error: "API configuration error: FAL_KEY is required. Please configure your Fal.ai API key in environment variables." },
+        { status: 500 }
+      );
+    }
+
     const supabase = await createClient();
 
     // Get the authenticated user
@@ -27,11 +36,15 @@ export async function POST(request: NextRequest) {
       audio_url,
       aspect_ratio = "16:9",
       resolution = "1080p",
-      duration = "5",
+      duration = 5,
       negative_prompt = "low resolution, error, worst quality, low quality, defects",
       enable_prompt_expansion = true,
+      expand_prompt, // For backwards compatibility
       seed
     } = body;
+
+    // Handle backwards compatibility for expand_prompt vs enable_prompt_expansion
+    const finalEnablePromptExpansion = enable_prompt_expansion ?? expand_prompt ?? true;
 
     // Validate required fields
     if (!prompt) {
@@ -48,7 +61,8 @@ export async function POST(request: NextRequest) {
       .eq("user_id", user.id)
       .single();
 
-    const requiredCredits = duration === "10" ? 2 : 1; // 10s videos cost 2 credits, 5s videos cost 1 credit
+    // Calculate required credits based on resolution: 480p=5, 720p=10, 1080p=15
+    const requiredCredits = resolution === '480p' ? 5 : resolution === '720p' ? 10 : 15;
 
     if (!customerData || customerData.credits < requiredCredits) {
       return NextResponse.json(
@@ -64,7 +78,7 @@ export async function POST(request: NextRequest) {
       resolution,
       duration,
       negative_prompt,
-      enable_prompt_expansion,
+      enable_prompt_expansion: finalEnablePromptExpansion,
     };
 
     if (audio_url) {
@@ -116,18 +130,36 @@ export async function POST(request: NextRequest) {
 
     // Handle specific fal API errors
     if (error instanceof Error) {
-      if (error.message.includes("API key")) {
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+
+      if (error.message.includes("API key") || error.message.includes("FAL_KEY")) {
         return NextResponse.json(
-          { error: "API configuration error" },
+          { error: "API configuration error. FAL_KEY may be missing or invalid." },
           { status: 500 }
         );
       }
       if (error.message.includes("quota") || error.message.includes("limit")) {
         return NextResponse.json(
-          { error: "Service temporarily unavailable" },
+          { error: "Service temporarily unavailable due to quota limits" },
           { status: 503 }
         );
       }
+      if (error.message.includes("credits") || error.message.includes("insufficient")) {
+        return NextResponse.json(
+          { error: "Insufficient credits" },
+          { status: 402 }
+        );
+      }
+
+      // Return the actual error message for debugging
+      return NextResponse.json(
+        { error: `Generation failed: ${error.message}` },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(
@@ -170,7 +202,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       status: status.status,
-      logs: status.logs,
+      logs: (status as any).logs || [],
     });
 
   } catch (error) {

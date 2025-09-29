@@ -28,6 +28,8 @@ export default function VideoGenerator() {
   const [mode, setMode] = useState('Character Replacement')
   const [isGenerating, setIsGenerating] = useState(false)
   const [showLoginDialog, setShowLoginDialog] = useState(false)
+  const [generationStatus, setGenerationStatus] = useState<string | null>(null)
+  const [generationError, setGenerationError] = useState<string | null>(null)
 
   const modeOptions: SegmentedControlOption[] = [
     { value: 'image-to-video', label: 'Image to video' },
@@ -56,20 +58,98 @@ export default function VideoGenerator() {
     setResolution('1080p')
     setDuration('5')
     setMode('Character Replacement')
+    setGenerationStatus(null)
+    setGenerationError(null)
+    setIsGenerating(false)
   }
 
-  const handleAnimate = () => {
+  const handleAnimate = async () => {
+    // Clear previous status/errors
+    setGenerationStatus(null)
+    setGenerationError(null)
+
+    // Check authentication first
+    if (!user) {
+      setShowLoginDialog(true)
+      return
+    }
+
+    // Validate inputs based on mode
     if (generationMode === 'image-to-video') {
-      if (!characterImage || !referenceVideo) return
+      if (!characterImage || !referenceVideo) {
+        setGenerationError('Please upload both character image and reference video')
+        return
+      }
     } else {
-      if (!textPrompt.trim()) return
+      if (!textPrompt.trim()) {
+        setGenerationError('Please enter a text description for your video')
+        return
+      }
     }
 
     setIsGenerating(true)
-    // Animation logic will be implemented here
-    setTimeout(() => {
+    setGenerationStatus('Starting video generation...')
+
+    try {
+      let response;
+
+      if (generationMode === 'text-to-video') {
+        // Call text-to-video API
+        setGenerationStatus('Processing text-to-video request...')
+        response = await fetch('/api/wan25/text-to-video', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: textPrompt,
+            aspect_ratio: '16:9',
+            resolution: resolution,
+            duration: parseInt(duration),
+            enable_prompt_expansion: true,
+            negative_prompt: "low resolution, error, worst quality, low quality, defects"
+          })
+        })
+      } else {
+        // For image-to-video, we need to upload files first
+        setGenerationStatus('Uploading files and processing...')
+        const formData = new FormData()
+        formData.append('character_image', characterImage)
+        formData.append('reference_video', referenceVideo)
+        formData.append('aspect_ratio', '16:9')
+        formData.append('resolution', resolution)
+        formData.append('motion_scale', '127')
+        formData.append('enable_camera_motion', 'true')
+
+        response = await fetch('/api/wan25/image-to-video', {
+          method: 'POST',
+          body: formData
+        })
+      }
+
+      const result = await response.json()
+
+      if (response.ok) {
+        // Success - handle the response
+        console.log('Generation started successfully:', result)
+        setGenerationStatus(`✅ Video generation started successfully! ${result.requestId ? `Request ID: ${result.requestId}` : ''}`)
+
+        // Redirect to dashboard or wan25 page after a short delay
+        setTimeout(() => {
+          window.location.href = '/wan25'
+        }, 2000)
+      } else {
+        // Handle errors
+        console.error('Generation failed:', result)
+        setGenerationError(result.error || 'Failed to start video generation. Please try again.')
+      }
+
+    } catch (error) {
+      console.error('Network error:', error)
+      setGenerationError('Network error: Please check your connection and try again.')
+    } finally {
       setIsGenerating(false)
-    }, 3000)
+    }
   }
 
 
@@ -249,14 +329,12 @@ export default function VideoGenerator() {
                 <div className="mt-1 flex flex-col gap-1">
                   <span className="text-sm text-gray-600 dark:text-gray-300">
                     {(() => {
-                      const baseCredits = duration === '5' ? 1 : 2;
-                      const resolutionMultiplier = resolution === '480p' ? 1 : resolution === '720p' ? 1.5 : 2;
-                      const totalCredits = Math.ceil(baseCredits * resolutionMultiplier);
-                      return `${totalCredits} credit${totalCredits === 1 ? '' : 's'} (${resolution}, ${duration}s)`;
+                      const credits = resolution === '480p' ? 5 : resolution === '720p' ? 10 : 15;
+                      return `${credits} credit${credits === 1 ? '' : 's'} (${resolution}, ${duration}s)`;
                     })()}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    480p: 1x • 720p: 1.5x • 1080p: 2x base cost
+                    480p: 5 credits • 720p: 10 credits • 1080p: 15 credits
                   </span>
                 </div>
               </div>
@@ -308,9 +386,26 @@ export default function VideoGenerator() {
                 <div className="mb-6">
                   <Video className="w-20 h-20 text-gray-400 dark:text-muted-foreground" />
                 </div>
+                {/* Status Messages */}
+                {generationStatus && (
+                  <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                    <p className="text-blue-700 dark:text-blue-300 text-sm text-center">
+                      {generationStatus}
+                    </p>
+                  </div>
+                )}
+
+                {generationError && (
+                  <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <p className="text-red-700 dark:text-red-300 text-sm text-center">
+                      {generationError}
+                    </p>
+                  </div>
+                )}
+
                 <p className="text-gray-500 dark:text-gray-400 text-lg text-center">
                   {isGenerating
-                    ? `Generating your ${generationMode === 'text-to-video' ? 'text-to-video' : 'animation'}...`
+                    ? generationStatus || `Generating your ${generationMode === 'text-to-video' ? 'text-to-video' : 'animation'}...`
                     : `Preview frames will appear here after the ${generationMode === 'text-to-video' ? 'video generation' : 'animation'} job finishes`
                   }
                 </p>

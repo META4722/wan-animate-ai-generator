@@ -205,7 +205,7 @@ export function ImageToVideoGenerator() {
     }
   };
 
-  const creditsRequired = wan25Client.calculateCredits(duration);
+  const creditsRequired = wan25Client.calculateCredits(resolution);
 
   return (
     <div className="space-y-6">
@@ -292,8 +292,8 @@ export function ImageToVideoGenerator() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="5">5 seconds (1 credit)</SelectItem>
-                      <SelectItem value="10">10 seconds (2 credits)</SelectItem>
+                      <SelectItem value="5">5 seconds</SelectItem>
+                      <SelectItem value="10">10 seconds</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

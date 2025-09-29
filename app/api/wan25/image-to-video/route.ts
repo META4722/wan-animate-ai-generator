@@ -48,7 +48,8 @@ export async function POST(request: NextRequest) {
       .eq("user_id", user.id)
       .single();
 
-    const requiredCredits = duration === "10" ? 2 : 1; // 10s videos cost 2 credits, 5s videos cost 1 credit
+    // Calculate required credits based on resolution: 480p=5, 720p=10, 1080p=15
+    const requiredCredits = resolution === '480p' ? 5 : resolution === '720p' ? 10 : 15;
 
     if (!customerData || customerData.credits < requiredCredits) {
       return NextResponse.json(
@@ -170,7 +171,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       status: status.status,
-      logs: status.logs,
+      logs: (status as any).logs || [],
     });
 
   } catch (error) {
