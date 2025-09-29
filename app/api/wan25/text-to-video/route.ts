@@ -89,17 +89,38 @@ export async function POST(request: NextRequest) {
       input.seed = seed;
     }
 
-    // Submit the request to Wan 2.5 text-to-video
-    const result = await fal.subscribe("fal-ai/wan-25-preview/text-to-video", {
-      input,
-      logs: true,
-      onQueueUpdate: (update) => {
-        if (update.status === "IN_PROGRESS") {
-          // Log progress for debugging
-          console.log("Generation progress:", update.logs?.map((log) => log.message));
+    // Submit the request to Wan 2.5 text-to-video with retry logic
+    let result;
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    while (retryCount < maxRetries) {
+      try {
+        result = await fal.subscribe("fal-ai/wan-25-preview/text-to-video", {
+          input,
+          logs: true,
+          onQueueUpdate: (update) => {
+            if (update.status === "IN_PROGRESS") {
+              // Log progress for debugging
+              console.log("Generation progress:", update.logs?.map((log) => log.message));
+            }
+          },
+        });
+        break; // Success, exit retry loop
+      } catch (error) {
+        retryCount++;
+        console.log(`Attempt ${retryCount} failed:`, error instanceof Error ? error.message : error);
+
+        if (retryCount >= maxRetries) {
+          throw error; // Re-throw if all retries exhausted
         }
-      },
-    });
+
+        // Wait before retrying (exponential backoff)
+        const waitTime = Math.pow(2, retryCount) * 1000; // 2s, 4s, 8s
+        console.log(`Retrying in ${waitTime}ms...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
+    }
 
     // Deduct credits from user account
     await supabase
@@ -114,6 +135,70 @@ export async function POST(request: NextRequest) {
       type: "wan25_text_video_generation",
       description: `Text-to-video generation (${duration}s, ${resolution}, ${aspect_ratio})`,
     });
+
+    // Save animation record - only include fields that exist in the table
+    const videoRecord = {
+      user_id: user.id,
+      prompt,
+      video_url: result.data.video?.url || result.data.video,
+      seed: result.data.seed,
+      actual_prompt: result.data.actual_prompt,
+      aspect_ratio,
+      resolution,
+      duration,
+      generation_type: "text-to-video",
+      status: "completed",
+      credits_used: requiredCredits,
+      completed_at: new Date().toISOString(),
+    };
+
+    let saved = false;
+
+    // Try animations table first
+    try {
+      const { error } = await supabase.from("animations").insert(videoRecord);
+      if (error) {
+        console.error("❌ Animations table insert failed:", error.message);
+        throw error;
+      }
+      console.log("✅ Saved to animations table");
+      saved = true;
+    } catch (animationError) {
+      console.warn("Could not save to animations table:", animationError);
+    }
+
+    // Fallback to video_generations table
+    if (!saved) {
+      try {
+        const { error } = await supabase.from("video_generations").insert({
+          user_id: user.id,
+          prompt,
+          video_url: result.data.video?.url || result.data.video,
+          seed: result.data.seed,
+          actual_prompt: result.data.actual_prompt,
+          aspect_ratio,
+          resolution,
+          duration,
+          generation_type: "text-to-video",
+          status: "completed",
+          credits_used: requiredCredits,
+          created_at: new Date().toISOString(),
+          completed_at: new Date().toISOString(),
+        });
+        if (error) {
+          console.error("❌ Video_generations table insert failed:", error.message);
+          throw error;
+        }
+        console.log("✅ Saved to video_generations table");
+        saved = true;
+      } catch (videoGenError) {
+        console.error("❌ Could not save to video_generations table:", videoGenError);
+      }
+    }
+
+    if (!saved) {
+      console.error("❌ Failed to save video record to any table!");
+    }
 
     // Return the result
     return NextResponse.json({
@@ -152,6 +237,12 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { error: "Insufficient credits" },
           { status: 402 }
+        );
+      }
+      if (error.message.includes("fetch failed") || error.message.includes("ECONNRESET") || error.message.includes("network")) {
+        return NextResponse.json(
+          { error: "Network connection failed. Please check your internet connection and try again." },
+          { status: 503 }
         );
       }
 

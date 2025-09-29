@@ -30,6 +30,8 @@ export default function VideoGenerator() {
   const [showLoginDialog, setShowLoginDialog] = useState(false)
   const [generationStatus, setGenerationStatus] = useState<string | null>(null)
   const [generationError, setGenerationError] = useState<string | null>(null)
+  const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null)
+  const [generationResult, setGenerationResult] = useState<any>(null)
 
   const modeOptions: SegmentedControlOption[] = [
     { value: 'image-to-video', label: 'Image to video' },
@@ -67,6 +69,8 @@ export default function VideoGenerator() {
     // Clear previous status/errors
     setGenerationStatus(null)
     setGenerationError(null)
+    setGeneratedVideoUrl(null)
+    setGenerationResult(null)
 
     // Check authentication first
     if (!user) {
@@ -114,8 +118,8 @@ export default function VideoGenerator() {
         // For image-to-video, we need to upload files first
         setGenerationStatus('Uploading files and processing...')
         const formData = new FormData()
-        formData.append('character_image', characterImage)
-        formData.append('reference_video', referenceVideo)
+        if (characterImage) formData.append('character_image', characterImage)
+        if (referenceVideo) formData.append('reference_video', referenceVideo)
         formData.append('aspect_ratio', '16:9')
         formData.append('resolution', resolution)
         formData.append('motion_scale', '127')
@@ -131,13 +135,14 @@ export default function VideoGenerator() {
 
       if (response.ok) {
         // Success - handle the response
-        console.log('Generation started successfully:', result)
-        setGenerationStatus(`✅ Video generation started successfully! ${result.requestId ? `Request ID: ${result.requestId}` : ''}`)
+        console.log('Generation completed successfully:', result)
+        setGenerationResult(result)
+        setGeneratedVideoUrl(result.video?.url || result.video)
+        setGenerationStatus(`✅ Video generated successfully! ${result.actual_prompt ? `\nPrompt: ${result.actual_prompt}` : ''}`)
 
-        // Redirect to dashboard or wan25 page after a short delay
-        setTimeout(() => {
-          window.location.href = '/wan25'
-        }, 2000)
+        // Show success message but don't redirect
+        console.log('Video URL:', result.video?.url || result.video)
+        console.log('Full result:', result)
       } else {
         // Handle errors
         console.error('Generation failed:', result)
@@ -154,6 +159,11 @@ export default function VideoGenerator() {
 
 
   const canAnimate = generationMode === 'image-to-video'
+    ? (characterImage && referenceVideo && !isGenerating)
+    : (textPrompt.trim() && !isGenerating)
+
+  // Allow clicking Generate button even when not logged in to show login dialog
+  const canClickGenerate = generationMode === 'image-to-video'
     ? (characterImage && referenceVideo && !isGenerating)
     : (textPrompt.trim() && !isGenerating)
 
@@ -330,7 +340,7 @@ export default function VideoGenerator() {
                   <span className="text-sm text-gray-600 dark:text-gray-300">
                     {(() => {
                       const credits = resolution === '480p' ? 5 : resolution === '720p' ? 10 : 15;
-                      return `${credits} credit${credits === 1 ? '' : 's'} (${resolution}, ${duration}s)`;
+                      return `${credits} credits (${resolution}, ${duration}s)`;
                     })()}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -351,9 +361,9 @@ export default function VideoGenerator() {
             </button>
             <button
               onClick={handleAnimate}
-              disabled={!canAnimate}
+              disabled={!canClickGenerate}
               className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                canAnimate
+                canClickGenerate
                   ? 'bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white'
                   : 'bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed'
               }`}
@@ -382,39 +392,99 @@ export default function VideoGenerator() {
 
           <div className="h-[600px] relative">
             <div className="absolute inset-0 bg-gray-50 dark:bg-card/50 backdrop-blur-sm rounded-lg overflow-hidden">
-              <div className="w-full h-full flex flex-col items-center justify-center p-8">
-                <div className="mb-6">
-                  <Video className="w-20 h-20 text-gray-400 dark:text-muted-foreground" />
+              {generatedVideoUrl ? (
+                // Show generated video
+                <div className="w-full h-full flex flex-col items-center justify-center p-4">
+                  <div className="w-full max-w-md aspect-video mb-4">
+                    <video
+                      src={generatedVideoUrl}
+                      controls
+                      className="w-full h-full object-cover rounded-lg"
+                      poster=""
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+
+                  {/* Video Actions */}
+                  <div className="flex gap-2 mb-4">
+                    <a
+                      href={generatedVideoUrl}
+                      download="generated-video.mp4"
+                      className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+                    >
+                      Download Video
+                    </a>
+                    <button
+                      onClick={() => navigator.clipboard.writeText(generatedVideoUrl)}
+                      className="px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm font-medium transition-colors"
+                    >
+                      Copy URL
+                    </button>
+                    <button
+                      onClick={() => {
+                        setGeneratedVideoUrl(null)
+                        setGenerationResult(null)
+                        setGenerationStatus(null)
+                      }}
+                      className="px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md text-sm font-medium transition-colors"
+                    >
+                      Generate Another
+                    </button>
+                  </div>
+
+                  {/* Generation Info */}
+                  {generationResult && (
+                    <div className="text-center text-sm text-muted-foreground space-y-1">
+                      {generationResult.seed && <p>Seed: {generationResult.seed}</p>}
+                      {generationResult.credits_used && <p>Credits used: {generationResult.credits_used}</p>}
+                      {generationResult.actual_prompt && (
+                        <p className="max-w-sm">Prompt: "{generationResult.actual_prompt}"</p>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {/* Status Messages */}
-                {generationStatus && (
-                  <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                    <p className="text-blue-700 dark:text-blue-300 text-sm text-center">
-                      {generationStatus}
-                    </p>
+              ) : (
+                // Default state or loading
+                <div className="w-full h-full flex flex-col items-center justify-center p-8">
+                  <div className="mb-6">
+                    {isGenerating ? (
+                      <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-primary"></div>
+                    ) : (
+                      <Video className="w-20 h-20 text-gray-400 dark:text-muted-foreground" />
+                    )}
                   </div>
-                )}
 
-                {generationError && (
-                  <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <p className="text-red-700 dark:text-red-300 text-sm text-center">
-                      {generationError}
-                    </p>
-                  </div>
-                )}
+                  {/* Status Messages */}
+                  {generationStatus && (
+                    <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                      <p className="text-blue-700 dark:text-blue-300 text-sm text-center whitespace-pre-line">
+                        {generationStatus}
+                      </p>
+                    </div>
+                  )}
 
-                <p className="text-gray-500 dark:text-gray-400 text-lg text-center">
-                  {isGenerating
-                    ? generationStatus || `Generating your ${generationMode === 'text-to-video' ? 'text-to-video' : 'animation'}...`
-                    : `Preview frames will appear here after the ${generationMode === 'text-to-video' ? 'video generation' : 'animation'} job finishes`
-                  }
-                </p>
-                {isGenerating && (
-                  <div className="mt-4 w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-red-600 to-purple-600 rounded-full animate-pulse"></div>
-                  </div>
-                )}
-              </div>
+                  {generationError && (
+                    <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                      <p className="text-red-700 dark:text-red-300 text-sm text-center">
+                        {generationError}
+                      </p>
+                    </div>
+                  )}
+
+                  {!isGenerating && !generationStatus && !generationError && (
+                    <p className="text-gray-500 dark:text-gray-400 text-lg text-center">
+                      Preview frames will appear here after the {generationMode === 'text-to-video' ? 'video generation' : 'animation'} job finishes
+                    </p>
+                  )}
+
+                  {isGenerating && (
+                    <div className="mt-4 w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-red-600 to-purple-600 rounded-full animate-pulse"></div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

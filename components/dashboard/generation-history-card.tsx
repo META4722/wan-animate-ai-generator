@@ -39,11 +39,20 @@ export function GenerationHistoryCard() {
 
   const fetchGenerationHistory = async () => {
     try {
-      const response = await fetch('/api/animation-history');
+      // Try main API first, fallback to temp API
+      let response = await fetch('/api/animation-history');
+      if (!response.ok) {
+        response = await fetch('/api/animation-history/temp');
+      }
+
       if (response.ok) {
         const data = await response.json();
         setLogs(data.logs || []);
         setStats(data.stats || null);
+
+        if (data.message) {
+          console.log("Dashboard info:", data.message);
+        }
       }
     } catch (error) {
       console.error('Failed to fetch animation history:', error);

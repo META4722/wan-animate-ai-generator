@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "debug": "node scripts/debug-video-generation.js",
+    "monitor": "node scripts/realtime-video-monitor.js monitor",
+    "diagnostic": "node scripts/realtime-video-monitor.js diagnostic"
   },
   "dependencies": {
     "@fal-ai/client": "^1.6.2",

@@ -37,7 +37,14 @@ export const updateSession = async (request: NextRequest) => {
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    const user = await supabase.auth.getUser();
+    let user;
+    try {
+      user = await supabase.auth.getUser();
+    } catch (authError) {
+      console.error("Supabase auth error in middleware:", authError);
+      // If auth fails, continue without authentication for non-protected routes
+      user = { error: authError };
+    }
 
     // Only protect dashboard routes
     if (request.nextUrl.pathname.startsWith("/dashboard") && user.error) {

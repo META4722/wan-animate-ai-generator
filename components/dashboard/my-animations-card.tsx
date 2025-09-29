@@ -39,10 +39,19 @@ export function MyAnimationsCard() {
 
   const fetchAnimations = async () => {
     try {
-      const response = await fetch('/api/animations');
+      // Try main API first, fallback to temp API
+      let response = await fetch('/api/animations');
+      if (!response.ok) {
+        response = await fetch('/api/animations/temp');
+      }
+
       if (response.ok) {
         const data = await response.json();
         setAnimations(data.animations || []);
+
+        if (data.message) {
+          console.log("Dashboard info:", data.message);
+        }
       }
     } catch (error) {
       console.error('Failed to fetch animations:', error);

@@ -405,7 +405,7 @@ export function ImageToVideoGenerator() {
           {/* Generate Button */}
           <Button
             onClick={handleGenerate}
-            disabled={(!selectedImage || (useCustomPrompt && !prompt.trim()) || isGenerating) && user}
+            disabled={!selectedImage || (useCustomPrompt && !prompt.trim()) || isGenerating || !user}
             className="w-full"
             size="lg"
           >
@@ -434,8 +434,16 @@ export function ImageToVideoGenerator() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="space-y-2"
+                className="space-y-3"
               >
+                <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                  <p className="text-sm text-blue-700 dark:text-blue-300 text-center font-medium">
+                    ⏱️ Video generation typically takes 2-3 minutes
+                  </p>
+                  <p className="text-xs text-blue-600 dark:text-blue-400 text-center mt-1">
+                    Please keep this page open and wait for completion
+                  </p>
+                </div>
                 <Progress value={generationProgress} />
                 <p className="text-sm text-muted-foreground text-center">
                   {generationProgress < 30 && "Processing image..."}
