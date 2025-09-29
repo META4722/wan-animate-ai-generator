@@ -1,8 +1,24 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@/hooks/use-user";
+import { LoginDialog } from "@/components/auth/login-dialog";
 
 export default function CTA() {
+  const { user } = useUser();
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+
+  const handleGetStarted = () => {
+    if (!user) {
+      setShowLoginDialog(true);
+    } else {
+      window.location.href = '/wan25';
+    }
+  };
+
   return (
     <section id="cta" className="md:pb-12">
       <div className="container px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -17,11 +33,13 @@ export default function CTA() {
               to.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-              <Button className="w-full sm:w-auto" asChild size="lg">
-                <Link href="/sign-up">
-                  Get started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+              <Button
+                className="w-full sm:w-auto"
+                size="lg"
+                onClick={handleGetStarted}
+              >
+                {user ? 'Start Creating' : 'Get started'}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 className="w-full sm:w-auto"
@@ -42,6 +60,12 @@ export default function CTA() {
           />
         </div>
       </div>
+
+      {/* Login Dialog */}
+      <LoginDialog
+        open={showLoginDialog}
+        onOpenChange={setShowLoginDialog}
+      />
     </section>
   );
 }

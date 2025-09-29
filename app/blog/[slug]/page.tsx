@@ -2768,15 +2768,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!post) {
     return {
-      title: 'Article Not Found - Wan 2.5 Animate',
+      title: 'Article Not Found - Wan 2.2 Animate',
       description: 'The requested article could not be found.'
     };
   }
 
   return generatePageMetadata(`/blog/${slug}`, {
-    title: `${post.title} - Wan 2.5 Animate`,
+    title: `${post.title} - Wan 2.2 Animate`,
     description: post.summary,
-    keywords: [...post.tags, 'Wan 2.5', 'character animation', 'AI animation']
+    keywords: [...post.tags, 'Wan 2.2', 'character animation', 'AI animation']
   });
 }
 

@@ -1,0 +1,48 @@
+# Robots.txt for Wanimate AI
+# https://wanimate.ai/robots.txt
+
+User-agent: *
+Allow: /
+
+# Allow important pages
+Allow: /creation
+Allow: /gallery
+Allow: /dashboard
+Allow: /community
+Allow: /blog
+Allow: /blog/*
+
+# Disallow authentication pages (no SEO value)
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /forgot-password
+Disallow: /dashboard/reset-password
+
+# Disallow API routes and internal pages
+Disallow: /api/
+Disallow: /api-test
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow legal pages but with low priority
+Allow: /privacy
+Allow: /terms
+
+# Sitemap location
+Sitemap: https://wanimate.ai/sitemap.xml
+
+# Crawl delay for politeness (optional)
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2

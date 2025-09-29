@@ -4,26 +4,25 @@ import { useState, useEffect } from "react";
 import { useUser } from "@/hooks/use-user";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Activity, TrendingUp, Calendar } from "lucide-react";
+import { Activity, TrendingUp, Calendar, Play, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface GenerationLog {
   id: string;
-  plan_type: string;
+  animation_mode: string;
+  quality_mode: string;
   credits_used: number;
-  names_generated: number;
-  english_name: string;
-  gender: string;
-  has_personality_traits: boolean;
-  has_name_preferences: boolean;
+  duration_seconds: number;
+  character_name: string;
+  status: string;
   created_at: string;
 }
 
 interface GenerationStats {
-  total_generations: number;
+  total_animations: number;
   total_credits_used: number;
-  total_names_generated: number;
-  avg_per_session: number;
+  total_duration_generated: number;
+  avg_credits_per_animation: number;
 }
 
 export function GenerationHistoryCard() {
@@ -40,25 +39,51 @@ export function GenerationHistoryCard() {
 
   const fetchGenerationHistory = async () => {
     try {
-      const response = await fetch('/api/generation-history');
+      const response = await fetch('/api/animation-history');
       if (response.ok) {
         const data = await response.json();
         setLogs(data.logs || []);
         setStats(data.stats || null);
       }
     } catch (error) {
-      console.error('Failed to fetch generation history:', error);
+      console.error('Failed to fetch animation history:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getPlanTypeLabel = (planType: string) => {
-    return planType === '4' ? 'Premium' : 'Standard';
+  const getQualityModeLabel = (qualityMode: string) => {
+    return qualityMode === 'high' ? 'High Quality' : 'Standard';
   };
 
-  const getPlanTypeColor = (planType: string) => {
-    return planType === '4' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700';
+  const getQualityModeColor = (qualityMode: string) => {
+    return qualityMode === 'high' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700';
+  };
+
+  const getAnimationModeLabel = (mode: string) => {
+    switch (mode) {
+      case 'character_replacement':
+        return 'Character Replace';
+      case 'face_swap':
+        return 'Face Swap';
+      case 'motion_transfer':
+        return 'Motion Transfer';
+      default:
+        return mode;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-100 text-green-700';
+      case 'processing':
+        return 'bg-blue-100 text-blue-700';
+      case 'failed':
+        return 'bg-red-100 text-red-700';
+      default:
+        return 'bg-yellow-100 text-yellow-700';
+    }
   };
 
   if (isLoading) {
@@ -67,7 +92,7 @@ export function GenerationHistoryCard() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Activity className="h-5 w-5" />
-            Generation History
+            Animation History
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -84,7 +109,7 @@ export function GenerationHistoryCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5" />
-          Generation History
+          Animation History
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -92,20 +117,20 @@ export function GenerationHistoryCard() {
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <div className="text-2xl font-bold text-primary">{stats.total_generations}</div>
-              <div className="text-xs text-muted-foreground">Sessions</div>
+              <div className="text-2xl font-bold text-primary">{stats.total_animations}</div>
+              <div className="text-xs text-muted-foreground">Animations</div>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <div className="text-2xl font-bold text-primary">{stats.total_names_generated}</div>
-              <div className="text-xs text-muted-foreground">Names</div>
+              <div className="text-2xl font-bold text-primary">{Math.floor(stats.total_duration_generated / 60)}m</div>
+              <div className="text-xs text-muted-foreground">Duration</div>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
               <div className="text-2xl font-bold text-primary">{stats.total_credits_used}</div>
               <div className="text-xs text-muted-foreground">Credits</div>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <div className="text-2xl font-bold text-primary">{stats.avg_per_session.toFixed(1)}</div>
-              <div className="text-xs text-muted-foreground">Avg/Session</div>
+              <div className="text-2xl font-bold text-primary">{stats.avg_credits_per_animation.toFixed(1)}</div>
+              <div className="text-xs text-muted-foreground">Avg/Animation</div>
             </div>
           </div>
         )}
@@ -119,7 +144,7 @@ export function GenerationHistoryCard() {
           
           {logs.length === 0 ? (
             <div className="text-center py-6 text-muted-foreground">
-              No generation history yet
+              No animation history yet
             </div>
           ) : (
             <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -133,33 +158,33 @@ export function GenerationHistoryCard() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-full">
-                      <span className="text-sm font-bold text-primary">
-                        {log.names_generated}
-                      </span>
+                      <Play className="h-4 w-4 text-primary" />
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm">
-                          Generated for "{log.english_name}"
+                          {log.character_name || "Animation"}
                         </span>
-                        <Badge 
-                          variant="secondary" 
-                          className={`text-xs ${getPlanTypeColor(log.plan_type)}`}
+                        <Badge
+                          variant="secondary"
+                          className={`text-xs ${getQualityModeColor(log.quality_mode)}`}
                         >
-                          {getPlanTypeLabel(log.plan_type)}
+                          {getQualityModeLabel(log.quality_mode)}
+                        </Badge>
+                        <Badge
+                          variant="secondary"
+                          className={`text-xs ${getStatusColor(log.status)}`}
+                        >
+                          {log.status}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3 w-3" />
                         {new Date(log.created_at).toLocaleDateString()}
                         <span>•</span>
-                        <span className="capitalize">{log.gender}</span>
-                        {log.has_personality_traits && (
-                          <>
-                            <span>•</span>
-                            <span>Personalized</span>
-                          </>
-                        )}
+                        <span>{getAnimationModeLabel(log.animation_mode)}</span>
+                        <span>•</span>
+                        <span>{log.duration_seconds}s</span>
                       </div>
                     </div>
                   </div>

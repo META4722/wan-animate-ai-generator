@@ -17,7 +17,7 @@ export default function Hero() {
             <div className="relative px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
               <div className="mx-auto max-w-4xl text-center">
                 <h1 className="text-4xl font-semibold tracking-tight text-pretty text-foreground sm:text-6xl">
-                  Wan 2.5 animate
+                  Wan 2.2 animate
                   <br />
                   <span className="whitespace-nowrap">
                     Animate any <FlipWords words={words} duration={1500} className="text-primary" />

@@ -10,6 +10,9 @@ type QuickActionsCardProps = {
 };
 
 const DEFAULT_ACTIONS: QuickAction[] = [
+  { label: "Create Animation", href: "/#generator" },
+  { label: "AI Video Generation (Wan 2.5)", href: "/wan25" },
+  { label: "View Gallery", href: "/#gallery" },
   { label: "View Plans", href: "#pricing" },
   { label: "Get Support", href: "#support" },
 ];

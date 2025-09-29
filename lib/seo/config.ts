@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 
 // SEO Configuration Constants
 export const SEO_CONFIG = {
-  siteName: 'Wan 2.5 animate',
+  siteName: 'Wan 2.2 animate',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://wan-animate.com',
-  companyName: 'Wan 2.5 animate',
+  companyName: 'Wan 2.2 animate',
   description: 'Animate any character from a source video with AI-powered motion transfer technology. Create stunning character animations effortlessly.',
   keywords: [
     'character animation',
@@ -105,7 +105,7 @@ export const defaultMetadata: Metadata = {
 // Page SEO Configuration Mapping
 export const PAGE_SEO: Record<string, Partial<Metadata>> = {
   '/': {
-    title: 'Wan 2.5 animate - Animate any character from a source video',
+    title: 'Wan 2.2 animate - Animate any character from a source video',
     description: 'Transform any character with AI-powered animation from source videos. Create stunning character animations with advanced motion transfer technology - animate characters effortlessly.',
     keywords: ['character animation', 'AI animation', 'motion transfer', 'video animation', 'animate from source video']
   },

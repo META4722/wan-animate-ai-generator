@@ -10,8 +10,8 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "What is Wan 2.5 animate?",
-    answer: "Wan 2.5 animate is an AI-powered character animation platform that allows you to animate any character from a source video. Simply upload a character image and reference performance video, and our AI will transfer the motion and expressions to create stunning animations."
+    question: "What is Wan 2.2 animate?",
+    answer: "Wan 2.2 animate is an AI-powered character animation platform that allows you to animate any character from a source video. Simply upload a character image and reference performance video, and our AI will transfer the motion and expressions to create stunning animations."
   },
   {
     question: "How does the character animation process work?",
@@ -39,7 +39,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Do I need motion capture equipment?",
-    answer: "No! That's the beauty of Wan 2.5 animate. You don't need any special equipment, mocap suits, or technical expertise. Just upload your files and our AI handles the complex motion transfer automatically."
+    answer: "No! That's the beauty of Wan 2.2 animate. You don't need any special equipment, mocap suits, or technical expertise. Just upload your files and our AI handles the complex motion transfer automatically."
   },
   {
     question: "What makes the lip sync and facial expressions so accurate?",
@@ -94,7 +94,7 @@ export default function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="max-w-[95%] sm:max-w-[85%] text-sm sm:text-lg leading-normal text-muted-foreground">
-            Everything you need to know about Wan 2.5 animate and AI-powered character animation.
+            Everything you need to know about Wan 2.2 animate and AI-powered character animation.
           </p>
         </div>
 

@@ -1,8 +1,8 @@
-# 🎬 Wan 2.5 animate - Animate any character from a source video
+# 🎬 Wan 2.2 animate - Animate any character from a source video
 
 > Built with Next.js, Supabase, and modern AI technology stack
 
-A complete AI-powered character animation platform that transforms any character from source videos into stunning animated content. Wan 2.5 animate combines cutting-edge motion transfer technology with professional animation workflow to deliver instant, high-quality character animations.
+A complete AI-powered character animation platform that transforms any character from source videos into stunning animated content. Wan 2.2 animate combines cutting-edge motion transfer technology with professional animation workflow to deliver instant, high-quality character animations.
 
 [![Next.js](https://img.shields.io/badge/Next.js-13+-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
