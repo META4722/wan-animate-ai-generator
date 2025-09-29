@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
         duration,
         aspect_ratio,
         generation_type,
+        character_image_url,
         status,
         credits_used,
         seed,

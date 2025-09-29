@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       prompt,
       image_url,
       audio_url,
+      aspect_ratio = "16:9",
       resolution = "1080p",
       duration = "5",
       negative_prompt = "low resolution, error, worst quality, low quality, defects",
@@ -127,10 +128,9 @@ export async function POST(request: NextRequest) {
     const videoRecord = {
       user_id: user.id,
       prompt: prompt || "Image-to-video generation",
-      video_url: result.data.video?.url || result.data.video,
-      seed: result.data.seed,
-      actual_prompt: result.data.actual_prompt,
-      request_id: result.requestId,
+      video_url: result?.data?.video?.url || result?.data?.video || "",
+      seed: result?.data?.seed,
+      actual_prompt: result?.data?.actual_prompt,
       aspect_ratio,
       resolution,
       duration,
@@ -158,9 +158,9 @@ export async function POST(request: NextRequest) {
         await supabase.from("video_generations").insert({
           user_id: user.id,
           prompt: prompt || "Image-to-video generation",
-          video_url: result.data.video?.url || result.data.video,
-          seed: result.data.seed,
-          actual_prompt: result.data.actual_prompt,
+          video_url: result?.data?.video?.url || result?.data?.video || "",
+          seed: result?.data?.seed,
+          actual_prompt: result?.data?.actual_prompt,
           aspect_ratio,
           resolution,
           duration,
@@ -184,11 +184,11 @@ export async function POST(request: NextRequest) {
     // Return the result
     return NextResponse.json({
       success: true,
-      video: result.data.video,
-      seed: result.data.seed,
-      actual_prompt: result.data.actual_prompt,
+      video: result?.data?.video,
+      seed: result?.data?.seed,
+      actual_prompt: result?.data?.actual_prompt,
       credits_used: requiredCredits,
-      request_id: result.requestId,
+      request_id: result?.requestId,
     });
 
   } catch (error) {

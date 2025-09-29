@@ -140,9 +140,9 @@ export async function POST(request: NextRequest) {
     const videoRecord = {
       user_id: user.id,
       prompt,
-      video_url: result.data.video?.url || result.data.video,
-      seed: result.data.seed,
-      actual_prompt: result.data.actual_prompt,
+      video_url: result?.data?.video?.url || result?.data?.video || "",
+      seed: result?.data?.seed,
+      actual_prompt: result?.data?.actual_prompt,
       aspect_ratio,
       resolution,
       duration,
@@ -173,9 +173,9 @@ export async function POST(request: NextRequest) {
         const { error } = await supabase.from("video_generations").insert({
           user_id: user.id,
           prompt,
-          video_url: result.data.video?.url || result.data.video,
-          seed: result.data.seed,
-          actual_prompt: result.data.actual_prompt,
+          video_url: result?.data?.video?.url || result?.data?.video || "",
+          seed: result?.data?.seed,
+          actual_prompt: result?.data?.actual_prompt,
           aspect_ratio,
           resolution,
           duration,
@@ -203,11 +203,11 @@ export async function POST(request: NextRequest) {
     // Return the result
     return NextResponse.json({
       success: true,
-      video: result.data.video,
-      seed: result.data.seed,
-      actual_prompt: result.data.actual_prompt,
+      video: result?.data?.video,
+      seed: result?.data?.seed,
+      actual_prompt: result?.data?.actual_prompt,
       credits_used: requiredCredits,
-      request_id: result.requestId,
+      request_id: result?.requestId,
     });
 
   } catch (error) {
