@@ -7,8 +7,10 @@ export async function GET(request: Request) {
   // https://supabase.com/docs/guides/auth/server-side/nextjs
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const origin = requestUrl.origin;
   const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
+
+  // Use the production URL from environment variable, fallback to request origin
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || requestUrl.origin;
 
   if (code) {
     const supabase = await createClient();
@@ -16,9 +18,9 @@ export async function GET(request: Request) {
   }
 
   if (redirectTo) {
-    return NextResponse.redirect(`${origin}${redirectTo}`);
+    return NextResponse.redirect(`${baseUrl}${redirectTo}`);
   }
 
   // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${origin}/dashboard`);
+  return NextResponse.redirect(`${baseUrl}/`);
 }
