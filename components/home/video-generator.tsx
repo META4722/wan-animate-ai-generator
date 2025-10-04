@@ -155,6 +155,10 @@ export default function VideoGenerator() {
         setGenerationStatus('Uploading character image...')
 
         // Upload character image
+        if (!characterImage) {
+          throw new Error('No character image selected')
+        }
+
         const imageFormData = new FormData()
         imageFormData.append('file', characterImage)
         imageFormData.append('type', 'image')
