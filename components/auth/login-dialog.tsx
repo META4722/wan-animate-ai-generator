@@ -69,10 +69,13 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
   const handleOAuthLogin = async (provider: "google" | "github") => {
     setIsOAuthLoading(provider);
     try {
+      // Use NEXT_PUBLIC_SITE_URL for production, fallback to current origin for local dev
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?redirect_to=${window.location.pathname}`,
+          redirectTo: `${baseUrl}/auth/callback?redirect_to=${window.location.pathname}`,
         },
       });
 
