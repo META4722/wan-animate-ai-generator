@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       prompt,
       image_url,
       resolution,
-      duration,
+      duration: parseInt(duration),
       negative_prompt,
       enable_prompt_expansion,
     };
@@ -76,6 +76,8 @@ export async function POST(request: NextRequest) {
     if (seed) {
       input.seed = seed;
     }
+
+    console.log('📤 Sending to Fal.ai:', JSON.stringify(input, null, 2));
 
     // Submit the request to Wan 2.5 with retry logic
     let result;
@@ -95,9 +97,17 @@ export async function POST(request: NextRequest) {
           },
         });
         break; // Success, exit retry loop
-      } catch (error) {
+      } catch (error: any) {
         retryCount++;
         console.log(`Attempt ${retryCount} failed:`, error instanceof Error ? error.message : error);
+
+        // Log the full error details
+        if (error.body) {
+          console.error('❌ Fal.ai error body:', JSON.stringify(error.body, null, 2));
+        }
+        if (error.status) {
+          console.error('❌ Fal.ai error status:', error.status);
+        }
 
         if (retryCount >= maxRetries) {
           throw error; // Re-throw if all retries exhausted

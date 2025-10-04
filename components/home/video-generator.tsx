@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Image, Video, ChevronDown, Type } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Image, Video, ChevronDown, Type, Music } from 'lucide-react'
 import { useUser } from '@/hooks/use-user'
 import { LoginDialog } from '@/components/auth/login-dialog'
 import { SegmentedControl, SegmentedControlOption } from '@/components/ui/segmented-control'
@@ -16,7 +16,10 @@ export default function VideoGenerator() {
 
   // Image to Video states
   const [characterImage, setCharacterImage] = useState<File | null>(null)
-  const [referenceVideo, setReferenceVideo] = useState<File | null>(null)
+  const [characterImagePreview, setCharacterImagePreview] = useState<string | null>(null)
+  const [imagePrompt, setImagePrompt] = useState('')
+  const [audioFile, setAudioFile] = useState<File | null>(null)
+  const [audioPreview, setAudioPreview] = useState<string | null>(null)
 
   // Text to Video states
   const [textPrompt, setTextPrompt] = useState('')
@@ -42,19 +45,36 @@ export default function VideoGenerator() {
     const file = event.target.files?.[0]
     if (file) {
       setCharacterImage(file)
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file)
+      setCharacterImagePreview(previewUrl)
     }
   }
 
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAudioUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      setReferenceVideo(file)
+      setAudioFile(file)
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file)
+      setAudioPreview(previewUrl)
     }
   }
 
   const handleClearAll = () => {
+    // Clean up preview URLs to prevent memory leaks
+    if (characterImagePreview) {
+      URL.revokeObjectURL(characterImagePreview)
+    }
+    if (audioPreview) {
+      URL.revokeObjectURL(audioPreview)
+    }
+
     setCharacterImage(null)
-    setReferenceVideo(null)
+    setCharacterImagePreview(null)
+    setImagePrompt('')
+    setAudioFile(null)
+    setAudioPreview(null)
     setTextPrompt('')
     setQuality('Standard')
     setResolution('1080p')
@@ -64,6 +84,18 @@ export default function VideoGenerator() {
     setGenerationError(null)
     setIsGenerating(false)
   }
+
+  // Clean up preview URLs when component unmounts
+  useEffect(() => {
+    return () => {
+      if (characterImagePreview) {
+        URL.revokeObjectURL(characterImagePreview)
+      }
+      if (audioPreview) {
+        URL.revokeObjectURL(audioPreview)
+      }
+    }
+  }, [characterImagePreview, audioPreview])
 
   const handleAnimate = async () => {
     // Clear previous status/errors
@@ -80,8 +112,12 @@ export default function VideoGenerator() {
 
     // Validate inputs based on mode
     if (generationMode === 'image-to-video') {
-      if (!characterImage || !referenceVideo) {
-        setGenerationError('Please upload both character image and reference video')
+      if (!characterImage) {
+        setGenerationError('Please upload a character image')
+        return
+      }
+      if (!imagePrompt.trim()) {
+        setGenerationError('Please enter a prompt describing the desired video motion')
         return
       }
     } else {
@@ -116,22 +152,90 @@ export default function VideoGenerator() {
         })
       } else {
         // For image-to-video, we need to upload files first
-        setGenerationStatus('Uploading files and processing...')
-        const formData = new FormData()
-        if (characterImage) formData.append('character_image', characterImage)
-        if (referenceVideo) formData.append('reference_video', referenceVideo)
-        formData.append('aspect_ratio', '16:9')
-        formData.append('resolution', resolution)
-        formData.append('motion_scale', '127')
-        formData.append('enable_camera_motion', 'true')
+        setGenerationStatus('Uploading character image...')
+
+        // Upload character image
+        const imageFormData = new FormData()
+        imageFormData.append('file', characterImage)
+        imageFormData.append('type', 'image')
+
+        const imageUploadResponse = await fetch('/api/wan25/upload', {
+          method: 'POST',
+          body: imageFormData
+        })
+
+        if (!imageUploadResponse.ok) {
+          const errorData = await imageUploadResponse.json()
+          console.error('Image upload failed:', errorData)
+          throw new Error(errorData.error || 'Failed to upload character image')
+        }
+
+        const imageUploadResult = await imageUploadResponse.json()
+        console.log('Image uploaded successfully:', imageUploadResult)
+        const imageUrl = imageUploadResult.url
+
+        // Upload audio if provided
+        let audioUrl: string | undefined = undefined
+        if (audioFile) {
+          setGenerationStatus('Uploading audio file...')
+          const audioFormData = new FormData()
+          audioFormData.append('file', audioFile)
+          audioFormData.append('type', 'audio')
+
+          const audioUploadResponse = await fetch('/api/wan25/upload', {
+            method: 'POST',
+            body: audioFormData
+          })
+
+          if (!audioUploadResponse.ok) {
+            const errorData = await audioUploadResponse.json()
+            console.error('Audio upload failed:', errorData)
+            throw new Error(errorData.error || 'Failed to upload audio file')
+          }
+
+          const audioUploadResult = await audioUploadResponse.json()
+          console.log('Audio uploaded successfully:', audioUploadResult)
+          audioUrl = audioUploadResult.url
+        }
+
+        // Now submit to image-to-video API
+        setGenerationStatus('Processing video generation...')
+        const requestBody: any = {
+          prompt: imagePrompt,
+          image_url: imageUrl,
+          aspect_ratio: '16:9',
+          resolution: resolution,
+          duration: parseInt(duration),
+          negative_prompt: "low resolution, error, worst quality, low quality, defects",
+          enable_prompt_expansion: true
+        }
+
+        if (audioUrl) {
+          requestBody.audio_url = audioUrl
+        }
 
         response = await fetch('/api/wan25/image-to-video', {
           method: 'POST',
-          body: formData
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody)
         })
       }
 
-      const result = await response.json()
+      let result;
+      try {
+        result = await response.json()
+      } catch (jsonError) {
+        console.error('Failed to parse response as JSON:', jsonError)
+        const text = await response.text()
+        console.error('Response text:', text)
+        setGenerationError(`Server error (${response.status}): Unable to parse response`)
+        return
+      }
+
+      console.log('API Response Status:', response.status)
+      console.log('API Response:', result)
 
       if (response.ok) {
         // Success - handle the response
@@ -145,8 +249,10 @@ export default function VideoGenerator() {
         console.log('Full result:', result)
       } else {
         // Handle errors
-        console.error('Generation failed:', result)
-        setGenerationError(result.error || 'Failed to start video generation. Please try again.')
+        console.error('Generation failed with status:', response.status)
+        console.error('Error details:', result)
+        const errorMessage = result.error || result.message || result.details || 'Failed to start video generation. Please try again.'
+        setGenerationError(`Error (${response.status}): ${errorMessage}`)
       }
 
     } catch (error) {
@@ -159,12 +265,12 @@ export default function VideoGenerator() {
 
 
   const canAnimate = generationMode === 'image-to-video'
-    ? (characterImage && referenceVideo && !isGenerating)
+    ? (characterImage && imagePrompt.trim() && !isGenerating)
     : (textPrompt.trim() && !isGenerating)
 
   // Allow clicking Generate button even when not logged in to show login dialog
   const canClickGenerate = generationMode === 'image-to-video'
-    ? (characterImage && referenceVideo && !isGenerating)
+    ? (characterImage && imagePrompt.trim() && !isGenerating)
     : (textPrompt.trim() && !isGenerating)
 
   return (
@@ -226,43 +332,138 @@ export default function VideoGenerator() {
                   htmlFor="ai-generator-image-upload"
                   className="block border-2 border-dashed border-gray-200 dark:border-input rounded-xl p-8 text-center cursor-pointer transition-all duration-300 bg-white/50 dark:bg-input/20 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-primary/5 dark:hover:bg-primary/10"
                 >
-                  <div className="flex flex-col items-center">
-                    <Image className="w-8 h-8 text-gray-400 dark:text-gray-500 mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">
-                      {characterImage ? characterImage.name : "Drop a character portrait here, or click to upload"}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">
-                      Supports JPG/PNG up to 10MB
-                    </p>
-                  </div>
+                  {characterImagePreview ? (
+                    // Show image preview
+                    <div className="flex flex-col items-center">
+                      <div className="relative mb-4 max-w-full">
+                        <img
+                          src={characterImagePreview}
+                          alt="Character preview"
+                          className="w-full max-w-sm h-auto object-contain rounded-lg border-2 border-primary/50 dark:border-primary/50 shadow-lg"
+                          style={{ maxHeight: '400px' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            // Clean up preview URL
+                            if (characterImagePreview) {
+                              URL.revokeObjectURL(characterImagePreview)
+                            }
+                            setCharacterImage(null)
+                            setCharacterImagePreview(null)
+                          }}
+                          className="absolute -top-3 -right-3 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-lg font-bold hover:bg-red-600 transition-colors shadow-md"
+                        >
+                          ×
+                        </button>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-1 font-medium text-center break-all px-4">
+                        {characterImage?.name}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Click to change image
+                      </p>
+                    </div>
+                  ) : (
+                    // Show upload prompt
+                    <div className="flex flex-col items-center">
+                      <Image className="w-8 h-8 text-gray-400 dark:text-gray-500 mb-3" />
+                      <p className="text-gray-600 dark:text-gray-400 mb-1">
+                        Drop a character portrait here, or click to upload
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                        JPG/PNG • Min 360x360, Max 2000x2000 • Up to 25MB
+                      </p>
+                    </div>
+                  )}
                 </label>
               </div>
 
-              {/* Reference Video Upload */}
+              {/* Motion Prompt Input */}
               <div>
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 block">
-                  UPLOAD REFERENCE VIDEO
+                  MOTION DESCRIPTION
                 </label>
-                <input
-                  accept="video/*"
-                  className="hidden"
-                  id="ai-generator-video-upload"
-                  type="file"
-                  onChange={handleVideoUpload}
-                />
-                <label
-                  htmlFor="ai-generator-video-upload"
-                  className="block border-2 border-dashed border-gray-200 dark:border-input rounded-xl p-8 text-center cursor-pointer transition-all duration-300 bg-white/50 dark:bg-input/20 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-primary/5 dark:hover:bg-primary/10"
-                >
+                <div className="border-2 border-dashed border-gray-200 dark:border-input rounded-xl p-6 bg-white/50 dark:bg-input/20">
                   <div className="flex flex-col items-center">
-                    <Video className="w-8 h-8 text-gray-400 dark:text-gray-500 mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">
-                      {referenceVideo ? referenceVideo.name : "Drop a performance reference video, or click to upload"}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">
-                      Supports MP4/MOV up to 50MB
+                    <Type className="w-8 h-8 text-gray-400 dark:text-gray-500 mb-3" />
+                    <textarea
+                      value={imagePrompt}
+                      onChange={(e) => setImagePrompt(e.target.value)}
+                      placeholder="Describe the desired video motion... (e.g., 'Character walking forward with confident stride, camera slowly zooming in')"
+                      className="w-full min-h-[120px] resize-none bg-transparent border-none outline-none text-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 text-center"
+                      maxLength={800}
+                    />
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                      {imagePrompt.length}/800 characters
                     </p>
                   </div>
+                </div>
+              </div>
+
+              {/* Audio Upload (Optional) */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 block">
+                  BACKGROUND MUSIC <span className="text-gray-500 dark:text-gray-400 font-normal">(Optional)</span>
+                </label>
+                <input
+                  accept="audio/wav,audio/mp3,audio/mpeg"
+                  className="hidden"
+                  id="ai-generator-audio-upload"
+                  type="file"
+                  onChange={handleAudioUpload}
+                />
+                <label
+                  htmlFor="ai-generator-audio-upload"
+                  className="block border-2 border-dashed border-gray-200 dark:border-input rounded-xl p-8 text-center cursor-pointer transition-all duration-300 bg-white/50 dark:bg-input/20 hover:border-primary/50 dark:hover:border-primary/50 hover:bg-primary/5 dark:hover:bg-primary/10"
+                >
+                  {audioPreview ? (
+                    // Show audio preview
+                    <div className="flex flex-col items-center">
+                      <div className="relative mb-4 w-full max-w-sm">
+                        <audio
+                          src={audioPreview}
+                          controls
+                          className="w-full rounded-lg"
+                        >
+                          Your browser does not support the audio tag.
+                        </audio>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            // Clean up preview URL
+                            if (audioPreview) {
+                              URL.revokeObjectURL(audioPreview)
+                            }
+                            setAudioFile(null)
+                            setAudioPreview(null)
+                          }}
+                          className="absolute -top-3 -right-3 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-lg font-bold hover:bg-red-600 transition-colors shadow-md"
+                        >
+                          ×
+                        </button>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-1 font-medium text-center break-all px-4">
+                        {audioFile?.name}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Click to change audio
+                      </p>
+                    </div>
+                  ) : (
+                    // Show upload prompt
+                    <div className="flex flex-col items-center">
+                      <Music className="w-8 h-8 text-gray-400 dark:text-gray-500 mb-3" />
+                      <p className="text-gray-600 dark:text-gray-400 mb-1">
+                        Drop an audio file here, or click to upload
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                        WAV/MP3 • 3-30 seconds • Up to 15MB
+                      </p>
+                    </div>
+                  )}
                 </label>
               </div>
             </>
@@ -291,44 +492,23 @@ export default function VideoGenerator() {
                   </div>
                 </div>
 
-                {generationMode === 'text-to-video' ? (
-                  /* Duration Selector for Text to Video */
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Duration
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={duration}
-                        onChange={(e) => setDuration(e.target.value)}
-                        className="w-full appearance-none border border-input rounded-md bg-transparent px-3 py-2 text-sm dark:bg-input/30 dark:hover:bg-input/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      >
-                        <option value="5">5 seconds</option>
-                        <option value="10">10 seconds</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 opacity-50 pointer-events-none" />
-                    </div>
+                {/* Duration Selector - Available for both modes */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Duration
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={duration}
+                      onChange={(e) => setDuration(e.target.value)}
+                      className="w-full appearance-none border border-input rounded-md bg-transparent px-3 py-2 text-sm dark:bg-input/30 dark:hover:bg-input/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    >
+                      <option value="5">5 seconds</option>
+                      <option value="10">10 seconds</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 opacity-50 pointer-events-none" />
                   </div>
-                ) : (
-                  /* Mode Selector for Image to Video */
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Mode
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={mode}
-                        onChange={(e) => setMode(e.target.value)}
-                        className="w-full appearance-none border border-input rounded-md bg-transparent px-3 py-2 text-sm dark:bg-input/30 dark:hover:bg-input/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                      >
-                        <option value="Character Replacement">Character Replacement</option>
-                        <option value="Face Swap">Face Swap</option>
-                        <option value="Motion Transfer">Motion Transfer</option>
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 opacity-50 pointer-events-none" />
-                    </div>
-                  </div>
-                )}
+                </div>
               </div>
 
               {/* Cost Estimate */}
