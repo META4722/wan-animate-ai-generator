@@ -6,7 +6,6 @@
 
 const pages = [
   '/',
-  '/creation',
   '/gallery', 
   '/dashboard',
   '/community',

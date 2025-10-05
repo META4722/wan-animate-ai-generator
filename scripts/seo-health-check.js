@@ -9,7 +9,6 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 // 主要页面
 const mainPages = [
   '/',
-  '/creation',
   '/gallery',
   '/dashboard',
   '/help',

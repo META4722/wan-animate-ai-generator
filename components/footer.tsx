@@ -9,7 +9,6 @@ const footerLinks = [
   {
     title: "Product",
     links: [
-      { label: "Create Videos", href: "/creation" },
       { label: "Gallery", href: "/gallery" },
       { label: "Pricing", href: "/#pricing" },
     ],

@@ -43,9 +43,6 @@ export default function NotFound() {
             Popular Pages
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <Link href="/creation" className="text-blue-600 dark:text-blue-400 hover:underline">
-              Create Video
-            </Link>
             <Link href="/gallery" className="text-blue-600 dark:text-blue-400 hover:underline">
               Gallery
             </Link>

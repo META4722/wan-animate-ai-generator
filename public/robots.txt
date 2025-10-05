@@ -5,7 +5,6 @@ User-agent: *
 Allow: /
 
 # Allow important pages
-Allow: /creation
 Allow: /gallery
 Allow: /dashboard
 Allow: /community

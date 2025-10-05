@@ -12,7 +12,6 @@ const navigationLinks = [
   { name: 'Help', url: '/help' },
   
   // Footer navigation
-  { name: 'Create Videos', url: '/creation' },
   { name: 'Gallery', url: '/gallery' },
   { name: 'Community', url: '/community' },
   { name: 'Privacy Policy', url: '/privacy' },

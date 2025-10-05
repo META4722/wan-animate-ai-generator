@@ -6,7 +6,6 @@
 
 const urls = [
   '/',
-  '/creation',
   '/gallery', 
   '/dashboard',
   '/community',
