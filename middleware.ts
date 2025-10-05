@@ -1,34 +1,33 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
+import { shouldIndexPath, getStaticResourceRobots } from "@/utils/seo/static-resources";
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
+  const hostname = request.headers.get('host') || '';
+  const pathname = request.nextUrl.pathname;
 
-  // 检查是否启用了"开发中"模式
-  const isMaintenanceMode = process.env.MAINTENANCE_MODE === 'true';
-
-  if (isMaintenanceMode) {
-    // 允许访问的路径
-    const allowedPaths = [
-      '/', // 首页
-      '/coming-soon', // 开发中页面
-      '/api', // API 路由
-    ];
-
-    // 检查是否为允许的路径
-    const isAllowedPath = allowedPaths.some(path =>
-      url.pathname === path || url.pathname.startsWith(path + '/')
-    );
-
-    // 如果不是允许的路径，重定向到开发中页面
-    if (!isAllowedPath && url.pathname !== '/coming-soon') {
-      url.pathname = '/coming-soon';
-      return NextResponse.redirect(url);
-    }
+  // 强制使用www版本的域名
+  if (hostname === 'wanimate.io') {
+    url.host = 'www.wanimate.io';
+    return NextResponse.redirect(url, 301);
   }
 
-  // 继续执行原有的 Supabase 中间件
-  return await updateSession(request);
+  // 重定向旧域名到新域名
+  if (hostname === 'wanimate.ai' || hostname === 'www.wanimate.ai') {
+    url.host = 'www.wanimate.io';
+    return NextResponse.redirect(url, 301);
+  }
+
+  // 执行 Supabase 中间件
+  const response = await updateSession(request);
+
+  // 为静态资源添加robots标签
+  if (!shouldIndexPath(pathname)) {
+    response.headers.set('X-Robots-Tag', getStaticResourceRobots(pathname));
+  }
+
+  return response;
 }
 
 export const config = {

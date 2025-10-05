@@ -1,4 +1,8 @@
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/seo/config';
 import Link from "next/link";
+
+export const metadata: Metadata = generatePageMetadata('/blog');
 
 interface BlogPost {
   id: string;

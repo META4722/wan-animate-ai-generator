@@ -72,6 +72,12 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
       // Use NEXT_PUBLIC_SITE_URL for production, fallback to current origin for local dev
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
 
+      console.log('🔍 Debug OAuth redirect:');
+      console.log('  - NEXT_PUBLIC_SITE_URL:', process.env.NEXT_PUBLIC_SITE_URL);
+      console.log('  - window.location.origin:', window.location.origin);
+      console.log('  - baseUrl:', baseUrl);
+      console.log('  - redirectTo:', `${baseUrl}/auth/callback?redirect_to=${window.location.pathname}`);
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

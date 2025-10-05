@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { defaultMetadata } from "@/lib/seo/config";
 import { MultipleStructuredData } from "@/components/seo/structured-data";
 import { pageSchemas } from "@/lib/seo/structured-data";
+import { CanonicalUrl } from "@/components/seo/canonical-url";
 import GoogleTagManager from "@/components/gtm";
 import GoogleAnalytics from "@/components/google-analytics";
 import "./globals.css";
@@ -31,6 +32,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
       <head>
+        <CanonicalUrl />
         <MultipleStructuredData schemas={pageSchemas.home} />
         <GoogleTagManager />
         <GoogleAnalytics />

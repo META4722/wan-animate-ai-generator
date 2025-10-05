@@ -1,5 +1,7 @@
 'use client'
 
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/seo/config';
 import React, { useState, useEffect, useRef } from 'react';
 import { Wand2, Upload, Loader2, Download, Heart, X, Maximize, Sparkles } from 'lucide-react';
 import { ImageGenerationService } from '@/lib/api/image-generation';

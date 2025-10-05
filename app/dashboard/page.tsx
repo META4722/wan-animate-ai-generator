@@ -1,5 +1,9 @@
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/seo/config';
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = generatePageMetadata('/dashboard');
 import { SubscriptionStatusCard } from "@/components/dashboard/subscription-status-card";
 import { CreditsBalanceCard } from "@/components/dashboard/credits-balance-card";
 import { QuickActionsCard } from "@/components/dashboard/quick-actions-card";

@@ -1,15 +1,9 @@
-import { Metadata } from 'next';
-import { generatePageMetadata } from '@/lib/seo/config';
-import CommunityClient from './community-client';
+"use client";
 
-export const metadata: Metadata = generatePageMetadata('/community');
-
-export default function CommunityPage() {
-  return <CommunityClient />;
-}
+import React, { useState } from 'react';
 import { MessageCircle, Users, Trophy, TrendingUp, Heart, Share2, MessageSquare, Star, Award } from 'lucide-react';
 
-export default function CommunityPage() {
+export default function CommunityClient() {
   const [activeTab, setActiveTab] = useState('trending');
 
   // Sample community posts
@@ -89,7 +83,7 @@ export default function CommunityPage() {
   // Community stats
   const communityStats = [
     { label: 'Active Users', value: '12.5K', icon: Users, color: 'text-blue-500' },
-    { label: 'Renders Created', value: '245K', icon: TrendingUp, color: 'text-green-500' },
+    { label: 'Videos Created', value: '245K', icon: TrendingUp, color: 'text-green-500' },
     { label: 'Community Posts', value: '8.2K', icon: MessageCircle, color: 'text-purple-500' },
     { label: 'Awards Given', value: '1.8K', icon: Trophy, color: 'text-yellow-500' }
   ];
@@ -117,7 +111,7 @@ export default function CommunityPage() {
               Community
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Connect with fellow designers, share your creations, and learn from the best
+              Connect with fellow creators, share your AI-generated videos, and learn from the best
             </p>
           </div>
         </div>
@@ -273,11 +267,11 @@ export default function CommunityPage() {
             <div className="bg-card backdrop-blur-xl rounded-2xl shadow-xl border border-border p-6">
               <h3 className="text-lg font-semibold text-foreground mb-4">Community Guidelines</h3>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <div>" Be respectful and constructive</div>
-                <div>" Share your original work</div>
-                <div>" Provide helpful feedback</div>
-                <div>" Credit inspiration sources</div>
-                <div>" Keep content relevant to architecture</div>
+                <div>• Be respectful and constructive</div>
+                <div>• Share your original work</div>
+                <div>• Provide helpful feedback</div>
+                <div>• Credit inspiration sources</div>
+                <div>• Keep content relevant to AI video creation</div>
               </div>
             </div>
           </div>

@@ -1,16 +1,10 @@
-import { Metadata } from 'next';
-import { generatePageMetadata } from '@/lib/seo/config';
-import GalleryClient from './gallery-client';
+"use client";
 
-export const metadata: Metadata = generatePageMetadata('/gallery');
-
-export default function GalleryPage() {
-  return <GalleryClient />;
-}
+import React, { useState } from 'react';
 import { Search, Filter, Heart, Download, Eye } from 'lucide-react';
 import { ImageModal } from '@/components/ui/image-modal';
 
-export default function GalleryPage() {
+export default function GalleryClient() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);

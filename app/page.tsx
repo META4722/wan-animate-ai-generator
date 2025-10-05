@@ -1,5 +1,5 @@
-"use client";
-
+import { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/seo/config';
 
 // New landing page components
 import Hero from "@/components/home/hero";
@@ -9,9 +9,9 @@ import VideoShowcase from "@/components/home/video-showcase";
 import Pricing from "@/components/home/pricing";
 import FAQ from "@/components/home/faq";
 
+export const metadata: Metadata = generatePageMetadata('/');
 
 export default function Home() {
-
   return (
     <div className="flex flex-col gap-8 md:gap-12 lg:gap-24">
       <Hero />

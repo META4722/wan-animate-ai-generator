@@ -69,6 +69,52 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      // 处理常见的URL错误
+      {
+        source: '/$',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/&',
+        destination: '/',
+        permanent: true,
+      },
+      // 强制使用www版本 - 非www重定向到www
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'wanimate.io',
+          },
+        ],
+        destination: 'https://www.wanimate.io/:path*',
+        permanent: true,
+      },
+      // 旧域名重定向
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'wanimate.ai',
+          },
+        ],
+        destination: 'https://www.wanimate.io/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.wanimate.ai',
+          },
+        ],
+        destination: 'https://www.wanimate.io/:path*',
+        permanent: true,
+      },
     ]
   },
   
@@ -120,6 +166,58 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      // 字体文件
+      {
+        source: '/:path*.(woff|woff2|ttf|eot)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      // Favicon和图标文件
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      {
+        source: '/:path*.(png|jpg|jpeg|gif|svg|webp|ico)',
+        has: [
+          {
+            type: 'header',
+            key: 'referer',
+            value: '(favicon|apple-icon|icon)',
+          },
+        ],
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
           },
         ],
       },

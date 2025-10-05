@@ -1,5 +1,5 @@
 # Robots.txt for Wanimate AI
-# https://wanimate.ai/robots.txt
+# https://www.wanimate.io/robots.txt
 
 User-agent: *
 Allow: /
@@ -11,6 +11,7 @@ Allow: /dashboard
 Allow: /community
 Allow: /blog
 Allow: /blog/*
+Allow: /help
 
 # Disallow authentication pages (no SEO value)
 Disallow: /sign-in
@@ -29,7 +30,7 @@ Allow: /privacy
 Allow: /terms
 
 # Sitemap location
-Sitemap: https://wanimate.ai/sitemap.xml
+Sitemap: https://www.wanimate.io/sitemap.xml
 
 # Crawl delay for politeness (optional)
 Crawl-delay: 1

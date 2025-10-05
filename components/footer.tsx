@@ -9,21 +9,24 @@ const footerLinks = [
   {
     title: "Product",
     links: [
-      { label: "Features", href: "/#features" },
+      { label: "Create Videos", href: "/creation" },
+      { label: "Gallery", href: "/gallery" },
       { label: "Pricing", href: "/#pricing" },
     ],
   },
   {
-    title: "Company",
+    title: "Resources",
     links: [
-      { label: "Blog", href: "#blog" },
+      { label: "Blog", href: "/blog" },
+      { label: "Help & Support", href: "/help" },
+      { label: "Community", href: "/community" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 ];
@@ -53,7 +56,7 @@ export function Footer() {
           <div className="col-span-full lg:col-span-2">
             <Logo />
             <p className="mt-4 text-sm text-muted-foreground">
-              Animate any character from a source video with AI-powered motion transfer technology.
+              Create stunning AI-generated videos with advanced artificial intelligence technology. Transform your ideas into amazing animated content.
             </p>
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
