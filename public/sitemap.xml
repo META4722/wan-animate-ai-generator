@@ -7,30 +7,22 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.wanimate.io/</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Main pages -->
-
   <url>
     <loc>https://www.wanimate.io/gallery</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wanimate.io/dashboard</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.wanimate.io/community</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -38,7 +30,7 @@
   <!-- Blog -->
   <url>
     <loc>https://www.wanimate.io/blog</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -46,54 +38,24 @@
   <!-- Help page -->
   <url>
     <loc>https://www.wanimate.io/help</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-
-  <!-- Auth pages -->
-  <url>
-    <loc>https://www.wanimate.io/sign-in</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wanimate.io/sign-up</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.wanimate.io/forgot-password</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
   </url>
 
   <!-- Legal pages -->
   <url>
     <loc>https://www.wanimate.io/privacy</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.wanimate.io/terms</loc>
-    <lastmod>2025-01-25</lastmod>
+    <lastmod>2025-10-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-  </url>
-
-  <!-- Coming soon page -->
-  <url>
-    <loc>https://www.wanimate.io/coming-soon</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
   </url>
 
 </urlset>
