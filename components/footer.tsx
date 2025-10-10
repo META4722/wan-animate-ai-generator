@@ -19,6 +19,7 @@ const footerLinks = [
       { label: "Blog", href: "/blog" },
       { label: "Help & Support", href: "/help" },
       { label: "Community", href: "/community" },
+      { label: "MossAI Tools", href: "https://mossai.org" },
     ],
   },
   {
@@ -26,6 +27,7 @@ const footerLinks = [
     links: [
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];
