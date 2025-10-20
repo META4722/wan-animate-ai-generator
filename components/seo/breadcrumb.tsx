@@ -83,7 +83,6 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
 export const breadcrumbConfigs = {
   pricing: [{ name: 'Pricing', current: true }],
   features: [{ name: 'Features', current: true }],
-  gallery: [{ name: 'Gallery', current: true }],
   about: [{ name: 'About Us', current: true }],
   dashboard: [{ name: 'Dashboard', current: true }],
   profile: [{ name: 'Profile', current: true }],
@@ -94,9 +93,5 @@ export const breadcrumbConfigs = {
   'dashboard/projects': [
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'My Projects', current: true }
-  ],
-  'dashboard/gallery': [
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'My Gallery', current: true }
   ]
 }

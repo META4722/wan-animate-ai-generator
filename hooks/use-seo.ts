@@ -76,7 +76,6 @@ export function useSEO(options: UseSEOOptions = {}): SEOData {
       const pathMap: Record<string, string> = {
         'pricing': 'Pricing',
         'features': 'Features',
-        'gallery': 'Gallery',
         'dashboard': 'Dashboard',
         'profile': 'Profile',
         'settings': 'Settings',

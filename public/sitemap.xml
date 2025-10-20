@@ -14,13 +14,6 @@
 
   <!-- Main pages -->
   <url>
-    <loc>https://www.wanimate.io/gallery</loc>
-    <lastmod>2025-10-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
     <loc>https://www.wanimate.io/community</loc>
     <lastmod>2025-10-05</lastmod>
     <changefreq>weekly</changefreq>

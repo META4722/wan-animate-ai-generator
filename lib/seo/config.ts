@@ -110,11 +110,7 @@ export const PAGE_SEO: Record<string, Partial<Metadata>> = {
     keywords: ['AI video generation', 'artificial intelligence video', 'AI animation', 'video creation AI', 'automated video generation']
   },
 
-  '/gallery': {
-    title: 'Gallery - Showcase of AI-Generated Videos',
-    description: 'Browse stunning AI-generated videos created by users with Wanimate AI. Experience the power of artificial intelligence in video creation.',
-    keywords: ['AI video gallery', 'video showcase', 'AI animation examples', 'generated video examples']
-  },
+
   '/dashboard': {
     title: 'Dashboard - Manage Your AI Video Projects',
     description: 'Access your Wanimate AI dashboard to manage video projects, track generation history, and control your subscription.',
