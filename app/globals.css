@@ -59,3 +59,110 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Blog-specific styles */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Enhanced prose styles for blog articles */
+  .prose {
+    @apply text-foreground;
+  }
+  
+  .prose h1 {
+    @apply scroll-mt-20;
+  }
+  
+  .prose h2 {
+    @apply scroll-mt-20;
+  }
+  
+  .prose h3 {
+    @apply scroll-mt-20;
+  }
+  
+  .prose h4 {
+    @apply scroll-mt-20;
+  }
+
+  /* Code block enhancements */
+  .prose pre {
+    @apply relative;
+  }
+  
+  .prose pre code {
+    @apply font-mono text-sm leading-relaxed;
+  }
+
+  /* Table enhancements */
+  .prose table {
+    @apply w-full border-collapse;
+  }
+  
+  .prose th {
+    @apply bg-muted font-semibold text-left;
+  }
+  
+  .prose td, .prose th {
+    @apply border border-border px-4 py-2;
+  }
+
+  /* List enhancements */
+  .prose ul {
+    @apply space-y-2;
+  }
+  
+  .prose ol {
+    @apply space-y-2;
+  }
+  
+  .prose li {
+    @apply leading-relaxed;
+  }
+
+  /* Link enhancements */
+  .prose a {
+    @apply text-primary hover:text-primary/80 transition-colors underline decoration-primary/30 hover:decoration-primary/60;
+  }
+
+  /* Blockquote enhancements */
+  .prose blockquote {
+    @apply border-l-4 border-primary bg-primary/5 pl-6 py-4 italic;
+  }
+}
+
+@layer utilities {
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar for code blocks */
+  .prose pre::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .prose pre::-webkit-scrollbar-track {
+    @apply bg-slate-700;
+  }
+  
+  .prose pre::-webkit-scrollbar-thumb {
+    @apply bg-slate-500 rounded;
+  }
+  
+  .prose pre::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+}

@@ -31,20 +31,23 @@ export default async function DashboardPage() {
         status,
         current_period_end,
         creem_product_id
-      ),
-      credits_history (
-        amount,
-        type,
-        created_at
       )
     `
     )
     .eq("user_id", user.id)
     .single();
 
+  // Get recent credits history separately with proper sorting
+  const { data: creditsHistoryData } = await supabase
+    .from("credits_history")
+    .select("amount, type, created_at, description")
+    .eq("customer_id", customerData?.id)
+    .order("created_at", { ascending: false })
+    .limit(3);
+
   const subscription = customerData?.subscriptions?.[0];
   const credits = customerData?.credits || 0;
-  const recentCreditsHistory = customerData?.credits_history?.slice(0, 2) || [];
+  const recentCreditsHistory = creditsHistoryData || [];
 
   return (
     <div className="flex-1 w-full flex flex-col gap-6 sm:gap-8 px-4 sm:px-8 container">

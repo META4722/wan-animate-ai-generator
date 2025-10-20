@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { X, Download, ExternalLink, Maximize2, Minimize2 } from 'lucide-react'
+import { useDateTimeFormat } from '@/lib/date-utils'
 
 interface ImageModalProps {
   isOpen: boolean
@@ -24,6 +25,9 @@ export function ImageModal({
 }: ImageModalProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  
+  // 安全的日期时间格式化
+  const formattedDate = generatedAt ? useDateTimeFormat(generatedAt) : null
 
   if (!isOpen) return null
 
@@ -197,7 +201,7 @@ export function ImageModal({
                 <div>
                   <span className="font-medium text-gray-900">Generated:</span>
                   <span className="ml-2 text-gray-600">
-                    {new Date(generatedAt).toLocaleString()}
+                    {formattedDate}
                   </span>
                 </div>
               )}

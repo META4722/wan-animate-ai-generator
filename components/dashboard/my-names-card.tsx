@@ -8,6 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Star, Eye, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { useDateFormat } from "@/lib/date-utils";
+
+// 安全的日期组件
+function SafeDate({ dateString }: { dateString: string }) {
+  const formattedDate = useDateFormat(dateString);
+  return <span>{formattedDate}</span>;
+}
 
 interface SavedName {
   id: string;
@@ -220,7 +227,7 @@ export function MyNamesCard() {
 
               <div className="flex items-center justify-between pt-2 border-t">
                 <div className="text-xs text-muted-foreground">
-                  Created {new Date(name.created_at).toLocaleDateString()}
+                  Created <SafeDate dateString={name.created_at} />
                 </div>
                 <Button variant="ghost" size="sm" className="text-xs">
                   <Eye className="h-3 w-3 mr-1" />

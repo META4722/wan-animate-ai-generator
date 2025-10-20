@@ -16,19 +16,56 @@ export async function GET(request: NextRequest) {
     }
 
     // Get animation history from credits_history
-    const { data: creditsHistory, error } = await supabase
-      .from("credits_history")
-      .select(`
-        id,
-        amount,
-        type,
-        description,
-        created_at
-      `)
-      .eq("user_id", user.id)
-      .in("type", ["wan25_text_video_generation", "wan25_video_generation"])
-      .order("created_at", { ascending: false })
-      .limit(20);
+    // Try with user_id first, fallback to customer_id if user_id doesn't exist
+    let creditsHistory, error;
+    
+    try {
+      const result = await supabase
+        .from("credits_history")
+        .select(`
+          id,
+          amount,
+          type,
+          description,
+          created_at
+        `)
+        .eq("user_id", user.id)
+        .in("type", ["wan25_text_video_generation", "wan25_video_generation"])
+        .order("created_at", { ascending: false })
+        .limit(20);
+      
+      creditsHistory = result.data;
+      error = result.error;
+    } catch (userIdError) {
+      // If user_id column doesn't exist, try with customer_id
+      console.log("Trying customer_id approach...");
+      
+      // First get customer_id for this user
+      const { data: customer } = await supabase
+        .from("customers")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+      
+      if (customer) {
+        const result = await supabase
+          .from("credits_history")
+          .select(`
+            id,
+            amount,
+            type,
+            description,
+            created_at
+          `)
+          .eq("customer_id", customer.id)
+          .in("type", ["wan25_text_video_generation", "wan25_video_generation"])
+          .order("created_at", { ascending: false })
+          .limit(20);
+        
+        creditsHistory = result.data;
+        error = result.error;
+      }
+    }
 
     if (error) {
       console.error("Error fetching animation history:", error);

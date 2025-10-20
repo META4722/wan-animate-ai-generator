@@ -9,7 +9,17 @@
     "lint": "next lint",
     "debug": "node scripts/debug-video-generation.js",
     "monitor": "node scripts/realtime-video-monitor.js monitor",
-    "diagnostic": "node scripts/realtime-video-monitor.js diagnostic"
+    "diagnostic": "node scripts/realtime-video-monitor.js diagnostic",
+    "test:credits": "node scripts/test-user-credits.js",
+    "fix:credits": "node scripts/fix-user-credits.js",
+    "test:registration": "node scripts/test-new-user-registration.js",
+    "check:compliance": "node scripts/payment-compliance-check.js",
+    "test:credits-error": "node scripts/test-credits-error.js",
+    "webhook:dev": "node scripts/start-webhook-dev.js",
+    "webhook:test": "node scripts/test-webhook.js",
+    "test:subscription": "node scripts/test-subscription-credits.js",
+    "db:migrate": "node scripts/run-db-migration.js",
+    "db:fix": "node scripts/manual-db-fix.js"
   },
   "dependencies": {
     "@fal-ai/client": "^1.6.2",

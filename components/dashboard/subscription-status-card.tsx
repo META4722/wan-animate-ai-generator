@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { SubscriptionPortalDialog } from "./subscription-portal-dialog";
 import { SubscriptionState } from "@/types/subscriptions";
+import { useIsClient } from "@/lib/date-utils";
 
 type StatusConfig = {
   color: string;
@@ -23,7 +24,12 @@ type StatusConfigs = {
   [key in SubscriptionState]: StatusConfig;
 };
 
-function formatDate(date: string) {
+function formatDate(date: string, isClient: boolean = false) {
+  if (!isClient) {
+    // 服务器端渲染时使用一致的格式
+    return new Date(date).toISOString().split('T')[0];
+  }
+  // 客户端渲染时使用本地化格式
   return new Date(date).toLocaleDateString();
 }
 
@@ -33,7 +39,8 @@ function isFutureDate(date: string) {
 
 function getStatusConfig(
   status: string,
-  current_period_end: string
+  current_period_end: string,
+  isClient: boolean = false
 ): StatusConfig {
   const inGracePeriod = isFutureDate(current_period_end);
 
@@ -41,27 +48,27 @@ function getStatusConfig(
     active: {
       color: "text-green-500",
       icon: Package2,
-      message: `Renews on ${formatDate(current_period_end)}`,
+      message: `Renews on ${formatDate(current_period_end, isClient)}`,
       iconColor: "text-green-500",
     },
     trialing: {
       color: "text-primary",
       icon: Clock,
-      message: `Trial ends on ${formatDate(current_period_end)}`,
+      message: `Trial ends on ${formatDate(current_period_end, isClient)}`,
       iconColor: "text-primary",
     },
     canceled: {
       color: inGracePeriod ? "text-yellow-500" : "text-destructive",
       icon: Ban,
       message: inGracePeriod
-        ? `Access until ${formatDate(current_period_end)}`
-        : `Ended on ${formatDate(current_period_end)}`,
+        ? `Access until ${formatDate(current_period_end, isClient)}`
+        : `Ended on ${formatDate(current_period_end, isClient)}`,
       iconColor: inGracePeriod ? "text-yellow-500" : "text-destructive",
     },
     past_due: {
       color: "text-yellow-500",
       icon: AlertCircle,
-      message: `Payment due - Access until ${formatDate(current_period_end)}`,
+      message: `Payment due - Access until ${formatDate(current_period_end, isClient)}`,
       iconColor: "text-yellow-500",
     },
     unpaid: {
@@ -73,7 +80,7 @@ function getStatusConfig(
     paused: {
       color: "text-yellow-500",
       icon: PauseCircle,
-      message: `Paused until ${formatDate(current_period_end)}`,
+      message: `Paused until ${formatDate(current_period_end, isClient)}`,
       iconColor: "text-yellow-500",
     },
     incomplete: {
@@ -85,7 +92,7 @@ function getStatusConfig(
     expired: {
       color: "text-destructive",
       icon: Ban,
-      message: `Expired on ${formatDate(current_period_end)}`,
+      message: `Expired on ${formatDate(current_period_end, isClient)}`,
       iconColor: "text-destructive",
     },
   };
@@ -110,6 +117,7 @@ type SubscriptionStatusCardProps = {
 export function SubscriptionStatusCard({
   subscription,
 }: SubscriptionStatusCardProps) {
+  const isClient = useIsClient();
   return (
     <div className="rounded-xl border bg-card p-6">
       <div className="flex items-center gap-4">
@@ -123,7 +131,8 @@ export function SubscriptionStatusCard({
               className={`text-2xl font-bold capitalize mt-1 ${
                 getStatusConfig(
                   subscription.status,
-                  subscription.current_period_end
+                  subscription.current_period_end,
+                  isClient
                 ).color
               }`}
             >
@@ -142,7 +151,8 @@ export function SubscriptionStatusCard({
           {(() => {
             const config = getStatusConfig(
               subscription.status,
-              subscription.current_period_end
+              subscription.current_period_end,
+              isClient
             );
             const Icon = config.icon;
             return (

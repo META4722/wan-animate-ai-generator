@@ -17,22 +17,41 @@ export async function GET(request: NextRequest) {
     // Try video_generations table first since animations table doesn't exist yet
     let animations, animationsError;
 
-    // Check video_generations table
-    const result = await supabase
-      .from("video_generations")
-      .select(`
-        id,
-        prompt,
-        generation_type,
-        resolution,
-        duration,
-        credits_used,
-        status,
-        created_at
-      `)
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(20);
+    // Check video_generations table with error handling for missing columns
+    let result;
+    try {
+      result = await supabase
+        .from("video_generations")
+        .select(`
+          id,
+          prompt,
+          generation_type,
+          resolution,
+          duration,
+          credits_used,
+          status,
+          created_at
+        `)
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(20);
+    } catch (selectError) {
+      // If some columns don't exist, try with basic columns only
+      console.log("Trying basic columns for video_generations...");
+      result = await supabase
+        .from("video_generations")
+        .select(`
+          id,
+          prompt,
+          resolution,
+          duration,
+          status,
+          created_at
+        `)
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(20);
+    }
 
     animations = result.data;
     animationsError = result.error;
@@ -75,20 +94,20 @@ export async function GET(request: NextRequest) {
     // Transform data to match the component interface
     const logs = animations?.map((anim) => ({
       id: anim.id,
-      animation_mode: anim.generation_type,
+      animation_mode: anim.generation_type || "text-to-video",
       quality_mode: anim.resolution === "480p" ? "standard" : "high",
-      credits_used: anim.credits_used,
-      duration_seconds: anim.duration,
-      character_name: anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : ""),
-      status: anim.status,
+      credits_used: anim.credits_used || 0,
+      duration_seconds: anim.duration || 5,
+      character_name: anim.prompt ? anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : "") : "Unknown",
+      status: anim.status || "completed",
       created_at: anim.created_at,
     })) || [];
 
-    // Calculate statistics
-    const completedAnimations = animations?.filter(a => a.status === 'completed') || [];
+    // Calculate statistics with safe fallbacks
+    const completedAnimations = animations?.filter(a => (a.status || 'completed') === 'completed') || [];
     const totalAnimations = completedAnimations.length;
     const totalCreditsUsed = completedAnimations.reduce((sum, a) => sum + (a.credits_used || 0), 0);
-    const totalDurationGenerated = completedAnimations.reduce((sum, a) => sum + (a.duration || 0), 0);
+    const totalDurationGenerated = completedAnimations.reduce((sum, a) => sum + (a.duration || 5), 0);
     const avgCreditsPerAnimation = totalAnimations > 0 ? totalCreditsUsed / totalAnimations : 0;
 
     const stats = {

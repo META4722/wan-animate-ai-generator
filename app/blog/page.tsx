@@ -74,59 +74,109 @@ const blogPosts: BlogPost[] = [
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Blog Articles
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Sharing technical insights on high-fidelity character animation.
-          </p>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-background border-b">
+        <div className="container mx-auto px-4 py-20 md:py-28">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+              AI Animation
+              <span className="block text-primary">Insights</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Discover the latest breakthroughs in AI-powered character animation, 
+              technical deep-dives, and industry insights from our research team.
+            </p>
+          </div>
         </div>
+      </div>
 
-        {/* Blog Posts Grid */}
-        <div className="grid gap-8 md:gap-12">
-          {blogPosts.length > 0 ? (
-            blogPosts.map((post) => (
-              <article key={post.id} className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                    {post.category}
+      <div className="container mx-auto px-4 py-16 md:py-20">
+        {/* Featured Article */}
+        {blogPosts.length > 0 && (
+          <div className="mb-20">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Featured Article</h2>
+              <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <article className="bg-gradient-to-br from-card to-card/50 border border-border rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="p-8 md:p-12">
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+                    {blogPosts[0].category}
                   </span>
-                  <span>{post.date}</span>
-                  <span>{post.readTime} read</span>
+                  <span className="text-muted-foreground text-sm">{blogPosts[0].date}</span>
+                  <span className="text-muted-foreground text-sm">{blogPosts[0].readTime} read</span>
                 </div>
 
-                <h2 className="text-2xl font-semibold mb-4 text-foreground hover:text-primary transition-colors">
-                  <Link href={`/blog/${post.slug}`}>
-                    {post.title}
+                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight hover:text-primary transition-colors">
+                  <Link href={`/blog/${blogPosts[0].slug}`}>
+                    {blogPosts[0].title}
                   </Link>
-                </h2>
+                </h3>
 
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {post.summary}
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  {blogPosts[0].summary}
                 </p>
 
                 <Link
-                  href={`/blog/${post.slug}`}
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+                  href={`/blog/${blogPosts[0].slug}`}
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
                 >
-                  Read more →
+                  Read Full Article
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
+              </div>
+            </article>
+          </div>
+        )}
+
+        {/* Recent Articles */}
+        <div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Recent Articles</h2>
+            <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.slice(1).map((post) => (
+              <article key={post.id} className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                    <span className="text-muted-foreground text-xs">{post.readTime}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-foreground mb-3 leading-tight group-hover:text-primary transition-colors">
+                    <Link href={`/blog/${post.slug}`} className="line-clamp-2">
+                      {post.title}
+                    </Link>
+                  </h3>
+
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-3">
+                    {post.summary}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">{post.date}</span>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                    >
+                      Read more →
+                    </Link>
+                  </div>
+                </div>
               </article>
-            ))
-          ) : (
-            <div className="text-center py-16">
-              <h3 className="text-xl font-semibold mb-4 text-muted-foreground">
-                Blog articles coming soon...
-              </h3>
-              <p className="text-muted-foreground">
-                We're working on bringing you the latest insights on character animation technology.
-              </p>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
+
+
       </div>
     </div>
   );

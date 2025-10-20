@@ -2,6 +2,7 @@
 
 import { Coins } from "lucide-react";
 import { CreditTransaction } from "@/types/creem";
+import { useDateFormat } from "@/lib/date-utils";
 
 type CreditsBalanceCardProps = {
   credits: number;
@@ -25,25 +26,37 @@ export function CreditsBalanceCard({
       </div>
       <div className="mt-4 space-y-2">
         <p className="text-sm text-muted-foreground">Recent Activity</p>
-        <div className="space-y-1">
-          {recentHistory.map((history, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between text-sm"
-            >
-              <span
-                className={
-                  history.type === "add" ? "text-primary" : "text-destructive"
-                }
+        <div className="space-y-2">
+          {recentHistory.map((history, index) => {
+            const formattedDate = useDateFormat(history.created_at);
+            return (
+              <div
+                key={index}
+                className="flex items-start justify-between text-sm gap-2"
               >
-                {history.type === "add" ? "+" : "-"}
-                {history.amount}
-              </span>
-              <span className="text-muted-foreground">
-                {new Date(history.created_at).toLocaleDateString()}
-              </span>
-            </div>
-          ))}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={
+                        history.type === "add" ? "text-primary font-medium" : "text-destructive font-medium"
+                      }
+                    >
+                      {history.type === "add" ? "+" : "-"}
+                      {history.amount}
+                    </span>
+                    <span className="text-muted-foreground text-xs">
+                      {formattedDate}
+                    </span>
+                  </div>
+                  {history.description && (
+                    <p className="text-xs text-muted-foreground mt-1 truncate">
+                      {history.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

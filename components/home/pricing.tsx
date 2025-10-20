@@ -67,7 +67,7 @@ export default function Pricing() {
               Character Animation Plans
             </h2>
             <p className="max-w-[95%] sm:max-w-[85%] text-sm sm:text-lg leading-normal text-muted-foreground">
-              Choose the perfect plan for your character animation needs. All plans include AI-powered motion transfer and high-fidelity animation generation.
+              Choose the perfect plan for your character animation needs. All plans include AI-powered motion transfer and high-fidelity animation generation. Cancel anytime with no long-term commitments.
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mt-8 md:mt-12">
@@ -115,7 +115,7 @@ export default function Pricing() {
                       handleSubscribe(tier.productId, tier.discountCode)
                     }
                   >
-                    Get started
+                    Get Started
                   </Button>
                 </div>
               </div>
@@ -123,6 +123,49 @@ export default function Pricing() {
           </div>
         </div>
 
+        {/* Credits Pricing Information */}
+        <div className="bg-muted/30 rounded-2xl p-8">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold mb-4">💎 Credits Usage</h3>
+            <p className="text-muted-foreground">
+              Credits are consumed based on video resolution and duration. All credits never expire.
+            </p>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="text-center p-4 bg-background rounded-lg border">
+              <div className="text-lg font-semibold mb-2">480p Quality</div>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div>5 seconds = <span className="font-medium text-foreground">5 credits</span></div>
+                <div>10 seconds = <span className="font-medium text-foreground">10 credits</span></div>
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-background rounded-lg border border-primary/50">
+              <div className="text-lg font-semibold mb-2">720p Quality</div>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div>5 seconds = <span className="font-medium text-foreground">10 credits</span></div>
+                <div>10 seconds = <span className="font-medium text-foreground">20 credits</span></div>
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-background rounded-lg border">
+              <div className="text-lg font-semibold mb-2">1080p Quality</div>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div>5 seconds = <span className="font-medium text-foreground">15 credits</span></div>
+                <div>10 seconds = <span className="font-medium text-foreground">30 credits</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-4 text-sm text-muted-foreground">
+              <span>✨ No expiration</span>
+              <span>🎯 Pay per use</span>
+              <span>🔄 Flexible consumption</span>
+            </div>
+          </div>
+        </div>
 
       </div>
     </section>

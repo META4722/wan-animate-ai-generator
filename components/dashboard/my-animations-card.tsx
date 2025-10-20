@@ -8,6 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import { Play, Download, Eye, Trash2, Clock, CheckCircle, XCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { useDateFormat } from "@/lib/date-utils";
+
+// 安全的日期组件
+function SafeDate({ dateString }: { dateString: string }) {
+  const formattedDate = useDateFormat(dateString);
+  return <span>{formattedDate}</span>;
+}
 
 interface AnimationProject {
   id: string;
@@ -280,11 +287,11 @@ export function MyAnimationsCard() {
 
               <div className="flex items-center justify-between pt-2 border-t text-xs text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <span>Created {new Date(animation.created_at).toLocaleDateString()}</span>
+                  <span>Created <SafeDate dateString={animation.created_at} /></span>
                   {animation.completed_at && (
                     <>
                       <span>•</span>
-                      <span>Completed {new Date(animation.completed_at).toLocaleDateString()}</span>
+                      <span>Completed <SafeDate dateString={animation.completed_at} /></span>
                     </>
                   )}
                 </div>

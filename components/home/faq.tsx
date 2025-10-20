@@ -15,7 +15,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "How does the character animation process work?",
-    answer: "Upload a clear character portrait and a reference performance video (up to 45 seconds). Our AI analyzes the motion, facial expressions, and gestures from the reference video and applies them to your character while maintaining their unique appearance and identity."
+    answer: "Upload a text prompt or image to generate AI-powered videos. Choose your preferred resolution (480p, 720p, or 1080p) and duration (5 or 10 seconds). Our AI creates dynamic video content based on your input, with options for different aspect ratios and quality settings."
   },
   {
     question: "What file formats are supported?",
@@ -51,24 +51,15 @@ const faqData: FAQItem[] = [
   },
   {
     question: "How does the credit system work?",
-    answer: "Credits are consumed based on video length and quality: Standard quality uses 20 credits per 5 seconds, High quality uses 40 credits per 5 seconds. Credits never expire and can be purchased in packages or through monthly plans."
+    answer: "Credits are consumed based on video resolution and length: 480p uses 5 credits per 5 seconds (10 for 10s), 720p uses 10 credits per 5 seconds (20 for 10s), and 1080p uses 15 credits per 5 seconds (30 for 10s). Credits never expire and can be purchased in packages or through monthly subscription plans."
   },
-  {
-    question: "What happens if my animation doesn't look right?",
-    answer: "You can try different reference videos, adjust quality settings, or use a clearer character image. Our AI works best with front-facing character portraits and well-lit reference videos with clear motion."
-  },
-  {
-    question: "Is there a limit on video length?",
-    answer: "Reference videos can be up to 45 seconds long. For longer content, you can split your video into segments and animate them separately, then combine the results in your video editor."
-  },
+
+
   {
     question: "Can I run animations in the background?",
     answer: "Yes! You can queue multiple animation jobs and let them run in the background while you continue working on other projects. You'll receive notifications when each animation is complete."
   },
-  {
-    question: "Do you offer team collaboration features?",
-    answer: "Enterprise plans include team workspaces where multiple users can share characters, animations, and collaborate on projects. Perfect for studios and agencies working on character animation projects."
-  },
+
   {
     question: "How do I get started?",
     answer: "Simply upload a character image and reference video using our generator above, select your quality and mode preferences, then hit 'Animate'. You can also try it for free to see the results before committing to a paid plan."
@@ -137,7 +128,7 @@ export default function FAQ() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:support@wanimate.ai"
+              href="mailto:support@wanimate.io"
               className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
             >
               Contact Support

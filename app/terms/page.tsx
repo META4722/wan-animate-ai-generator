@@ -47,7 +47,7 @@ export default function TermsPage() {
               Terms of Service
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              These terms govern your use of our Chinese name generation service. 
+              These terms govern your use of our AI-powered video animation service. 
               By using our service, you agree to these terms and conditions.
             </p>
             <p className="text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  Use our service to generate Chinese names, save your favorites, and share your generated names with others.
+                  Use our service to create AI-powered video animations, save your projects, and download your generated content.
                 </p>
               </CardContent>
             </Card>
@@ -85,7 +85,7 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  Misuse our service, violate others' rights, or use generated names for illegal or harmful purposes.
+                  Misuse our service, violate others' rights, or use generated content for illegal or harmful purposes.
                 </p>
               </CardContent>
             </Card>
@@ -99,7 +99,7 @@ export default function TermsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  Provide reliable service, protect your privacy, and maintain the quality of our name generation.
+                  Provide reliable service, protect your privacy, and maintain the quality of our AI animation technology.
                 </p>
               </CardContent>
             </Card>
@@ -120,15 +120,15 @@ export default function TermsPage() {
               
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Chinese Name Generator is an AI-powered platform that creates personalized Chinese names based on 
-                  your preferences, personality traits, and cultural considerations. Our service includes:
+                  Wan 2.2 Animate is an AI-powered platform that creates high-quality video animations from source videos 
+                  and images. Our service transforms any character with advanced motion transfer technology. Our service includes:
                 </p>
                 
                 <ul className="space-y-2">
-                  <li>• <strong>Free Generation:</strong> Limited daily name generation for non-registered users</li>
-                  <li>• <strong>Premium Features:</strong> Unlimited generation, personalized matching, and name saving for registered users</li>
-                  <li>• <strong>Cultural Education:</strong> Detailed meanings, pronunciations, and cultural context for generated names</li>
-                  <li>• <strong>Personal Collections:</strong> Save and manage your favorite generated names</li>
+                  <li>• <strong>AI Animation:</strong> Transform characters with motion capture-free animation</li>
+                  <li>• <strong>Credit System:</strong> Flexible pay-per-use model with credit packages</li>
+                  <li>• <strong>Subscription Plans:</strong> Monthly plans for regular users with unlimited generations</li>
+                  <li>• <strong>High-Quality Output:</strong> Support for 720p, 1080p, and 4K video generation</li>
                 </ul>
               </div>
             </div>
@@ -148,22 +148,22 @@ export default function TermsPage() {
                 <div>
                   <h4 className="font-semibold mb-3 text-green-700">Acceptable Use</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Use the service for personal, educational, or cultural purposes</li>
+                    <li>• Use the service for legitimate creative and commercial purposes</li>
                     <li>• Provide accurate information when creating an account</li>
-                    <li>• Respect intellectual property rights</li>
+                    <li>• Respect intellectual property rights of source content</li>
                     <li>• Keep your account credentials secure</li>
-                    <li>• Report any technical issues or misuse</li>
+                    <li>• Report any technical issues or inappropriate content</li>
                   </ul>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-red-700">Prohibited Activities</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Using generated names for fraudulent purposes</li>
-                    <li>• Attempting to reverse-engineer our algorithms</li>
+                    <li>• Using generated content for fraudulent or harmful purposes</li>
+                    <li>• Attempting to reverse-engineer our AI algorithms</li>
                     <li>• Sharing account credentials with others</li>
-                    <li>• Using automated tools to bulk-generate names</li>
-                    <li>• Violating any applicable laws or regulations</li>
+                    <li>• Using automated tools to abuse the service</li>
+                    <li>• Uploading copyrighted content without permission</li>
                   </ul>
                 </div>
               </div>
@@ -182,28 +182,28 @@ export default function TermsPage() {
               
               <div className="space-y-4 text-muted-foreground">
                 <div>
-                  <h4 className="font-semibold mb-3 text-foreground">Your Rights to Generated Names</h4>
+                  <h4 className="font-semibold mb-3 text-foreground">Your Rights to Generated Content</h4>
                   <p>
-                    You have the right to use any Chinese names generated through our service for personal purposes. 
-                    However, please note that traditional Chinese names are part of cultural heritage and cannot be 
-                    exclusively owned by any individual.
+                    You retain ownership rights to the original content you upload and the final animated videos generated 
+                    through our service. You may use generated content for personal and commercial purposes, subject to 
+                    any third-party rights in the source material.
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Our Intellectual Property</h4>
                   <p>
-                    The Chinese Name Generator platform, including our AI algorithms, website design, brand elements, 
-                    and proprietary technology, remains our intellectual property. You may not copy, modify, or 
+                    The Wan 2.2 Animate platform, including our AI algorithms, website design, brand elements, 
+                    and proprietary animation technology, remains our intellectual property. You may not copy, modify, or 
                     redistribute our platform or technology.
                   </p>
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-3 text-foreground">Cultural Respect</h4>
+                  <h4 className="font-semibold mb-3 text-foreground">Content Responsibility</h4>
                   <p>
-                    We encourage respectful use of Chinese names and understanding of their cultural significance. 
-                    Generated names should be used with appreciation for Chinese culture and traditions.
+                    You are responsible for ensuring you have the right to use any source content you upload. 
+                    We encourage respectful and ethical use of our animation technology for creative and legitimate purposes.
                   </p>
                 </div>
               </div>
@@ -235,8 +235,8 @@ export default function TermsPage() {
                 <div>
                   <h4 className="font-semibold mb-2 text-foreground">AI-Generated Content</h4>
                   <p>
-                    Our Chinese names are generated by AI technology. While we strive for cultural accuracy and appropriateness, 
-                    we recommend consulting with native speakers or cultural experts for important use cases.
+                    Our animations are generated by AI technology. While we strive for high quality and accuracy, 
+                    AI-generated content may occasionally contain imperfections or unexpected results.
                   </p>
                 </div>
                 
@@ -244,7 +244,7 @@ export default function TermsPage() {
                   <h4 className="font-semibold mb-2 text-foreground">No Warranties</h4>
                   <p>
                     Our service is provided "as is" without warranties of any kind. We do not guarantee the suitability 
-                    of generated names for any specific purpose or their acceptance in all cultural contexts.
+                    of generated animations for any specific purpose or their technical compatibility with all platforms.
                   </p>
                 </div>
               </div>
@@ -265,10 +265,10 @@ export default function TermsPage() {
                 <div>
                   <h4 className="font-semibold mb-3">Premium Subscriptions</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Monthly and annual subscription options available</li>
+                    <li>• Monthly subscription plans available</li>
                     <li>• Automatic renewal unless cancelled</li>
-                    <li>• Access to unlimited name generation</li>
-                    <li>• Premium features and personalization</li>
+                    <li>• Access to unlimited animation generations</li>
+                    <li>• Premium features and higher quality outputs</li>
                   </ul>
                 </div>
                 
@@ -277,8 +277,8 @@ export default function TermsPage() {
                   <ul className="space-y-2 text-muted-foreground">
                     <li>• Cancel anytime through your account settings</li>
                     <li>• Refunds processed according to our refund policy</li>
-                    <li>• No refunds for partially used subscription periods</li>
-                    <li>• Free trial cancellations take effect immediately</li>
+                    <li>• No refunds for used credits or consumed services</li>
+                    <li>• Subscription cancellations take effect at period end</li>
                   </ul>
                 </div>
               </div>

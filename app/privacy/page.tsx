@@ -48,7 +48,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We are committed to protecting your privacy and being transparent about how we collect, 
-              use, and protect your personal information when you use our Chinese name generation service.
+              use, and protect your personal information when you use our AI-powered video animation service.
             </p>
             <p className="text-sm text-muted-foreground">
               <strong>Last updated:</strong> January 31, 2025
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  We clearly explain what data we collect and how we use it to provide you with the best Chinese name generation experience.
+                  We clearly explain what data we collect and how we use it to provide you with the best AI video animation experience.
                 </p>
               </CardContent>
             </Card>
@@ -122,10 +122,10 @@ export default function PrivacyPage() {
                 <div>
                   <h4 className="font-semibold mb-3">Information You Provide</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• <strong>Personal Details:</strong> English name, gender, birth year (optional)</li>
-                    <li>• <strong>Preferences:</strong> Personality traits and name preferences you share</li>
-                    <li>• <strong>Account Information:</strong> Email address when you create an account</li>
-                    <li>• <strong>Generated Names:</strong> Chinese names you generate and save to your profile</li>
+                    <li>• <strong>Account Information:</strong> Email address and password when you create an account</li>
+                    <li>• <strong>Video Content:</strong> Source videos and images you upload for animation</li>
+                    <li>• <strong>Generated Content:</strong> AI-generated animations and videos you create</li>
+                    <li>• <strong>Payment Information:</strong> Billing details for subscription and credit purchases</li>
                   </ul>
                 </div>
                 
@@ -155,20 +155,20 @@ export default function PrivacyPage() {
                 <div>
                   <h4 className="font-semibold mb-3">Service Provision</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Generate personalized Chinese names</li>
-                    <li>• Save your generated names and preferences</li>
-                    <li>• Provide customer support</li>
-                    <li>• Process payments for premium features</li>
+                    <li>• Generate AI-powered video animations</li>
+                    <li>• Process and store your uploaded content</li>
+                    <li>• Provide customer support and technical assistance</li>
+                    <li>• Process payments for subscriptions and credits</li>
                   </ul>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold mb-3">Service Improvement</h4>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Analyze service usage to improve functionality</li>
-                    <li>• Develop new features and capabilities</li>
-                    <li>• Ensure service security and prevent fraud</li>
-                    <li>• Send service-related communications</li>
+                    <li>• Analyze usage patterns to improve AI models</li>
+                    <li>• Develop new animation features and capabilities</li>
+                    <li>• Ensure service security and prevent misuse</li>
+                    <li>• Send service updates and promotional communications</li>
                   </ul>
                 </div>
               </div>
@@ -268,9 +268,9 @@ export default function PrivacyPage() {
                     <h4 className="font-semibold mb-2 text-foreground">Data Retention</h4>
                     <ul className="space-y-1">
                       <li>• Account data: Until account deletion</li>
-                      <li>• Generated names: Until you delete them</li>
+                      <li>• Generated videos: Until you delete them</li>
                       <li>• Usage logs: Up to 2 years</li>
-                      <li>• Marketing data: Until opt-out</li>
+                      <li>• Payment data: As required by law</li>
                     </ul>
                   </div>
                 </div>

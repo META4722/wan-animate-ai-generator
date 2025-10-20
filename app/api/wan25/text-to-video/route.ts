@@ -61,12 +61,18 @@ export async function POST(request: NextRequest) {
       .eq("user_id", user.id)
       .single();
 
-    // Calculate required credits based on resolution: 480p=5, 720p=10, 1080p=15
-    const requiredCredits = resolution === '480p' ? 5 : resolution === '720p' ? 10 : 15;
+    // Calculate required credits based on resolution and duration
+    const { calculateRequiredCredits } = await import('@/config/credits-pricing');
+    const requiredCredits = calculateRequiredCredits(resolution, duration);
 
     if (!customerData || customerData.credits < requiredCredits) {
       return NextResponse.json(
-        { error: "Insufficient credits" },
+        { 
+          error: "积分不足",
+          message: `生成此视频需要 ${requiredCredits} 积分，您当前有 ${customerData?.credits || 0} 积分`,
+          required_credits: requiredCredits,
+          current_credits: customerData?.credits || 0
+        },
         { status: 402 }
       );
     }

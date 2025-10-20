@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
         const hasEnough = await creditsOperations.hasEnoughCredits(user_id, amount)
         if (!hasEnough) {
           return NextResponse.json(
-            { error: 'Insufficient credits' },
+            { error: '积分不足' },
             { status: 400 }
           )
         }

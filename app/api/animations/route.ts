@@ -17,27 +17,45 @@ export async function GET(request: NextRequest) {
     // Try video_generations table first since animations table doesn't exist yet
     let animations, error;
 
-    // Check video_generations table
-    const result = await supabase
-      .from("video_generations")
-      .select(`
-        id,
-        prompt,
-        video_url,
-        resolution,
-        duration,
-        aspect_ratio,
-        generation_type,
-        character_image_url,
-        status,
-        credits_used,
-        seed,
-        actual_prompt,
-        created_at,
-        completed_at
-      `)
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
+    // Check video_generations table with error handling for missing columns
+    let result;
+    try {
+      result = await supabase
+        .from("video_generations")
+        .select(`
+          id,
+          prompt,
+          video_url,
+          resolution,
+          duration,
+          aspect_ratio,
+          generation_type,
+          character_image_url,
+          status,
+          credits_used,
+          seed,
+          actual_prompt,
+          created_at,
+          completed_at
+        `)
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+    } catch (selectError) {
+      // If some columns don't exist, try with basic columns only
+      console.log("Trying basic columns for video_generations...");
+      result = await supabase
+        .from("video_generations")
+        .select(`
+          id,
+          prompt,
+          resolution,
+          duration,
+          status,
+          created_at
+        `)
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+    }
 
     animations = result.data;
     error = result.error;
@@ -82,20 +100,20 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Transform data to match the component interface
+    // Transform data to match the component interface with safe fallbacks
     const transformedAnimations = animations?.map((anim) => ({
       id: anim.id,
-      character_name: anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : ""),
+      character_name: anim.prompt ? anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : "") : "Unknown Animation",
       character_image_url: anim.character_image_url || "",
       reference_video_url: "", // We don't store this currently
-      output_video_url: anim.video_url,
-      status: anim.status as "pending" | "processing" | "completed" | "failed",
+      output_video_url: anim.video_url || "",
+      status: (anim.status || "completed") as "pending" | "processing" | "completed" | "failed",
       quality_mode: anim.resolution === "480p" ? "standard" : "high" as "standard" | "high",
-      animation_mode: anim.generation_type === "text-to-video" ? "character_replacement" : "face_swap" as "character_replacement" | "face_swap" | "motion_transfer",
-      credits_used: anim.credits_used,
-      duration_seconds: anim.duration,
+      animation_mode: (anim.generation_type === "text-to-video" ? "character_replacement" : "face_swap") as "character_replacement" | "face_swap" | "motion_transfer",
+      credits_used: anim.credits_used || 0,
+      duration_seconds: anim.duration || 5,
       created_at: anim.created_at,
-      completed_at: anim.completed_at,
+      completed_at: anim.completed_at || anim.created_at,
     })) || [];
 
     return NextResponse.json({

@@ -24,7 +24,7 @@ const blogPosts: BlogPost[] = [
     readTime: "8 min",
     category: "Technology Deep Dive",
     slug: "wan-22-animate-evolution-ai-character-animation",
-    author: "Wan Development Team",
+    author: "Wanimate AI",
     tags: ["AI Animation", "Motion Transfer", "Character Animation", "Neural Networks"],
     content: `
 # Wan 2.2 Animate: The Evolution of AI Character Animation
@@ -2793,146 +2793,203 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-            ← Back to Blog
-          </Link>
-        </nav>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-background border-b">
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          {/* Breadcrumb */}
+          <nav className="mb-8">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Blog
+            </Link>
+          </nav>
 
-        {/* Article Header */}
-        <header className="mb-12">
-          <div className="flex items-center gap-4 mb-6 text-sm text-muted-foreground">
-            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-              {post.category}
-            </span>
-            <span>{post.date}</span>
-            <span>{post.readTime} read</span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
-            {post.title}
-          </h1>
-
-          <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-            {post.summary}
-          </p>
-
-          <div className="flex items-center justify-between border-b border-border pb-6">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">By</span>
-              <span className="text-sm font-medium">{post.author}</span>
+          {/* Article Header */}
+          <header className="max-w-4xl">
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+                {post.category}
+              </span>
+              <span className="text-muted-foreground text-sm">{post.date}</span>
+              <span className="text-muted-foreground text-sm">{post.readTime} read</span>
             </div>
-            <div className="flex gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </header>
 
-        {/* Article Content */}
-        <article className="prose prose-lg max-w-none mb-16">
-          <div className="text-foreground" dangerouslySetInnerHTML={{ __html:
-            post.content
-              .split('\n')
-              .map(line => {
-                // Handle headers
-                if (line.startsWith('# ')) {
-                  return `<h1 class="text-3xl font-bold mt-12 mb-6 text-foreground">${line.substring(2)}</h1>`;
-                }
-                if (line.startsWith('## ')) {
-                  return `<h2 class="text-2xl font-semibold mt-10 mb-4 text-foreground">${line.substring(3)}</h2>`;
-                }
-                if (line.startsWith('### ')) {
-                  return `<h3 class="text-xl font-semibold mt-8 mb-3 text-foreground">${line.substring(4)}</h3>`;
-                }
-                if (line.startsWith('#### ')) {
-                  return `<h4 class="text-lg font-semibold mt-6 mb-2 text-foreground">${line.substring(5)}</h4>`;
-                }
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+              {post.title}
+            </h1>
 
-                // Handle code blocks
-                if (line.startsWith('```')) {
-                  const lang = line.substring(3);
-                  return lang ? `<pre class="bg-muted p-4 rounded-lg overflow-x-auto my-6"><code class="text-sm">` : `</code></pre>`;
-                }
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+              {post.summary}
+            </p>
 
-                // Handle inline code
-                if (line.includes('`') && !line.startsWith('```')) {
-                  line = line.replace(/`([^`]+)`/g, '<code class="bg-muted px-2 py-1 rounded text-sm">$1</code>');
-                }
-
-                // Handle bold text
-                if (line.includes('**')) {
-                  line = line.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
-                }
-
-                // Handle tables
-                if (line.includes('|')) {
-                  return `<div class="overflow-x-auto my-6"><table class="min-w-full border border-border"><tbody><tr>${line.split('|').filter(cell => cell.trim()).map(cell => `<td class="border border-border px-3 py-2">${cell.trim()}</td>`).join('')}</tr></tbody></table></div>`;
-                }
-
-                // Handle lists
-                if (line.startsWith('- ') || line.startsWith('* ')) {
-                  return `<li class="mb-2">${line.substring(2)}</li>`;
-                }
-                if (/^\d+\. /.test(line)) {
-                  return `<li class="mb-2">${line.replace(/^\d+\. /, '')}</li>`;
-                }
-
-                // Handle regular paragraphs
-                if (line.trim() && !line.startsWith('<') && !line.includes('class=')) {
-                  return `<p class="mb-4 leading-relaxed">${line}</p>`;
-                }
-
-                return line;
-              })
-              .join('\n')
-          }} />
-        </article>
-
-        {/* Related Articles */}
-        {relatedPosts.length > 0 && (
-          <section className="border-t border-border pt-12">
-            <h2 className="text-2xl font-bold mb-8 text-foreground">Related Articles</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {relatedPosts.map((relatedPost) => (
-                <article key={relatedPost.id} className="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                  <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                      {relatedPost.category}
-                    </span>
-                    <span>{relatedPost.date}</span>
-                    <span>{relatedPost.readTime} read</span>
-                  </div>
-
-                  <h3 className="text-xl font-semibold mb-3 text-foreground">
-                    <Link href={`/blog/${relatedPost.slug}`} className="hover:text-primary transition-colors">
-                      {relatedPost.title}
-                    </Link>
-                  </h3>
-
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {relatedPost.summary.substring(0, 120)}...
-                  </p>
-
-                  <Link
-                    href={`/blog/${relatedPost.slug}`}
-                    className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-border/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span className="text-primary font-semibold text-sm">
+                    {post.author.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground">{post.author}</div>
+                  <div className="text-xs text-muted-foreground">Technical Writer</div>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs bg-background/50 border border-border text-muted-foreground px-3 py-1 rounded-full"
                   >
-                    Read more →
-                  </Link>
-                </article>
-              ))}
+                    #{tag.toLowerCase().replace(/\s+/g, '')}
+                  </span>
+                ))}
+              </div>
             </div>
-          </section>
-        )}
+          </header>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-16 md:py-20">
+        <div className="max-w-4xl mx-auto">
+
+          {/* Article Content */}
+          <article className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-20">
+            <div className="text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html:
+              post.content
+                .split('\n')
+                .map(line => {
+                  // Handle headers
+                  if (line.startsWith('# ')) {
+                    return `<h1 class="text-4xl md:text-5xl font-bold mt-16 mb-8 text-foreground border-b border-border pb-4">${line.substring(2)}</h1>`;
+                  }
+                  if (line.startsWith('## ')) {
+                    return `<h2 class="text-3xl md:text-4xl font-bold mt-12 mb-6 text-foreground">${line.substring(3)}</h2>`;
+                  }
+                  if (line.startsWith('### ')) {
+                    return `<h3 class="text-2xl font-semibold mt-10 mb-4 text-foreground">${line.substring(4)}</h3>`;
+                  }
+                  if (line.startsWith('#### ')) {
+                    return `<h4 class="text-xl font-semibold mt-8 mb-3 text-foreground">${line.substring(5)}</h4>`;
+                  }
+
+                  // Handle code blocks
+                  if (line.startsWith('```')) {
+                    const lang = line.substring(3);
+                    return lang ? `<div class="bg-slate-900 dark:bg-slate-800 rounded-xl p-6 my-8 overflow-x-auto border border-border"><pre><code class="text-sm text-slate-100 dark:text-slate-200">` : `</code></pre></div>`;
+                  }
+
+                  // Handle inline code
+                  if (line.includes('`') && !line.startsWith('```')) {
+                    line = line.replace(/`([^`]+)`/g, '<code class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-1 rounded text-sm font-mono">$1</code>');
+                  }
+
+                  // Handle bold text
+                  if (line.includes('**')) {
+                    line = line.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                  }
+
+                  // Handle tables
+                  if (line.includes('|')) {
+                    return `<div class="overflow-x-auto my-8"><table class="min-w-full bg-card border border-border rounded-lg"><tbody><tr class="border-b border-border">${line.split('|').filter(cell => cell.trim()).map(cell => `<td class="px-4 py-3 text-sm">${cell.trim()}</td>`).join('')}</tr></tbody></table></div>`;
+                  }
+
+                  // Handle lists
+                  if (line.startsWith('- ') || line.startsWith('* ')) {
+                    return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.substring(2)}</li>`;
+                  }
+                  if (/^\d+\. /.test(line)) {
+                    return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.replace(/^\d+\. /, '')}</li>`;
+                  }
+
+                  // Handle regular paragraphs
+                  if (line.trim() && !line.startsWith('<') && !line.includes('class=')) {
+                    return `<p class="mb-6 text-lg leading-relaxed text-muted-foreground">${line}</p>`;
+                  }
+
+                  return line;
+                })
+                .join('\n')
+            }} />
+          </article>
+
+          {/* Article Actions */}
+          <div className="flex items-center justify-between py-8 border-y border-border mb-16">
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">Share this article:</span>
+              <div className="flex gap-2">
+                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  </svg>
+                </button>
+                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+            >
+              More Articles
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Related Articles */}
+          {relatedPosts.length > 0 && (
+            <section>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Continue Reading</h2>
+                <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {relatedPosts.map((relatedPost) => (
+                  <article key={relatedPost.id} className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
+                          {relatedPost.category}
+                        </span>
+                        <span className="text-muted-foreground text-xs">{relatedPost.readTime}</span>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-foreground mb-3 leading-tight group-hover:text-primary transition-colors">
+                        <Link href={`/blog/${relatedPost.slug}`}>
+                          {relatedPost.title}
+                        </Link>
+                      </h3>
+
+                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                        {relatedPost.summary.substring(0, 150)}...
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-muted-foreground">{relatedPost.date}</span>
+                        <Link
+                          href={`/blog/${relatedPost.slug}`}
+                          className="inline-flex items-center gap-1 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                        >
+                          Read Article
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
       </div>
     </div>
   );

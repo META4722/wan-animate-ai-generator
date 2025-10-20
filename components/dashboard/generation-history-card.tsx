@@ -6,6 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Activity, TrendingUp, Calendar, Play, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { useDateFormat } from "@/lib/date-utils";
+
+// 安全的日期组件
+function SafeDate({ dateString }: { dateString: string }) {
+  const formattedDate = useDateFormat(dateString);
+  return <span>{formattedDate}</span>;
+}
 
 interface GenerationLog {
   id: string;
@@ -189,7 +196,7 @@ export function GenerationHistoryCard() {
                       </div>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Calendar className="h-3 w-3" />
-                        {new Date(log.created_at).toLocaleDateString()}
+                        <SafeDate dateString={log.created_at} />
                         <span>•</span>
                         <span>{getAnimationModeLabel(log.animation_mode)}</span>
                         <span>•</span>
