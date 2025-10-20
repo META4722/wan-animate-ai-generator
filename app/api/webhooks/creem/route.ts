@@ -365,7 +365,7 @@ async function handlePaymentCompleted(eventData: any): Promise<boolean> {
   }
 
   // 添加积分到用户账户
-  if (finalCredits > 0) {
+  if (finalCredits > 0 && customer) {
     try {
       const productName = eventData.product?.id ? getProductName(eventData.product.id) : 'Credits Purchase'
       await addCreditsToCustomer(
@@ -471,7 +471,7 @@ async function handleSubscriptionCreated(eventData: any): Promise<boolean> {
   }
 
   // 添加订阅的月度积分
-  if (creditsPerMonth > 0) {
+  if (creditsPerMonth > 0 && customer) {
     try {
       await addCreditsToCustomer(
         customer.id,
@@ -685,6 +685,8 @@ async function handlePaymentFailed(eventData: any): Promise<boolean> {
   if (!userId || !paymentId) {
     throw new Error('Missing required payment failure data')
   }
+
+  const supabase = createServiceRoleClient()
 
   // 记录失败的支付
   const { error } = await supabase

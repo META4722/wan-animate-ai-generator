@@ -40,7 +40,7 @@ export default async function DashboardPage() {
   // Get recent credits history separately with proper sorting
   const { data: creditsHistoryData } = await supabase
     .from("credits_history")
-    .select("amount, type, created_at, description")
+    .select("id, customer_id, amount, type, created_at, description")
     .eq("customer_id", customerData?.id)
     .order("created_at", { ascending: false })
     .limit(3);

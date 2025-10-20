@@ -94,9 +94,9 @@ export async function GET(request: NextRequest) {
     // Transform data to match the component interface
     const logs = animations?.map((anim) => ({
       id: anim.id,
-      animation_mode: anim.generation_type || "text-to-video",
+      animation_mode: (anim as any).generation_type || "text-to-video",
       quality_mode: anim.resolution === "480p" ? "standard" : "high",
-      credits_used: anim.credits_used || 0,
+      credits_used: (anim as any).credits_used || 0,
       duration_seconds: anim.duration || 5,
       character_name: anim.prompt ? anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : "") : "Unknown",
       status: anim.status || "completed",
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
     // Calculate statistics with safe fallbacks
     const completedAnimations = animations?.filter(a => (a.status || 'completed') === 'completed') || [];
     const totalAnimations = completedAnimations.length;
-    const totalCreditsUsed = completedAnimations.reduce((sum, a) => sum + (a.credits_used || 0), 0);
+    const totalCreditsUsed = completedAnimations.reduce((sum, a) => sum + ((a as any).credits_used || 0), 0);
     const totalDurationGenerated = completedAnimations.reduce((sum, a) => sum + (a.duration || 5), 0);
     const avgCreditsPerAnimation = totalAnimations > 0 ? totalCreditsUsed / totalAnimations : 0;
 

@@ -104,16 +104,16 @@ export async function GET(request: NextRequest) {
     const transformedAnimations = animations?.map((anim) => ({
       id: anim.id,
       character_name: anim.prompt ? anim.prompt.substring(0, 50) + (anim.prompt.length > 50 ? "..." : "") : "Unknown Animation",
-      character_image_url: anim.character_image_url || "",
+      character_image_url: (anim as any).character_image_url || "",
       reference_video_url: "", // We don't store this currently
-      output_video_url: anim.video_url || "",
+      output_video_url: (anim as any).video_url || "",
       status: (anim.status || "completed") as "pending" | "processing" | "completed" | "failed",
       quality_mode: anim.resolution === "480p" ? "standard" : "high" as "standard" | "high",
-      animation_mode: (anim.generation_type === "text-to-video" ? "character_replacement" : "face_swap") as "character_replacement" | "face_swap" | "motion_transfer",
-      credits_used: anim.credits_used || 0,
+      animation_mode: ((anim as any).generation_type === "text-to-video" ? "character_replacement" : "face_swap") as "character_replacement" | "face_swap" | "motion_transfer",
+      credits_used: (anim as any).credits_used || 0,
       duration_seconds: anim.duration || 5,
       created_at: anim.created_at,
-      completed_at: anim.completed_at || anim.created_at,
+      completed_at: (anim as any).completed_at || anim.created_at,
     })) || [];
 
     return NextResponse.json({
