@@ -2,23 +2,23 @@ export default function HowToUse() {
   const steps = [
     {
       number: 1,
-      title: "Prepare your character still",
-      description: "Upload a clear front-facing portrait or keyframe of your character at 1080p or higher so the generator can lock the design."
+      title: "Sign up and get credits",
+      description: "Create your account and purchase credits. 480p videos cost 5-10 credits, 720p costs 10-20 credits, and 1080p costs 15-30 credits depending on duration."
     },
     {
       number: 2,
-      title: "Add a reference performance",
-      description: "Select an MP4 or MOV clip under 45 seconds that captures the motion and expression you want Wan Animate to mirror."
+      title: "Choose your generation method",
+      description: "Select Text-to-Video to create videos from descriptions, or Image-to-Video to animate your existing images. Both support 5-second and 10-second durations."
     },
     {
       number: 3,
-      title: "Launch the animation",
-      description: "Hit \"Start animating.\" We'll upload, process, and queue the job—progress updates appear beside the generator."
+      title: "Configure and generate",
+      description: "Enter your prompt or upload an image, choose resolution (480p/720p/1080p), aspect ratio (16:9/9:16/1:1), and optional audio. Click generate to start."
     },
     {
       number: 4,
-      title: "Wait for completion and save",
-      description: "Once the job finishes, download the rendered clip and archive it with your project files. Assets remain in your library for later runs."
+      title: "Download your video",
+      description: "Wait for processing to complete (usually 1-3 minutes), then download your AI-generated video. All videos are saved to your dashboard for future access."
     }
   ]
 
@@ -27,10 +27,10 @@ export default function HowToUse() {
       <div className="container mx-auto max-w-5xl">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            How to Use Wan Animate
+            How to Use Wanimate AI
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Follow these steps to go from static art to a finished animation in minutes.
+            Create stunning AI-powered videos from text or images in just a few simple steps.
           </p>
         </div>
 
