@@ -11,8 +11,7 @@ const mainPages = [
   '/',
   '/dashboard',
   '/help',
-  '/blog',
-  '/community'
+  '/blog'
 ];
 
 // 静态资源

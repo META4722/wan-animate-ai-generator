@@ -13,13 +13,6 @@
   </url>
 
   <!-- Main pages -->
-  <url>
-    <loc>https://www.wanimate.io/community</loc>
-    <lastmod>2025-10-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
   <!-- Blog -->
   <url>
     <loc>https://www.wanimate.io/blog</loc>

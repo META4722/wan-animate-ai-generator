@@ -17,7 +17,6 @@ const footerLinks = [
     links: [
       { label: "Blog", href: "/blog" },
       { label: "Help & Support", href: "/help" },
-      { label: "Community", href: "/community" },
       { label: "MossAI Tools", href: "https://mossai.org" },
       { label: "AI Tool Center", href: "https://aitoolcenter.com/" },
     ],

@@ -42,12 +42,9 @@ export default function NotFound() {
           <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
             Popular Pages
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-4 text-sm">
             <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
               Dashboard
-            </Link>
-            <Link href="/community" className="text-blue-600 dark:text-blue-400 hover:underline">
-              Community
             </Link>
             <Link href="/help" className="text-blue-600 dark:text-blue-400 hover:underline">
               Help & Support

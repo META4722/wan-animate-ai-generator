@@ -126,11 +126,7 @@ export const PAGE_SEO: Record<string, Partial<Metadata>> = {
     description: 'Stay updated with the latest in AI video generation technology, tutorials, and industry insights from Wanimate AI.',
     keywords: ['AI video blog', 'video generation news', 'AI tutorials', 'video technology insights']
   },
-  '/community': {
-    title: 'Community - Connect with AI Video Creators',
-    description: 'Join the Wanimate AI community. Share your creations, get inspiration, and connect with other AI video creators.',
-    keywords: ['AI video community', 'creator community', 'video sharing', 'AI animation community']
-  },
+
 }
 
 // 工具函数：生成页面元数据

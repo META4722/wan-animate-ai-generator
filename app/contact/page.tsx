@@ -312,11 +312,7 @@ export default function ContactPage() {
                       💳 Pricing & Billing
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" className="w-full justify-start">
-                    <Link href="/community">
-                      👥 Community Forum
-                    </Link>
-                  </Button>
+
                 </CardContent>
               </Card>
 
