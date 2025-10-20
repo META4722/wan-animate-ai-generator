@@ -13,7 +13,7 @@ export default function HowToUse() {
     {
       number: 3,
       title: "Configure and generate",
-      description: "Enter your prompt or upload an image, choose resolution (480p/720p/1080p), aspect ratio (16:9/9:16/1:1), and optional audio. Click generate to start."
+      description: "Enter your prompt or upload an image, choose resolution (480p/720p/1080p), and optional audio. Click generate to start."
     },
     {
       number: 4,
