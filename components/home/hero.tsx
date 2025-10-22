@@ -25,7 +25,7 @@ export default function Hero() {
                   from a source video
                 </h1>
                 <p className="mt-8 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8">
-                  Transform any character with AI-powered animation from source videos
+                  Create professional character animations using advanced AI technology
                 </p>
                 <div className="mt-10 flex-col gap-4">
                   <div className="relative inline-block hover:rotate-[10deg] hover:scale-105 transition-all duration-300 ease-out rounded-lg">

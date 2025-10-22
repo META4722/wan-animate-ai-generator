@@ -137,13 +137,7 @@ export default function ContactPage() {
                     </p>
                   </div>
 
-                  <div>
-                    <h4 className="font-semibold mb-2">Business Registration</h4>
-                    <p className="text-muted-foreground text-sm">
-                      China Business Registration<br />
-                      Location: Shanghai, China
-                    </p>
-                  </div>
+
                 </CardContent>
               </Card>
 

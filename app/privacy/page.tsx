@@ -50,9 +50,7 @@ export default function PrivacyPage() {
               We are committed to protecting your privacy and being transparent about how we collect, 
               use, and protect your personal information when you use our AI-powered video animation service.
             </p>
-            <p className="text-sm text-muted-foreground">
-              <strong>Last updated:</strong> January 31, 2025
-            </p>
+
           </motion.div>
 
           {/* Privacy Principles */}
@@ -99,7 +97,7 @@ export default function PrivacyPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">
-                  You have full control over your data, including the ability to access, update, or delete your information.
+                  Manage your privacy settings and data preferences through your account dashboard.
                 </p>
               </CardContent>
             </Card>
@@ -124,6 +122,7 @@ export default function PrivacyPage() {
                   <ul className="space-y-2 text-muted-foreground">
                     <li>• <strong>Account Information:</strong> Email address and password when you create an account</li>
                     <li>• <strong>Video Content:</strong> Source videos and images you upload for animation</li>
+                    <li>• <strong>Audio Content:</strong> Audio files and voice recordings you upload</li>
                     <li>• <strong>Generated Content:</strong> AI-generated animations and videos you create</li>
                     <li>• <strong>Payment Information:</strong> Billing details for subscription and credit purchases</li>
                   </ul>
