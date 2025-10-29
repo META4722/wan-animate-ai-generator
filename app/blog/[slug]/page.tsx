@@ -3,30 +3,30 @@ import { notFound } from "next/navigation";
 import { generatePageMetadata } from "@/lib/seo/config";
 
 interface BlogPost {
-  id: string;
-  title: string;
-  summary: string;
-  date: string;
-  readTime: string;
-  category: string;
-  slug: string;
-  content: string;
-  author: string;
-  tags: string[];
+    id: string;
+    title: string;
+    summary: string;
+    date: string;
+    readTime: string;
+    category: string;
+    slug: string;
+    content: string;
+    author: string;
+    tags: string[];
 }
 
 const blogPosts: BlogPost[] = [
-  {
-    id: "1",
-    title: "Wan 2.2 Animate: The Evolution of AI Character Animation",
-    summary: "Explore the groundbreaking features of Wan 2.2 Animate, the unified character animation and replacement AI that combines holistic replication technology with advanced motion transfer capabilities. Learn about its dual-mode operation, technical innovations, and open-source accessibility.",
-    date: "December 15, 2025",
-    readTime: "8 min",
-    category: "Technology Deep Dive",
-    slug: "wan-22-animate-evolution-ai-character-animation",
-    author: "Wanimate AI",
-    tags: ["AI Animation", "Motion Transfer", "Character Animation", "Neural Networks"],
-    content: `
+    {
+        id: "1",
+        title: "Wan 2.2 Animate: The Evolution of AI Character Animation",
+        summary: "Explore the groundbreaking features of Wan 2.2 Animate, the unified character animation and replacement AI that combines holistic replication technology with advanced motion transfer capabilities. Learn about its dual-mode operation, technical innovations, and open-source accessibility.",
+        date: "December 15, 2025",
+        readTime: "8 min",
+        category: "Technology Deep Dive",
+        slug: "wan-22-animate-evolution-ai-character-animation",
+        author: "Wanimate AI",
+        tags: ["AI Animation", "Motion Transfer", "Character Animation", "Neural Networks"],
+        content: `
 # Wan 2.2 Animate: The Evolution of AI Character Animation
 
 The landscape of AI-powered character animation has reached a new milestone with the release of **Wan 2.2 Animate**, a revolutionary unified platform that fundamentally transforms how we approach digital character creation and motion transfer.
@@ -180,18 +180,18 @@ The future of character animation is here, and it's more accessible than ever be
 
 *Ready to transform your animation workflow? [Download Wan 2.2 Animate](/) today and experience the next evolution of AI character animation.*
 `
-  },
-  {
-    id: "2",
-    title: "Understanding Motion Transfer Technology in 2025",
-    summary: "Dive deep into the technical architecture behind AI-powered motion transfer systems. From spatially-aligned skeleton signals to implicit facial feature extraction, discover how modern neural networks enable real-time character animation with unprecedented fidelity.",
-    date: "December 12, 2025",
-    readTime: "10 min",
-    category: "Technical Tutorial",
-    slug: "motion-transfer-technology-2025",
-    author: "Dr. Sarah Chen",
-    tags: ["Motion Transfer", "Neural Networks", "Computer Vision", "Technical Tutorial"],
-    content: `
+    },
+    {
+        id: "2",
+        title: "Understanding Motion Transfer Technology in 2025",
+        summary: "Dive deep into the technical architecture behind AI-powered motion transfer systems. From spatially-aligned skeleton signals to implicit facial feature extraction, discover how modern neural networks enable real-time character animation with unprecedented fidelity.",
+        date: "December 12, 2025",
+        readTime: "10 min",
+        category: "Technical Tutorial",
+        slug: "motion-transfer-technology-2025",
+        author: "Dr. Sarah Chen",
+        tags: ["Motion Transfer", "Neural Networks", "Computer Vision", "Technical Tutorial"],
+        content: `
 # Understanding Motion Transfer Technology in 2025
 
 Motion transfer technology has evolved dramatically over the past few years, transforming from experimental research projects into production-ready systems that power everything from Hollywood blockbusters to social media filters. This comprehensive guide explores the technical foundations that make modern motion transfer possible.
@@ -496,18 +496,18 @@ Understanding these technical foundations is crucial for developers, researchers
 
 *Want to dive deeper into motion transfer implementation? Check out our [technical documentation](/docs) and [open-source repositories](https://github.com/wan-animate) for hands-on examples and code samples.*
 `
-  },
-  {
-    id: "3",
-    title: "The Future of Markerless Motion Capture",
-    summary: "Analyzing how AI tools are revolutionizing motion capture by eliminating the need for expensive marker systems. Explore the computer vision breakthroughs that enable high-quality animation from standard camera footage and their impact on content creation workflows.",
-    date: "December 8, 2025",
-    readTime: "6 min",
-    category: "Industry Insights",
-    slug: "future-markerless-motion-capture",
-    author: "Alex Martinez",
-    tags: ["Motion Capture", "Computer Vision", "Industry Insights", "Technology"],
-    content: `
+    },
+    {
+        id: "3",
+        title: "The Future of Markerless Motion Capture",
+        summary: "Analyzing how AI tools are revolutionizing motion capture by eliminating the need for expensive marker systems. Explore the computer vision breakthroughs that enable high-quality animation from standard camera footage and their impact on content creation workflows.",
+        date: "December 8, 2025",
+        readTime: "6 min",
+        category: "Industry Insights",
+        slug: "future-markerless-motion-capture",
+        author: "Alex Martinez",
+        tags: ["Motion Capture", "Computer Vision", "Industry Insights", "Technology"],
+        content: `
 # The Future of Markerless Motion Capture
 
 The motion capture industry is experiencing a seismic shift. Traditional marker-based systems, once the exclusive domain of major studios with million-dollar budgets, are rapidly being replaced by AI-powered markerless solutions that democratize high-quality animation for creators worldwide.
@@ -837,18 +837,18 @@ The convergence of improved algorithms, more powerful hardware, and growing adop
 
 *Ready to explore markerless motion capture? Try our [live demo](/) and see the technology in action with just your webcam.*
 `
-  },
-  {
-    id: "4",
-    title: "Neural Networks for Real-Time Character Animation",
-    summary: "Examine the Phase-Functioned Neural Network approach and other cutting-edge architectures that enable real-time character animation. Learn about gating networks, motion prediction systems, and how CUDA acceleration makes live virtual production possible.",
-    date: "December 5, 2025",
-    readTime: "12 min",
-    category: "Technical Deep Dive",
-    slug: "neural-networks-realtime-character-animation",
-    author: "Dr. Maya Patel",
-    tags: ["Neural Networks", "Real-time Animation", "CUDA", "Technical Deep Dive"],
-    content: `
+    },
+    {
+        id: "4",
+        title: "Neural Networks for Real-Time Character Animation",
+        summary: "Examine the Phase-Functioned Neural Network approach and other cutting-edge architectures that enable real-time character animation. Learn about gating networks, motion prediction systems, and how CUDA acceleration makes live virtual production possible.",
+        date: "December 5, 2025",
+        readTime: "12 min",
+        category: "Technical Deep Dive",
+        slug: "neural-networks-realtime-character-animation",
+        author: "Dr. Maya Patel",
+        tags: ["Neural Networks", "Real-time Animation", "CUDA", "Technical Deep Dive"],
+        content: `
 # Neural Networks for Real-Time Character Animation
 
 Real-time character animation powered by neural networks represents one of the most significant advances in computer graphics over the past decade. This comprehensive guide explores the architectures, algorithms, and optimizations that enable lifelike character animation at interactive frame rates.
@@ -1475,18 +1475,18 @@ The future of character animation is neural, real-time, and incredibly exciting.
 
 *Explore our [technical documentation](/docs) for implementation details and [GitHub repository](https://github.com/wan-animate) for complete source code examples.*
 `
-  },
-  {
-    id: "5",
-    title: "From 2D Video to 3D Animation: AI-Powered Workflows",
-    summary: "Discover how modern AI systems can transform simple 2D video footage into sophisticated 3D character animations. Explore the technical challenges of depth estimation, pose detection, and motion synthesis in automated animation pipelines.",
-    date: "December 2, 2025",
-    readTime: "9 min",
-    category: "Workflow Optimization",
-    slug: "2d-video-3d-animation-ai-workflows",
-    author: "Lisa Wong",
-    tags: ["2D to 3D", "Workflow Optimization", "Depth Estimation", "Automation"],
-    content: `
+    },
+    {
+        id: "5",
+        title: "From 2D Video to 3D Animation: AI-Powered Workflows",
+        summary: "Discover how modern AI systems can transform simple 2D video footage into sophisticated 3D character animations. Explore the technical challenges of depth estimation, pose detection, and motion synthesis in automated animation pipelines.",
+        date: "December 2, 2025",
+        readTime: "9 min",
+        category: "Workflow Optimization",
+        slug: "2d-video-3d-animation-ai-workflows",
+        author: "Lisa Wong",
+        tags: ["2D to 3D", "Workflow Optimization", "Depth Estimation", "Automation"],
+        content: `
 # From 2D Video to 3D Animation: AI-Powered Workflows
 
 The transformation of 2D video footage into fully-realized 3D character animations represents one of the most significant advances in modern content creation. This comprehensive guide explores the technical pipeline, challenges, and solutions that make this remarkable conversion possible.
@@ -2123,18 +2123,18 @@ As neural networks continue to advance and computational resources become more a
 
 *Ready to try 2D-to-3D conversion? Upload your video to our [online converter](/) and experience the magic of AI-powered animation transformation.*
 `
-  },
-  {
-    id: "6",
-    title: "Holistic Replication: Body, Face, and Environment Integration",
-    summary: "Understanding how Wan 2.2's holistic replication technology seamlessly combines body motion, facial expressions, and environmental lighting. Explore the Relighting LoRA technique and cross-attention mechanisms that create natural-looking character animations.",
-    date: "November 28, 2025",
-    readTime: "7 min",
-    category: "Technology Analysis",
-    slug: "holistic-replication-body-face-environment",
-    author: "Dr. James Kim",
-    tags: ["Holistic Replication", "Relighting", "Cross-attention", "Technology Analysis"],
-    content: `
+    },
+    {
+        id: "6",
+        title: "Holistic Replication: Body, Face, and Environment Integration",
+        summary: "Understanding how Wan 2.2's holistic replication technology seamlessly combines body motion, facial expressions, and environmental lighting. Explore the Relighting LoRA technique and cross-attention mechanisms that create natural-looking character animations.",
+        date: "November 28, 2025",
+        readTime: "7 min",
+        category: "Technology Analysis",
+        slug: "holistic-replication-body-face-environment",
+        author: "Dr. James Kim",
+        tags: ["Holistic Replication", "Relighting", "Cross-attention", "Technology Analysis"],
+        content: `
 # Holistic Replication: Body, Face, and Environment Integration
 
 Wan 2.2's holistic replication technology represents a paradigm shift in character animation, moving beyond isolated body tracking to comprehensive scene understanding. This groundbreaking approach simultaneously processes body motion, facial expressions, and environmental lighting to create unprecedented realism in AI-generated character animations.
@@ -2759,238 +2759,239 @@ As this technology continues to evolve, we can expect even more sophisticated in
 
 *Experience holistic replication in action with our [live demo](/) and see how unified character animation is transforming digital content creation.*
 `
-  }
+    }
 ];
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = blogPosts.find(post => post.slug === slug);
+    const { slug } = await params;
+    const post = blogPosts.find(post => post.slug === slug);
 
-  if (!post) {
-    return {
-      title: 'Article Not Found - Wan 2.2 Animate',
-      description: 'The requested article could not be found.'
-    };
-  }
+    if (!post) {
+        return {
+            title: 'Article Not Found - Wan 2.2 Animate',
+            description: 'The requested article could not be found.'
+        };
+    }
 
-  return generatePageMetadata(`/blog/${slug}`, {
-    title: `${post.title} - Wan 2.2 Animate`,
-    description: post.summary,
-    keywords: [...post.tags, 'Wan 2.2', 'character animation', 'AI animation']
-  });
+    return generatePageMetadata(`/blog/${slug}`, {
+        title: `${post.title} - Wan 2.2 Animate`,
+        description: post.summary,
+        keywords: [...post.tags, 'Wan 2.2', 'character animation', 'AI animation']
+    });
 }
 
 export default async function BlogArticle({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = blogPosts.find(post => post.slug === slug);
+    const { slug } = await params;
+    const post = blogPosts.find(post => post.slug === slug);
 
-  if (!post) {
-    notFound();
-  }
+    if (!post) {
+        notFound();
+    }
 
-  // Get related posts (excluding current post)
-  const relatedPosts = blogPosts.filter(p => p.id !== post.id).slice(0, 2);
+    // Get related posts (excluding current post)
+    const relatedPosts = blogPosts.filter(p => p.id !== post.id).slice(0, 2);
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-background border-b">
-        <div className="container mx-auto px-4 py-12 md:py-16">
-          {/* Breadcrumb */}
-          <nav className="mb-8">
-            <Link href="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to Blog
-            </Link>
-          </nav>
-
-          {/* Article Header */}
-          <header className="max-w-4xl">
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
-                {post.category}
-              </span>
-              <span className="text-muted-foreground text-sm">{post.date}</span>
-              <span className="text-muted-foreground text-sm">{post.readTime} read</span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              {post.title}
-            </h1>
-
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-              {post.summary}
-            </p>
-
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-border/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                  <span className="text-primary font-semibold text-sm">
-                    {post.author.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">{post.author}</div>
-                  <div className="text-xs text-muted-foreground">Technical Writer</div>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs bg-background/50 border border-border text-muted-foreground px-3 py-1 rounded-full"
-                  >
-                    #{tag.toLowerCase().replace(/\s+/g, '')}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </header>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto">
-
-          {/* Article Content */}
-          <article className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-20">
-            <div className="text-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html:
-              post.content
-                .split('\n')
-                .map(line => {
-                  // Handle headers
-                  if (line.startsWith('# ')) {
-                    return `<h1 class="text-4xl md:text-5xl font-bold mt-16 mb-8 text-foreground border-b border-border pb-4">${line.substring(2)}</h1>`;
-                  }
-                  if (line.startsWith('## ')) {
-                    return `<h2 class="text-3xl md:text-4xl font-bold mt-12 mb-6 text-foreground">${line.substring(3)}</h2>`;
-                  }
-                  if (line.startsWith('### ')) {
-                    return `<h3 class="text-2xl font-semibold mt-10 mb-4 text-foreground">${line.substring(4)}</h3>`;
-                  }
-                  if (line.startsWith('#### ')) {
-                    return `<h4 class="text-xl font-semibold mt-8 mb-3 text-foreground">${line.substring(5)}</h4>`;
-                  }
-
-                  // Handle code blocks
-                  if (line.startsWith('```')) {
-                    const lang = line.substring(3);
-                    return lang ? `<div class="bg-slate-900 dark:bg-slate-800 rounded-xl p-6 my-8 overflow-x-auto border border-border"><pre><code class="text-sm text-slate-100 dark:text-slate-200">` : `</code></pre></div>`;
-                  }
-
-                  // Handle inline code
-                  if (line.includes('`') && !line.startsWith('```')) {
-                    line = line.replace(/`([^`]+)`/g, '<code class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-1 rounded text-sm font-mono">$1</code>');
-                  }
-
-                  // Handle bold text
-                  if (line.includes('**')) {
-                    line = line.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
-                  }
-
-                  // Handle tables
-                  if (line.includes('|')) {
-                    return `<div class="overflow-x-auto my-8"><table class="min-w-full bg-card border border-border rounded-lg"><tbody><tr class="border-b border-border">${line.split('|').filter(cell => cell.trim()).map(cell => `<td class="px-4 py-3 text-sm">${cell.trim()}</td>`).join('')}</tr></tbody></table></div>`;
-                  }
-
-                  // Handle lists
-                  if (line.startsWith('- ') || line.startsWith('* ')) {
-                    return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.substring(2)}</li>`;
-                  }
-                  if (/^\d+\. /.test(line)) {
-                    return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.replace(/^\d+\. /, '')}</li>`;
-                  }
-
-                  // Handle regular paragraphs
-                  if (line.trim() && !line.startsWith('<') && !line.includes('class=')) {
-                    return `<p class="mb-6 text-lg leading-relaxed text-muted-foreground">${line}</p>`;
-                  }
-
-                  return line;
-                })
-                .join('\n')
-            }} />
-          </article>
-
-          {/* Article Actions */}
-          <div className="flex items-center justify-between py-8 border-y border-border mb-16">
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">Share this article:</span>
-              <div className="flex gap-2">
-                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </button>
-                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
-            >
-              More Articles
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-
-          {/* Related Articles */}
-          {relatedPosts.length > 0 && (
-            <section>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Continue Reading</h2>
-                <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                {relatedPosts.map((relatedPost) => (
-                  <article key={relatedPost.id} className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
-                          {relatedPost.category}
-                        </span>
-                        <span className="text-muted-foreground text-xs">{relatedPost.readTime}</span>
-                      </div>
-
-                      <h3 className="text-xl font-bold text-foreground mb-3 leading-tight group-hover:text-primary transition-colors">
-                        <Link href={`/blog/${relatedPost.slug}`}>
-                          {relatedPost.title}
+    return (
+        <div className="min-h-screen bg-background">
+            {/* Hero Section */}
+            <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-background border-b">
+                <div className="container mx-auto px-4 py-12 md:py-16">
+                    {/* Breadcrumb */}
+                    <nav className="mb-8">
+                        <Link href="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Back to Blog
                         </Link>
-                      </h3>
+                    </nav>
 
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                        {relatedPost.summary.substring(0, 150)}...
-                      </p>
+                    {/* Article Header */}
+                    <header className="max-w-4xl">
+                        <div className="flex flex-wrap items-center gap-4 mb-6">
+                            <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
+                                {post.category}
+                            </span>
+                            <span className="text-muted-foreground text-sm">{post.date}</span>
+                            <span className="text-muted-foreground text-sm">{post.readTime} read</span>
+                        </div>
 
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">{relatedPost.date}</span>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                            {post.title}
+                        </h1>
+
+                        <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+                            {post.summary}
+                        </p>
+
+                        <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-border/50">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <span className="text-primary font-semibold text-sm">
+                                        {post.author.split(' ').map(n => n[0]).join('')}
+                                    </span>
+                                </div>
+                                <div>
+                                    <div className="text-sm font-medium text-foreground">{post.author}</div>
+                                    <div className="text-xs text-muted-foreground">Technical Writer</div>
+                                </div>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {post.tags.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="text-xs bg-background/50 border border-border text-muted-foreground px-3 py-1 rounded-full"
+                                    >
+                                        #{tag.toLowerCase().replace(/\s+/g, '')}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+                </div>
+            </div>
+
+            <div className="container mx-auto px-4 py-16 md:py-20">
+                <div className="max-w-4xl mx-auto">
+
+                    {/* Article Content */}
+                    <article className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-20">
+                        <div className="text-foreground leading-relaxed" dangerouslySetInnerHTML={{
+                            __html:
+                                post.content
+                                    .split('\n')
+                                    .map(line => {
+                                        // Handle headers
+                                        if (line.startsWith('# ')) {
+                                            return `<h1 class="text-4xl md:text-5xl font-bold mt-16 mb-8 text-foreground border-b border-border pb-4">${line.substring(2)}</h1>`;
+                                        }
+                                        if (line.startsWith('## ')) {
+                                            return `<h2 class="text-3xl md:text-4xl font-bold mt-12 mb-6 text-foreground">${line.substring(3)}</h2>`;
+                                        }
+                                        if (line.startsWith('### ')) {
+                                            return `<h3 class="text-2xl font-semibold mt-10 mb-4 text-foreground">${line.substring(4)}</h3>`;
+                                        }
+                                        if (line.startsWith('#### ')) {
+                                            return `<h4 class="text-xl font-semibold mt-8 mb-3 text-foreground">${line.substring(5)}</h4>`;
+                                        }
+
+                                        // Handle code blocks
+                                        if (line.startsWith('```')) {
+                                            const lang = line.substring(3);
+                                            return lang ? `<div class="bg-slate-900 dark:bg-slate-800 rounded-xl p-6 my-8 overflow-x-auto border border-border"><pre><code class="text-sm text-slate-100 dark:text-slate-200">` : `</code></pre></div>`;
+                                        }
+
+                                        // Handle inline code
+                                        if (line.includes('`') && !line.startsWith('```')) {
+                                            line = line.replace(/`([^`]+)`/g, '<code class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-1 rounded text-sm font-mono">$1</code>');
+                                        }
+
+                                        // Handle bold text
+                                        if (line.includes('**')) {
+                                            line = line.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+                                        }
+
+                                        // Handle tables
+                                        if (line.includes('|')) {
+                                            return `<div class="overflow-x-auto my-8"><table class="min-w-full bg-card border border-border rounded-lg"><tbody><tr class="border-b border-border">${line.split('|').filter(cell => cell.trim()).map(cell => `<td class="px-4 py-3 text-sm">${cell.trim()}</td>`).join('')}</tr></tbody></table></div>`;
+                                        }
+
+                                        // Handle lists
+                                        if (line.startsWith('- ') || line.startsWith('* ')) {
+                                            return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.substring(2)}</li>`;
+                                        }
+                                        if (/^\d+\. /.test(line)) {
+                                            return `<li class="mb-3 text-muted-foreground leading-relaxed">${line.replace(/^\d+\. /, '')}</li>`;
+                                        }
+
+                                        // Handle regular paragraphs
+                                        if (line.trim() && !line.startsWith('<') && !line.includes('class=')) {
+                                            return `<p class="mb-6 text-lg leading-relaxed text-muted-foreground">${line}</p>`;
+                                        }
+
+                                        return line;
+                                    })
+                                    .join('\n')
+                        }} />
+                    </article>
+
+                    {/* Article Actions */}
+                    <div className="flex items-center justify-between py-8 border-y border-border mb-16">
+                        <div className="flex items-center gap-4">
+                            <span className="text-sm text-muted-foreground">Share this article:</span>
+                            <div className="flex gap-2">
+                                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                                    </svg>
+                                </button>
+                                <button className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                         <Link
-                          href={`/blog/${relatedPost.slug}`}
-                          className="inline-flex items-center gap-1 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                            href="/blog"
+                            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
                         >
-                          Read Article
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                            More Articles
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
                         </Link>
-                      </div>
                     </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          )}
+
+                    {/* Related Articles */}
+                    {relatedPosts.length > 0 && (
+                        <section>
+                            <div className="text-center mb-12">
+                                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Continue Reading</h2>
+                                <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8">
+                                {relatedPosts.map((relatedPost) => (
+                                    <article key={relatedPost.id} className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                        <div className="p-6">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
+                                                    {relatedPost.category}
+                                                </span>
+                                                <span className="text-muted-foreground text-xs">{relatedPost.readTime}</span>
+                                            </div>
+
+                                            <h3 className="text-xl font-bold text-foreground mb-3 leading-tight group-hover:text-primary transition-colors">
+                                                <Link href={`/blog/${relatedPost.slug}`}>
+                                                    {relatedPost.title}
+                                                </Link>
+                                            </h3>
+
+                                            <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                                                {relatedPost.summary.substring(0, 150)}...
+                                            </p>
+
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs text-muted-foreground">{relatedPost.date}</span>
+                                                <Link
+                                                    href={`/blog/${relatedPost.slug}`}
+                                                    className="inline-flex items-center gap-1 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                                                >
+                                                    Read Article
+                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
