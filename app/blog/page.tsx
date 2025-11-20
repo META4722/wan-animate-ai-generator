@@ -16,6 +16,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    id: "7",
+    title: "ArchiQuill: AI-Powered Architectural Rendering in Seconds",
+    summary: "Discover how ArchiQuill transforms architectural sketches, elevations, and design concepts into photorealistic renderings using advanced AI. Learn about its browser-based workflow, industry-leading accuracy, and how it's helping architects save hours each week while accelerating client approvals.",
+    date: "December 18, 2025",
+    readTime: "6 min",
+    category: "AI Tools Spotlight",
+    slug: "archiquill-ai-architectural-rendering"
+  },
+  {
     id: "1",
     title: "Wan 2.2 Animate: The Evolution of AI Character Animation",
     summary: "Explore the groundbreaking features of Wan 2.2 Animate, the unified character animation and replacement AI that combines holistic replication technology with advanced motion transfer capabilities. Learn about its dual-mode operation, technical innovations, and open-source accessibility.",
