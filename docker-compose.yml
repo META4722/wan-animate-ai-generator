@@ -1,0 +1,18 @@
+services:
+  app:
+    image: ghcr.io/meta4722/wan-animate-ai-generator:latest
+    restart: unless-stopped
+    ports:
+      - "3006:3000"
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wanimate.rule=Host(`wanimate.io`) || Host(`www.wanimate.io`)"
+      - "traefik.http.routers.wanimate.entrypoints=websecure"
+      - "traefik.http.routers.wanimate.tls.certresolver=letsencrypt"
+      - "traefik.http.services.wanimate.loadbalancer.server.port=3000"
+      - "traefik.http.routers.wanimate.middlewares=wanimate-www-redirect"
+      - "traefik.http.middlewares.wanimate-www-redirect.redirectregex.regex=^https://wanimate\\.io/(.*)"
+      - "traefik.http.middlewares.wanimate-www-redirect.redirectregex.replacement=https://www.wanimate.io/$${1}"
+      - "traefik.http.middlewares.wanimate-www-redirect.redirectregex.permanent=true"
